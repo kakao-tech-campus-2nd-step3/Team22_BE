@@ -1,0 +1,4 @@
+token:
+  secret-key: ${SECRET_KEY}
+  access-token-expiration: ${REFRESH_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION}

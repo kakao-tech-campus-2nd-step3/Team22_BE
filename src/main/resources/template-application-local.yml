@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    database: mysql
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+        time_zone: Asia/Seoul
+token:
+  secret-key: ${SECRET_KEY}
+  access-token-expiration: ${REFRESH_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION}

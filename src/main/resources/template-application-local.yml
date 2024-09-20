@@ -14,3 +14,7 @@ spring:
       hibernate:
         jdbc:
         time_zone: Asia/Seoul
+token:
+  secret-key: ${SECRET_KEY}
+  access-token-expiration: ${REFRESH_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION}

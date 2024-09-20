@@ -20,7 +20,6 @@ import java.util.List;
 public class JwtTokenProvider implements TokenProvider {
     private final JwtProperties jwtProperties;
     private final JwtClaimsProvider jwtClaimsProvider;
-    private final JwtTokenExtractor jwtTokenExtractor;
     private SecretKey secretKey;
 
     @PostConstruct

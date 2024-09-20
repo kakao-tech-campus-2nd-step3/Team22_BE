@@ -1,8 +1,8 @@
 package io.github.eappezo.soundary.services.authentication.infrastructure.persistence.repository;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.authentication.domain.SocialAccountRepository;
 import io.github.eappezo.soundary.services.authentication.domain.SocialAccount;
+import io.github.eappezo.soundary.services.authentication.domain.SocialAccountRepository;
 import io.github.eappezo.soundary.services.authentication.domain.SocialPlatform;
 import io.github.eappezo.soundary.services.authentication.infrastructure.persistence.entity.SocialAccountEntity;
 import io.github.eappezo.soundary.services.authentication.infrastructure.persistence.entity.key.SocialAccountEntityKey;

@@ -1,7 +1,7 @@
 package io.github.eappezo.soundary.services.authentication.api.controller;
 
-import io.github.eappezo.soundary.services.authentication.api.dto.LoginResponse;
 import io.github.eappezo.soundary.services.authentication.api.dto.LoginRequest;
+import io.github.eappezo.soundary.services.authentication.api.dto.LoginResponse;
 import io.github.eappezo.soundary.services.authentication.api.dto.RefreshRequest;
 import io.github.eappezo.soundary.services.authentication.api.dto.RefreshResponse;
 import io.github.eappezo.soundary.services.authentication.application.LoginResultDto;
@@ -9,7 +9,6 @@ import io.github.eappezo.soundary.services.authentication.application.RefreshRes
 import io.github.eappezo.soundary.services.authentication.application.service.OAuthService;
 import io.github.eappezo.soundary.services.authentication.application.service.RefreshService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

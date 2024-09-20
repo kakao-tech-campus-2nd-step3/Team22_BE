@@ -2,7 +2,6 @@ package io.github.eappezo.soundary.services.authentication.application;
 
 import io.github.eappezo.soundary.services.authentication.domain.SocialPlatform;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

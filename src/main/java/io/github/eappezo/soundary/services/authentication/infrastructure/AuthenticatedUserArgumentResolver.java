@@ -22,7 +22,7 @@ public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentR
     }
 
     @Override
-    public Object resolveArgument(
+    public Identifier resolveArgument(
             MethodParameter parameter,
             ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest,
@@ -34,6 +34,6 @@ public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentR
         if (!(authentication instanceof APIAuthentication)) {
             throw new AuthenticationFailedException();
         }
-        return authentication.getPrincipal();
+        return (Identifier) authentication.getPrincipal();
     }
 }

@@ -45,8 +45,8 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        APIAuthentication authentication = jwtTokenExtractor.extractAuthenticationFrom(token);
         try {
+            APIAuthentication authentication = jwtTokenExtractor.extractAuthenticationFrom(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (ExpiredJwtException exception) {
             sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_EXPIRED);

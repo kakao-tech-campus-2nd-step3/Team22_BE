@@ -3,11 +3,13 @@ package io.github.eappezo.soundary.core.user;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class User {
     private final Identifier identifier;

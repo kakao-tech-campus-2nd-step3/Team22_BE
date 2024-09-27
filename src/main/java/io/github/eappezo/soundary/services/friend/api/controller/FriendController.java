@@ -1,6 +1,7 @@
 package io.github.eappezo.soundary.services.friend.api.controller;
 
-import io.github.eappezo.soundary.services.friend.api.dto.FriendListRequest;
+import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
+import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendListResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendRequest;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
@@ -34,28 +35,29 @@ public class FriendController {
     }
 
     @DeleteMapping("/delete")
-    ResponseEntity<String> deleteFriend(FriendRequest friendRequest){
+    ResponseEntity<String> deleteFriend(FriendRequest friendRequest) {
         friendService.deleteFriend(friendRequest);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("delete");
     }
 
     @GetMapping()
-    ResponseEntity<FriendListResponse> getFriendList(FriendListRequest friendListRequest) {
+    ResponseEntity<FriendListResponse> getFriendList(@AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getFriendList(friendListRequest.userId())));
+            FriendListResponse.from(friendService.getFriendList(userId.toString())));
     }
 
     @GetMapping("/requests/received")
-    ResponseEntity<FriendListResponse> getRequestReceivedList(FriendListRequest friendListRequest) {
+    ResponseEntity<FriendListResponse> getRequestReceivedList(
+        @AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(FriendListResponse.from(friendService.getRequestReceivedList(
-            friendListRequest.userId())));
+            userId.toString())));
     }
 
     @GetMapping("/requests/sent")
     ResponseEntity<FriendListResponse> getSentRequestFriendList(
-        FriendListRequest friendListRequest) {
+        @AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getSentRequestList(friendListRequest.userId())));
+            FriendListResponse.from(friendService.getSentRequestList(userId.toString())));
     }
 
 }

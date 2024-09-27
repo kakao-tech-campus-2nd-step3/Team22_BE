@@ -18,43 +18,43 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/friends")
 @AllArgsConstructor
-public class FriendController {
+public class FriendController implements FriendAPI{
 
     private final FriendService friendService;
 
     @PostMapping()
-    ResponseEntity<String> sendOrAcceptFriendRequest(FriendRequest friendRequest) {
+    public ResponseEntity<String> sendOrAcceptFriendRequest(FriendRequest friendRequest) {
         friendService.addFriend(FriendshipDTO.from(friendRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body("create");
     }
 
     @DeleteMapping()
-    ResponseEntity<String> rejectFriendRequest(FriendRequest friendRequest) {
+    public ResponseEntity<String> rejectFriendRequest(FriendRequest friendRequest) {
         friendService.rejectFriendRequest(FriendshipDTO.from(friendRequest));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("delete");
     }
 
     @DeleteMapping("/delete")
-    ResponseEntity<String> deleteFriend(FriendRequest friendRequest) {
+    public ResponseEntity<String> deleteFriend(FriendRequest friendRequest) {
         friendService.deleteFriend(friendRequest);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("delete");
     }
 
     @GetMapping()
-    ResponseEntity<FriendListResponse> getFriendList(@AuthenticatedUser Identifier userId) {
+    public ResponseEntity<FriendListResponse> getFriendList(@AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
             FriendListResponse.from(friendService.getFriendList(userId.toString())));
     }
 
     @GetMapping("/requests/received")
-    ResponseEntity<FriendListResponse> getRequestReceivedList(
+    public ResponseEntity<FriendListResponse> getRequestReceivedList(
         @AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(FriendListResponse.from(friendService.getRequestReceivedList(
             userId.toString())));
     }
 
     @GetMapping("/requests/sent")
-    ResponseEntity<FriendListResponse> getSentRequestFriendList(
+    public ResponseEntity<FriendListResponse> getSentRequestFriendList(
         @AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
             FriendListResponse.from(friendService.getSentRequestList(userId.toString())));

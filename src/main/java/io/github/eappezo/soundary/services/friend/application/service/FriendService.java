@@ -3,9 +3,10 @@ package io.github.eappezo.soundary.services.friend.application.service;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
+import io.github.eappezo.soundary.services.friend.api.dto.FriendRequest;
 import io.github.eappezo.soundary.services.friend.application.FriendRepository;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
-import io.github.eappezo.soundary.services.friend.application.dto.UserIdentifiers;
+import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import io.github.eappezo.soundary.services.friend.domain.Friend;
 import io.github.eappezo.soundary.services.friend.domain.key.FriendKey;
 import java.util.ArrayList;
@@ -19,15 +20,20 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
-    public void addFriend(UserIdentifiers userIdentifiers){
-        User from = getUser(userIdentifiers.from());
-        User to = getUser(userIdentifiers.to());
+    public void addFriend(FriendshipDTO friendshipDTO){
+        User from = getUser(friendshipDTO.from());
+        User to = getUser(friendshipDTO.to());
 
         friendRepository.save(new Friend(from.getIdentifier().toString(), to.getIdentifier().toString()));
     }
 
-    public void rejectFriendRequest(UserIdentifiers userIdentifiers){
-        friendRepository.deleteById(getFriendKey(userIdentifiers));
+    public void rejectFriendRequest(FriendshipDTO friendshipDTO){
+        friendRepository.deleteById(getFriendKey(friendshipDTO));
+    }
+
+    public void deleteFriend(FriendRequest friendRequest){
+        friendRepository.deleteById(getFriendKey(FriendshipDTO.from(friendRequest)));
+        friendRepository.deleteById(new FriendKey(friendRequest.toUserId(), friendRequest.fromUserId()));
     }
 
     public List<FriendInfo> getFriendList(String fromUserId){
@@ -81,7 +87,7 @@ public class FriendService {
         return userRepository.findById(identifier).orElseThrow();
     }
 
-    private FriendKey getFriendKey(UserIdentifiers userIdentifiers){
-        return new FriendKey(userIdentifiers.from().toString(), userIdentifiers.to().toString());
+    private FriendKey getFriendKey(FriendshipDTO friendshipDTO){
+        return new FriendKey(friendshipDTO.from().toString(), friendshipDTO.to().toString());
     }
 }

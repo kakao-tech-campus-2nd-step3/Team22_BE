@@ -3,7 +3,7 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendListRequest;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendListResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendRequest;
-import io.github.eappezo.soundary.services.friend.application.dto.UserIdentifiers;
+import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import io.github.eappezo.soundary.services.friend.application.service.FriendService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,13 +23,19 @@ public class FriendController {
 
     @PostMapping()
     ResponseEntity<String> sendOrAcceptFriendRequest(FriendRequest friendRequest) {
-        friendService.addFriend(UserIdentifiers.from(friendRequest));
+        friendService.addFriend(FriendshipDTO.from(friendRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body("create");
     }
 
     @DeleteMapping()
     ResponseEntity<String> rejectFriendRequest(FriendRequest friendRequest) {
-        friendService.rejectFriendRequest(UserIdentifiers.from(friendRequest));
+        friendService.rejectFriendRequest(FriendshipDTO.from(friendRequest));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("delete");
+    }
+
+    @DeleteMapping("/delete")
+    ResponseEntity<String> deleteFriend(FriendRequest friendRequest){
+        friendService.deleteFriend(friendRequest);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("delete");
     }
 

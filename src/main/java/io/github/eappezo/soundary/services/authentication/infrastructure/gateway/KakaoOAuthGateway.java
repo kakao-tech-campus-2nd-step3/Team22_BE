@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-import static io.github.eappezo.soundary.services.authentication.infrastructure.DecodeInputStreamUtil.decodeInputStream;
+import static io.github.eappezo.soundary.core.DecodeInputStreamUtil.decodeInputStream;
 
 @Component
 @Slf4j

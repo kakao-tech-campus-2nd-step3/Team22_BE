@@ -8,6 +8,7 @@ import io.github.eappezo.soundary.services.friend.application.FriendRepository;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import io.github.eappezo.soundary.services.friend.domain.Friend;
+import io.github.eappezo.soundary.services.friend.domain.exception.FriendsAPIFailedException;
 import io.github.eappezo.soundary.services.friend.domain.key.FriendKey;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,9 @@ public class FriendService {
     public void addFriend(FriendshipDTO friendshipDTO){
         User from = getUser(friendshipDTO.from());
         User to = getUser(friendshipDTO.to());
-
+        if(friendRepository.findById(getFriendKey(friendshipDTO)).isPresent()){
+            throw new FriendsAPIFailedException();
+        }
         friendRepository.save(new Friend(from.getIdentifier().toString(), to.getIdentifier().toString()));
     }
 

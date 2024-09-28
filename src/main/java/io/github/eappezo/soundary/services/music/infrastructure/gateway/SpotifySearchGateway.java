@@ -58,7 +58,7 @@ public class SpotifySearchGateway implements TrackSearchGateway {
                 .toEntity(MusicSearchResponse.class)
                 .getBody();
         assert searchResponse != null;
-        return searchResponse.extractMusicList();
+        return searchResponse.convertToTrackList();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class SpotifySearchGateway implements TrackSearchGateway {
     private record MusicSearchResponse(
             SearchItems tracks
     ) {
-        public List<Track> extractMusicList() {
+        public List<Track> convertToTrackList() {
             return tracks.items.stream().map(TrackDto::toMusic).toList();
         }
     }

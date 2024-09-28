@@ -14,6 +14,7 @@ import java.util.List;
 public class TrackSearchService {
     private final TrackSearchGatewayRegistry gatewayRegistry;
 
+    // TODO 검색 시 나온 track 중 track repository 에 없는 트랙은 저장해야 함 (kafka producer 도입)
     public List<Track> search(MusicPlatform platform, String query) {
         TrackSearchGateway gateway = gatewayRegistry.getGateway(platform);
 

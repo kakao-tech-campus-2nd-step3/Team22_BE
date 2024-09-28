@@ -25,6 +25,7 @@ public class SecurityConfig {
                         (auth) -> {
                             auth.requestMatchers("/api/login").permitAll();
                             auth.requestMatchers("/api/refresh").permitAll();
+                            auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/exception/**").permitAll();
                             auth.anyRequest().authenticated();
                         }
                 )

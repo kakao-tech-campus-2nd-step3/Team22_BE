@@ -4,7 +4,7 @@ import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 
 public record PlatformAccessToken(
         MusicPlatform platform,
-        String token,
+        String value,
         Long expiresIn
 ) {
     public static PlatformAccessToken of(MusicPlatform platform, String token, Long expiresIn) {

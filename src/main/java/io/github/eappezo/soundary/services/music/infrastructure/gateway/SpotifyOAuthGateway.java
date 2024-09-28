@@ -66,7 +66,7 @@ public class SpotifyOAuthGateway implements MusicPlatformOAuthGateway {
         log.info("Successfully got token from Spotify API. token: {}", tokenResponse.accessToken());
         return PlatformAccessToken.of(
                 getPlatform(),
-                String.format("%s %s", tokenResponse.tokenType(), tokenResponse.accessToken()),
+                tokenResponse.accessToken(),
                 tokenResponse.expiresIn()
         );
     }

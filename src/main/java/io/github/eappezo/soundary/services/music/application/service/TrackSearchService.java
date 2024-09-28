@@ -2,8 +2,8 @@ package io.github.eappezo.soundary.services.music.application.service;
 
 import io.github.eappezo.soundary.services.music.application.TrackSearchGateway;
 import io.github.eappezo.soundary.services.music.application.TrackSearchGatewayRegistry;
-import io.github.eappezo.soundary.services.music.domain.Track;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
+import io.github.eappezo.soundary.services.music.domain.Track;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

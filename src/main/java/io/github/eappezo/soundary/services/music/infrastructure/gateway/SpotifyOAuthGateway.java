@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.services.authentication.domain.exception.AuthenticationFailedException;
 import io.github.eappezo.soundary.services.music.application.MusicPlatformOAuthGateway;
-import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.application.PlatformAccessToken;
+import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.infrastructure.MusicPlatformOAuthConfig;
 import io.github.eappezo.soundary.services.music.infrastructure.MusicPlatformOAuthProperties;
 import jakarta.annotation.PostConstruct;

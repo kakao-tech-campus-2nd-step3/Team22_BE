@@ -1,7 +1,6 @@
 package io.github.eappezo.soundary.services.music.application;
 
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

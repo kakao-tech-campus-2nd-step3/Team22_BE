@@ -71,7 +71,7 @@ public class SpotifySearchGateway implements TrackSearchGateway {
             SearchItems tracks
     ) {
         public List<Track> convertToTrackList() {
-            return tracks.items.stream().map(TrackDto::toMusic).toList();
+            return tracks.items.stream().map(TrackDto::toTrack).toList();
         }
     }
 
@@ -91,7 +91,7 @@ public class SpotifySearchGateway implements TrackSearchGateway {
             AlbumDto album,
             List<ArtistDto> artists
     ) {
-        public Track toMusic() {
+        public Track toTrack() {
             return Track.of(
                     id,
                     MusicPlatform.SPOTIFY,

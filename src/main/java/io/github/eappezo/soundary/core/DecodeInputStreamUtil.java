@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.authentication.infrastructure;
+package io.github.eappezo.soundary.core;
 
 import java.io.BufferedReader;
 import java.io.IOException;

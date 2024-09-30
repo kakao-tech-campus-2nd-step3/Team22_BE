@@ -1,4 +1,6 @@
 spring:
+  jpa:
+    open-in-view: false
   data:
     redis:
       repositories:

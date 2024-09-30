@@ -23,9 +23,13 @@ public class SecurityConfig {
                 .headers((configurer) -> configurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests(
                         (auth) -> {
-                            auth.requestMatchers("/api/login").permitAll();
-                            auth.requestMatchers("/api/refresh").permitAll();
-                            auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/exception/**").permitAll();
+                            auth.requestMatchers("/api/login").anonymous();
+                            auth.requestMatchers("/api/refresh").anonymous();
+                            auth.requestMatchers(
+                                    "/swagger-ui/**",
+                                    "/v3/api-docs/**",
+                                    "/exception/**"
+                            ).permitAll();
                             auth.anyRequest().authenticated();
                         }
                 )

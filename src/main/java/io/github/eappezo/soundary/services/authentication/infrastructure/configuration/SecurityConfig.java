@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.authentication.infrastructure.security;
+package io.github.eappezo.soundary.services.authentication.infrastructure.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

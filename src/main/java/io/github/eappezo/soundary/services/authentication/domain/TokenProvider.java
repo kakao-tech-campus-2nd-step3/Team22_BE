@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.authentication.application;
+package io.github.eappezo.soundary.services.authentication.domain;
 
 import io.github.eappezo.soundary.core.user.User;
 

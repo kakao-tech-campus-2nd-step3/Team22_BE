@@ -1,9 +1,10 @@
-package io.github.eappezo.soundary.services.authentication.infrastructure.security;
+package io.github.eappezo.soundary.services.authentication.infrastructure.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.eappezo.soundary.core.exception.ErrorResponse;
 import io.github.eappezo.soundary.services.authentication.domain.exception.AuthenticationErrorCode;
 import io.github.eappezo.soundary.services.authentication.domain.exception.AuthenticationFailedException;
+import io.github.eappezo.soundary.services.authentication.infrastructure.APIAuthentication;
 import io.github.eappezo.soundary.services.authentication.infrastructure.JwtTokenExtractor;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;

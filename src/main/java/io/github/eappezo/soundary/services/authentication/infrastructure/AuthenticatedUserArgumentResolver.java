@@ -3,7 +3,6 @@ package io.github.eappezo.soundary.services.authentication.infrastructure;
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.authentication.domain.exception.AuthenticationFailedException;
-import io.github.eappezo.soundary.services.authentication.infrastructure.security.APIAuthentication;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

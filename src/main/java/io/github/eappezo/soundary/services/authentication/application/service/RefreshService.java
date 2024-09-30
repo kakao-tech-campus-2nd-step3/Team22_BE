@@ -1,7 +1,7 @@
 package io.github.eappezo.soundary.services.authentication.application.service;
 
 import io.github.eappezo.soundary.services.authentication.application.RefreshResultDto;
-import io.github.eappezo.soundary.services.authentication.application.TokenProvider;
+import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

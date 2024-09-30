@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.authentication.infrastructure.security;
+package io.github.eappezo.soundary.services.authentication.infrastructure;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.UserRole;

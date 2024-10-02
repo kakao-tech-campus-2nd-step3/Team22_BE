@@ -1,15 +1,15 @@
 package io.github.eappezo.soundary.services.friend.application.service;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntity;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendRequest;
 import io.github.eappezo.soundary.services.friend.application.FriendRepository;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
-import io.github.eappezo.soundary.services.friend.domain.Friend;
 import io.github.eappezo.soundary.services.friend.domain.exception.FriendsAPIFailedException;
-import io.github.eappezo.soundary.services.friend.domain.key.FriendKey;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendKey;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class FriendService {
         if(friendRepository.findById(getFriendKey(friendshipDTO)).isPresent()){
             throw new FriendsAPIFailedException();
         }
-        friendRepository.save(new Friend(from.getIdentifier().toString(), to.getIdentifier().toString()));
+        friendRepository.save(new FriendEntity(from.getIdentifier().toString(), to.getIdentifier().toString()));
     }
 
     public void rejectFriendRequest(FriendshipDTO friendshipDTO){
@@ -40,10 +40,10 @@ public class FriendService {
     }
 
     public List<FriendInfo> getFriendList(String fromUserId){
-        List<Friend> friendList = friendRepository.findByFromUserId(fromUserId);
+        List<FriendEntity> friendList = friendRepository.findByFromUserId(fromUserId);
         List<FriendInfo> friendInfoList = new ArrayList<>();
 
-        for (Friend it : friendList){
+        for (FriendEntity it : friendList){
             if(isFriend(it)){
                 friendInfoList.add(
                     FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
@@ -54,10 +54,10 @@ public class FriendService {
     }
 
     public List<FriendInfo> getSentRequestList(String fromUserId){
-        List<Friend> friendList = friendRepository.findByFromUserId(fromUserId);
+        List<FriendEntity> friendList = friendRepository.findByFromUserId(fromUserId);
         List<FriendInfo> friendInfoList = new ArrayList<>();
 
-        for (Friend it : friendList){
+        for (FriendEntity it : friendList){
             if(!isFriend(it)){
                 friendInfoList.add(
                     FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
@@ -68,10 +68,10 @@ public class FriendService {
     }
 
     public List<FriendInfo> getRequestReceivedList(String toUserId){
-        List<Friend> friendList = friendRepository.findByToUserId(toUserId);
+        List<FriendEntity> friendList = friendRepository.findByToUserId(toUserId);
         List<FriendInfo> friendInfoList = new ArrayList<>();
 
-        for (Friend it : friendList){
+        for (FriendEntity it : friendList){
             if(!isFriend(it)){
                 friendInfoList.add(
                     FriendInfo.from(getUser(Identifier.fromString(it.getFromUserId()))));
@@ -81,7 +81,7 @@ public class FriendService {
         return friendInfoList;
     }
 
-    private boolean isFriend(Friend friend){
+    private boolean isFriend(FriendEntity friend){
         return friendRepository.findById(new FriendKey(friend.getToUserId(), friend.getFromUserId()))
             .isPresent();
     }

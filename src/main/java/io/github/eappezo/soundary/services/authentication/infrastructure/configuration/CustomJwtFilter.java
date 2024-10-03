@@ -50,14 +50,14 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             APIAuthentication authentication = jwtTokenExtractor.extractAuthenticationFrom(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (ExpiredJwtException exception) {
-            sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_EXPIRED);
+            writeAuthenticationErrorResponse(response, AuthenticationErrorCode.AUTHENTICATION_EXPIRED);
             return;
         } catch (JwtException | AuthenticationFailedException exception) {
-            sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
+            writeAuthenticationErrorResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
             return;
         } catch (Exception exception) {
             log.error(stackTraceOf(exception));
-            sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
+            writeAuthenticationErrorResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
             return;
         }
         filterChain.doFilter(request, response);
@@ -74,7 +74,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
         return token.substring(7);
     }
 
-    private void sendUnauthorizedResponse(
+    private void writeAuthenticationErrorResponse(
             HttpServletResponse response,
             AuthenticationErrorCode errorCode
     ) throws IOException {

@@ -75,11 +75,11 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     private Date buildAccessTokenExpiration() {
-        return new Date(System.currentTimeMillis() + getAccessTokenExpirationTime());
+        return new Date(System.currentTimeMillis() + getAccessTokenExpirationTime() * 1000);
     }
 
     private Date buildRefreshTokenExpiration() {
-        return new Date(System.currentTimeMillis() + getRefreshTokenExpirationTime());
+        return new Date(System.currentTimeMillis() + getRefreshTokenExpirationTime() * 1000);
     }
 
     private Date now() {

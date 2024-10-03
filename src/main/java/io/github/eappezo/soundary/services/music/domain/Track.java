@@ -1,5 +1,7 @@
 package io.github.eappezo.soundary.services.music.domain;
 
+import jakarta.annotation.Nullable;
+
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +12,7 @@ public class Track {
     private final String title;
     private final Album album;
     private final List<Artist> artist;
-    private String previewMp3Url = "";
+    private String previewMp3Url;
     private final Duration duration;
 
     public static Track of(
@@ -86,6 +88,7 @@ public class Track {
         return new LinkedList<>(artist);
     }
 
+    @Nullable
     public String previewMp3Url() {
         return previewMp3Url;
     }

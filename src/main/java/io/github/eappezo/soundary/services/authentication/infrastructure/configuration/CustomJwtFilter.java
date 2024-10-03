@@ -41,18 +41,18 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             @Nonnull HttpServletResponse response,
             @Nonnull FilterChain filterChain
     ) throws ServletException, IOException {
-        String token = getBearerToken(request);
-        if (token == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
         try {
+            String token = getBearerToken(request);
+            if (token == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
             APIAuthentication authentication = jwtTokenExtractor.extractAuthenticationFrom(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (ExpiredJwtException exception) {
             sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_EXPIRED);
             return;
-        } catch (JwtException exception) {
+        } catch (JwtException | AuthenticationFailedException exception) {
             sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
             return;
         } catch (Exception exception) {

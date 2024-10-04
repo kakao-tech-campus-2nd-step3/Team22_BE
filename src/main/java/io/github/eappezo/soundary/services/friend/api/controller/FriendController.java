@@ -46,21 +46,20 @@ public class FriendController implements FriendAPI {
     @GetMapping()
     public ResponseEntity<FriendListResponse> getFriendList(@AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getFriendList(userId)));
+            FriendListResponse.from(friendService.getFriendListWithSelfJoin(userId)));
     }
 
     @GetMapping("/requests/received")
     public ResponseEntity<FriendListResponse> getRequestReceivedList(
         @AuthenticatedUser Identifier userId) {
-        return ResponseEntity.ok(FriendListResponse.from(friendService.getRequestReceivedList(
-            userId)));
+        return ResponseEntity.ok(FriendListResponse.from(friendService.getRequestReceivedWithSelfJoin(userId)));
     }
 
     @GetMapping("/requests/sent")
     public ResponseEntity<FriendListResponse> getSentRequestFriendList(
         @AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getSentRequestList(userId)));
+            FriendListResponse.from(friendService.getSentRequestWithSelfJoin(userId)));
     }
 
     @GetMapping("/requests/sent/{toUserId}")

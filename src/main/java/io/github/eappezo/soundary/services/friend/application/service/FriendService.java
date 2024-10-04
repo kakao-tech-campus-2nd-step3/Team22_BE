@@ -65,6 +65,17 @@ public class FriendService {
         return friendInfoList;
     }
 
+    public List<FriendInfo> getFriendListWithSelfJoin(Identifier fromUserId){
+        List<Friend> friendList = friendRepository.findFriend(fromUserId.toString());
+        List<FriendInfo> friendInfoList = new ArrayList<>();
+        for (Friend it : friendList) {
+            friendInfoList.add(
+                    FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
+        }
+
+        return  friendInfoList;
+    }
+
     @Transactional
     public List<FriendInfo> getSentRequestList(Identifier fromUserId) {
         List<Friend> friendList = friendRepository.findByFromUserId(fromUserId.toString());
@@ -81,6 +92,18 @@ public class FriendService {
     }
 
     @Transactional
+    public List<FriendInfo> getSentRequestWithSelfJoin(Identifier fromUserId){
+        List<Friend> friendList = friendRepository.findSentRequest(fromUserId.toString());
+        List<FriendInfo> friendInfoList = new ArrayList<>();
+        for (Friend it : friendList) {
+            friendInfoList.add(
+                FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
+        }
+
+        return  friendInfoList;
+    }
+
+    @Transactional
     public List<FriendInfo> getRequestReceivedList(Identifier toUserId) {
         List<Friend> friendList = friendRepository.findByToUserId(toUserId.toString());
         List<FriendInfo> friendInfoList = new ArrayList<>();
@@ -93,6 +116,18 @@ public class FriendService {
         }
 
         return friendInfoList;
+    }
+
+    @Transactional
+    public List<FriendInfo> getRequestReceivedWithSelfJoin(Identifier toUserId){
+        List<Friend> friendList = friendRepository.findReceivedRequest(toUserId.toString());
+        List<FriendInfo> friendInfoList = new ArrayList<>();
+        for (Friend it : friendList) {
+            friendInfoList.add(
+                FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
+        }
+
+        return  friendInfoList;
     }
 
     private boolean isFriend(Friend friend) {

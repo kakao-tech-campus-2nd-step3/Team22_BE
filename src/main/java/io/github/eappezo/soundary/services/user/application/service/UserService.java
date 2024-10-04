@@ -18,13 +18,12 @@ public class UserService {
     }
 
     public UserInfo getUserInfo(String userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        User user = getUser(userId);
         return UserInfo.from(user);
     }
 
     // 이전에 짜둔거라 수정해야함 identifier 사용하는거 아직 제대로 안 봄
-    public User updateUser(Identifier userId, UserUpdateRequest request) {
+    public User updateUser(String userId, UserUpdateRequest request) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -42,11 +41,15 @@ public class UserService {
         return null;
     }
 
-    public void deleteUser(Identifier userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            user.getRoles().add(UserRole.LEAVED);
-        }
+    public String deleteUser(String userId) {
+        User user = getUser(userId);
+        user.getRoles().add(UserRole.LEAVED);
+        userRepository.save(user);
+        return "User deleted";
+    }
+
+    private User getUser(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 }

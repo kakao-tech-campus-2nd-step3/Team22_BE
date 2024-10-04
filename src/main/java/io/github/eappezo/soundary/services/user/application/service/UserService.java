@@ -4,6 +4,7 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
+import io.github.eappezo.soundary.services.user.api.controller.dto.UserUpdateRequest;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import org.springframework.stereotype.Service;
 
@@ -22,23 +23,18 @@ public class UserService {
         return UserInfo.from(user);
     }
 
-    // 이전에 짜둔거라 수정해야함 identifier 사용하는거 아직 제대로 안 봄
     public User updateUser(String userId, UserUpdateRequest request) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            User updatedUser = new User(
-                    user.getIdentifier(),
-                    user.getDisplayId(),
-                    request.description(),
-                    request.nickname(),
-                    request.profileImageUrl(),
-                    user.getRoles(),
-                    user.getSignupAt()
-            );
-            return userRepository.save(updatedUser);
-        }
-        return null;
+        User user = getUser(userId);
+
+        User updatedUser = new User(
+                user.getIdentifier(),
+                user.getDisplayId(),
+                request.description(),
+                request.nickname(),
+                request.profileImageUrl(),
+                user.getRoles(),
+                user.getSignupAt());
+        return userRepository.save(updatedUser);
     }
 
     public String deleteUser(String userId) {

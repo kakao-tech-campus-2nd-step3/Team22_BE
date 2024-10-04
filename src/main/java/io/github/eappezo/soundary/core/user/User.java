@@ -1,15 +1,14 @@
 package io.github.eappezo.soundary.core.user;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class User {
     private final Identifier identifier;
@@ -35,6 +34,22 @@ public class User {
                 profileImageUrl,
                 List.of(UserRole.PENDING),
                 LocalDateTime.now()
+        );
+    }
+
+    public User updtaeUserInfo(
+            @Nullable String nickname,
+            @Nullable String description,
+            @Nullable String profileImageUrl
+    ){
+        return new User(
+                this.identifier,
+                this.displayId,
+                nickname != null ? nickname : this.nickname,
+                description != null ? description : this.description,
+                profileImageUrl != null ? profileImageUrl : this.profileImageUrl,
+                this.roles,
+                this.signupAt
         );
     }
 }

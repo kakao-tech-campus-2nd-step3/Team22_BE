@@ -24,17 +24,10 @@ public class UserService {
 
     public User updateUser(Identifier userId, UserUpdateRequest request) {
         User user = getUser(userId);
-
-        User updatedUser = new User(
-                user.getIdentifier(),
-                user.getDisplayId(),
-                request.description(),
-                request.nickname(),
-                request.profileImageUrl(),
-                user.getRoles(),
-                user.getSignupAt());
-        return userRepository.save(updatedUser);
+        user.updtaeUserInfo(request.nickname(), request.description(), request.profileImageUrl());
+        return userRepository.save(user);
     }
+
 
     public void quitUser(Identifier userId) {
         User user = getUser(userId);

@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.user.api.controller.dto;
+package io.github.eappezo.soundary.services.user.api.dto;
 
 public record UserUpdateRequest(
         String nickname,

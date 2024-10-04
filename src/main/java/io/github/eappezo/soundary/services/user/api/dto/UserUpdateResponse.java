@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.user.api.controller.dto;
+package io.github.eappezo.soundary.services.user.api.dto;
 
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRole;

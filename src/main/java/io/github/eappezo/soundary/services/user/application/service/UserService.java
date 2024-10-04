@@ -5,7 +5,7 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
-import io.github.eappezo.soundary.services.user.api.controller.dto.UserUpdateRequest;
+import io.github.eappezo.soundary.services.user.api.dto.UserUpdateRequest;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import org.springframework.stereotype.Service;
 

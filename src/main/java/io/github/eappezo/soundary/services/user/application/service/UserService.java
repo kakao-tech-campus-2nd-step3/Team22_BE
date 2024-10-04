@@ -24,9 +24,9 @@ public class UserService {
 
     public UserInfo updateUser(Identifier userId, UserUpdateRequest request) {
         User user = getUser(userId);
-        user.updtaeUserInfo(request.nickname(), request.description(), request.profileImageUrl());
-        userRepository.save(user);
-        return UserInfo.from(user);
+        User updateduser = user.updtaeUserInfo(request.nickname(), request.description(), request.profileImageUrl());
+        userRepository.save(updateduser);
+        return UserInfo.from(updateduser);
     }
 
 

@@ -22,7 +22,12 @@ public class SecurityConfig {
         http
                 .headers((configurer) -> configurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests(
-                        (auth) -> auth.requestMatchers("/").permitAll()
+                        (auth) -> {
+                            auth.requestMatchers("/api/login").permitAll();
+                            auth.requestMatchers("/api/refresh").permitAll();
+                            auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/exception/**").permitAll();
+                            auth.anyRequest().authenticated();
+                        }
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)

@@ -1,7 +1,12 @@
 spring:
+  data:
+    redis:
+      repositories:
+        enabled: false
   profiles:
     active: local
 app:
+  music-search-limit: 10
   headers:
     auth-token-header: Authorization
   user:

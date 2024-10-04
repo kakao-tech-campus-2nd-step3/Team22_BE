@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.services.user.application.service;
 
+import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
@@ -42,7 +43,6 @@ public class UserService {
     }
 
     private User getUser(Identifier userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 }

@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.services.user.application.service;
 
+import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
@@ -15,12 +16,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserInfo getUserInfo(String userId) {
+    public UserInfo getUserInfo(Identifier userId) {
         User user = getUser(userId);
         return UserInfo.from(user);
     }
 
-    public User updateUser(String userId, UserUpdateRequest request) {
+    public User updateUser(Identifier userId, UserUpdateRequest request) {
         User user = getUser(userId);
 
         User updatedUser = new User(
@@ -34,13 +35,13 @@ public class UserService {
         return userRepository.save(updatedUser);
     }
 
-    public void quitUser(String userId) {
+    public void quitUser(Identifier userId) {
         User user = getUser(userId);
         user.getRoles().add(UserRole.LEAVED);
         userRepository.save(user);
     }
 
-    private User getUser(String userId) {
+    private User getUser(Identifier userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }

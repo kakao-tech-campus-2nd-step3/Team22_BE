@@ -19,19 +19,19 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<UserInfoResponse> getUserInfo(@AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-                UserInfoResponse.from(userService.getUserInfo(userId.toString())));
+                UserInfoResponse.from(userService.getUserInfo(userId)));
     }
 
     @PutMapping()
     public ResponseEntity<UserUpdateResponse> updateUserInfo(@AuthenticatedUser Identifier userId, @RequestBody UserUpdateRequest userUpdateRequest) {
         return ResponseEntity.ok(
-                UserUpdateResponse.from(userService.updateUser(userId.toString(), userUpdateRequest))
+                UserUpdateResponse.from(userService.updateUser(userId, userUpdateRequest))
         );
     }
 
     @DeleteMapping()
     public ResponseEntity<Object> quitUser(@AuthenticatedUser Identifier userId) {
-        userService.quitUser(userId.toString());
+        userService.quitUser(userId);
         return ResponseEntity.ok().build();
     }
 }

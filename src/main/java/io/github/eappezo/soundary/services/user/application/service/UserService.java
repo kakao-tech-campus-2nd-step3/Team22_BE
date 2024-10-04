@@ -22,10 +22,11 @@ public class UserService {
         return UserInfo.from(user);
     }
 
-    public User updateUser(Identifier userId, UserUpdateRequest request) {
+    public UserInfo updateUser(Identifier userId, UserUpdateRequest request) {
         User user = getUser(userId);
         user.updtaeUserInfo(request.nickname(), request.description(), request.profileImageUrl());
-        return userRepository.save(user);
+        userRepository.save(user);
+        return UserInfo.from(user);
     }
 
 

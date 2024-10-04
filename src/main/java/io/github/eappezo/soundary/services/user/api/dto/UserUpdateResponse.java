@@ -1,7 +1,7 @@
 package io.github.eappezo.soundary.services.user.api.dto;
 
-import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRole;
+import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ public record UserUpdateResponse(String displayId,
                                  String profileImageUrl,
                                  List<UserRole> roles
 ) {
-    public static UserUpdateResponse from(User user) {
+    public static UserUpdateResponse from(UserInfo userInfo) {
         return new UserUpdateResponse(
-                user.getDisplayId(),
-                user.getNickname(),
-                user.getDescription(),
-                user.getProfileImageUrl(),
-                user.getRoles()
+                userInfo.displayId(),
+                userInfo.nickname(),
+                userInfo.description(),
+                userInfo.profileImageUrl(),
+                userInfo.roles()
         );
     }
 }

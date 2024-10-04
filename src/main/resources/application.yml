@@ -7,6 +7,9 @@ spring:
         enabled: false
   profiles:
     active: local
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG
 app:
   music-search-limit: 10
   headers:

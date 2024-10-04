@@ -1,5 +1,7 @@
 package io.github.eappezo.soundary.services.music.application.service;
 
+import io.github.eappezo.soundary.services.music.application.SimpleTrackDto;
+import io.github.eappezo.soundary.services.music.application.TrackBatchProducer;
 import io.github.eappezo.soundary.services.music.application.TrackSearchGateway;
 import io.github.eappezo.soundary.services.music.application.TrackSearchGatewayRegistry;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
@@ -13,11 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrackSearchService {
     private final TrackSearchGatewayRegistry gatewayRegistry;
+    private final TrackBatchProducer trackBatchProducer;
 
-    // TODO 검색 시 나온 track 중 track repository 에 없는 트랙은 저장해야 함 (kafka producer 도입)
     public List<Track> search(MusicPlatform platform, String query) {
         TrackSearchGateway gateway = gatewayRegistry.getGateway(platform);
-
-        return gateway.search(query);
+        List<Track> searchResult = gateway.search(query);
+        trackBatchProducer.produce(
+                searchResult.stream().map(SimpleTrackDto::from).toList()
+        );
+        return searchResult;
     }
 }

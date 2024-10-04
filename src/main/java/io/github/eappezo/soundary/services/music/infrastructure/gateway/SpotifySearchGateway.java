@@ -2,6 +2,7 @@ package io.github.eappezo.soundary.services.music.infrastructure.gateway;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.application.MusicPlatformAuthenticationManager;
 import io.github.eappezo.soundary.services.music.application.PlatformAccessToken;
 import io.github.eappezo.soundary.services.music.application.TrackSearchGateway;
@@ -93,8 +94,8 @@ public class SpotifySearchGateway implements TrackSearchGateway {
     ) {
         public Track toTrack() {
             return Track.of(
-                    id,
                     MusicPlatform.SPOTIFY,
+                    Identifier.fromString(id),
                     name,
                     artists.stream().map(ArtistDto::toArtist).toList(),
                     album.toAlbum(),

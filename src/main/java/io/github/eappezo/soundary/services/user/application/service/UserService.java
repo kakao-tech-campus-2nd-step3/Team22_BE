@@ -1,14 +1,11 @@
 package io.github.eappezo.soundary.services.user.application.service;
 
-import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.user.api.controller.dto.UserUpdateRequest;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -37,11 +34,10 @@ public class UserService {
         return userRepository.save(updatedUser);
     }
 
-    public String deleteUser(String userId) {
+    public void quitUser(String userId) {
         User user = getUser(userId);
         user.getRoles().add(UserRole.LEAVED);
         userRepository.save(user);
-        return "User deleted";
     }
 
     private User getUser(String userId) {

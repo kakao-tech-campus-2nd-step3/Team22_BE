@@ -5,7 +5,6 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.user.api.controller.dto.UserInfoResponse;
 import io.github.eappezo.soundary.services.user.api.controller.dto.UserUpdateRequest;
 import io.github.eappezo.soundary.services.user.api.controller.dto.UserUpdateResponse;
-import io.github.eappezo.soundary.services.user.application.service.UserInfoRequest;
 import io.github.eappezo.soundary.services.user.application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,8 @@ public class UserController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<Object> deleteUser(@AuthenticatedUser Identifier userId) {
-        return ResponseEntity.ok(userService.deleteUser(userId.toString()));
+    public ResponseEntity<Object> quitUser(@AuthenticatedUser Identifier userId) {
+        userService.quitUser(userId.toString());
+        return ResponseEntity.ok().build();
     }
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +23,7 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public void addFriend(FriendshipDTO friendshipDTO) {
         User from = getUser(friendshipDTO.from());
         User to = getUser(friendshipDTO.to());
@@ -36,6 +38,7 @@ public class FriendService {
         friendRepository.deleteById(getFriendKey(friendshipDTO));
     }
 
+    @Transactional
     public void deleteFriend(FriendshipDTO friendshipDTO) {
         friendRepository.deleteById(getFriendKey(friendshipDTO));
         friendRepository.deleteById(
@@ -47,6 +50,7 @@ public class FriendService {
             friendRepository.findById(getFriendKey(friendshipDTO)).orElseThrow());
     }
 
+    @Transactional
     public List<FriendInfo> getFriendList(Identifier fromUserId) {
         List<Friend> friendList = friendRepository.findByFromUserId(fromUserId.toString());
         List<FriendInfo> friendInfoList = new ArrayList<>();
@@ -61,6 +65,7 @@ public class FriendService {
         return friendInfoList;
     }
 
+    @Transactional
     public List<FriendInfo> getSentRequestList(Identifier fromUserId) {
         List<Friend> friendList = friendRepository.findByFromUserId(fromUserId.toString());
         List<FriendInfo> friendInfoList = new ArrayList<>();
@@ -75,6 +80,7 @@ public class FriendService {
         return friendInfoList;
     }
 
+    @Transactional
     public List<FriendInfo> getRequestReceivedList(Identifier toUserId) {
         List<Friend> friendList = friendRepository.findByToUserId(toUserId.toString());
         List<FriendInfo> friendInfoList = new ArrayList<>();

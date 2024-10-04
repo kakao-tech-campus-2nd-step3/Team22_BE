@@ -4,6 +4,7 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
+import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,10 +17,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // dto 수정해야함 짜놓고 가져오질 않음
-    public User getUserInfo(Identifier userId) {
-        return userRepository.findById(userId)
+    public UserInfo getUserInfo(String userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return UserInfo.from(user);
     }
 
     // 이전에 짜둔거라 수정해야함 identifier 사용하는거 아직 제대로 안 봄

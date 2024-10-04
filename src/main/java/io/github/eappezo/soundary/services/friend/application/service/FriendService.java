@@ -87,7 +87,7 @@ public class FriendService {
     }
 
     private User getUser(Identifier identifier){
-        return userRepository.findById(identifier).orElseThrow();
+        return userRepository.findById(identifier.toString()).orElseThrow();
     }
 
     private FriendKey getFriendKey(FriendshipDTO friendshipDTO){

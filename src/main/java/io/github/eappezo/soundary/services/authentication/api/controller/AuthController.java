@@ -20,14 +20,14 @@ public class AuthController {
     private final RefreshService refreshService;
 
     @PostMapping("/api/login")
-    public LoginResponse login(@RequestBody LoginRequest request){
+    public LoginResponse login(@RequestBody LoginRequest request) {
         LoginResultDto loginResult = oAuthService.login(request.to());
 
         return LoginResponse.from(loginResult);
     }
 
     @PostMapping("/api/refresh")
-    public RefreshResponse refresh(@RequestBody RefreshRequest request){
+    public RefreshResponse refresh(@RequestBody RefreshRequest request) {
         RefreshResultDto refreshResult = refreshService.refresh(request.refreshToken());
 
         return RefreshResponse.from(refreshResult);

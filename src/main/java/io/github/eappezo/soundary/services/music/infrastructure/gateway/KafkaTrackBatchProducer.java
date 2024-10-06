@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.music.infrastructure;
+package io.github.eappezo.soundary.services.music.infrastructure.gateway;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.eappezo.soundary.services.music.application.SimpleTrackDto;

@@ -8,8 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Track {
-    private final MusicPlatform platform;
-    private final Identifier platformTrackId;
+    private final Identifier id;
     private final String title;
     private final Album album;
     private final List<Artist> artist;
@@ -17,39 +16,35 @@ public class Track {
     private final Duration duration;
 
     public static Track of(
-            MusicPlatform platform,
-            Identifier id,
+            Identifier isrc,
             String title,
             List<Artist> artist,
             Album album,
             String previewMp3Url,
             Duration duration
     ) {
-        return new Track(platform, id, title, artist, album, previewMp3Url, duration);
+        return new Track(isrc, title, artist, album, previewMp3Url, duration);
     }
 
     public static Track of(
-            MusicPlatform platform,
             Identifier id,
             String title,
             List<Artist> artist,
             Album album,
             Duration duration
     ) {
-        return new Track(platform, id, title, artist, album, duration);
+        return new Track(id, title, artist, album, duration);
     }
 
     private Track(
-            MusicPlatform platform,
-            Identifier platformTrackId,
+            Identifier id,
             String title,
             List<Artist> artist,
             Album album,
             String previewMp3Url,
             Duration duration
     ) {
-        this.platform = platform;
-        this.platformTrackId = platformTrackId;
+        this.id = id;
         this.title = title;
         this.artist = artist;
         this.duration = duration;
@@ -58,15 +53,13 @@ public class Track {
     }
 
     private Track(
-            MusicPlatform platform,
-            Identifier platformTrackId,
+            Identifier id,
             String title,
             List<Artist> artist,
             Album album,
             Duration duration
     ) {
-        this.platform = platform;
-        this.platformTrackId = platformTrackId;
+        this.id = id;
         this.title = title;
         this.artist = artist;
         this.duration = duration;
@@ -75,11 +68,7 @@ public class Track {
     }
 
     public Identifier id() {
-        return platformTrackId;
-    }
-
-    public MusicPlatform platform() {
-        return platform;
+        return id;
     }
 
     public String title() {

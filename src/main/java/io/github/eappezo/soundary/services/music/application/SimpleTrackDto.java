@@ -1,7 +1,6 @@
 package io.github.eappezo.soundary.services.music.application;
 
 import io.github.eappezo.soundary.services.music.domain.Artist;
-import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.domain.Track;
 import jakarta.annotation.Nullable;
 
@@ -9,7 +8,6 @@ import java.util.List;
 
 public record SimpleTrackDto(
         String id,
-        MusicPlatform platform,
         String title,
         String artists,
         String album,
@@ -20,7 +18,6 @@ public record SimpleTrackDto(
     public static SimpleTrackDto from(Track track) {
         return new SimpleTrackDto(
                 track.id().toString(),
-                track.platform(),
                 track.title(),
                 serialize(track.artists()),
                 track.albumTitle(),

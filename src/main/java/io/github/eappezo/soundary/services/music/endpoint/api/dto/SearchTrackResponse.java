@@ -16,7 +16,6 @@ public record SearchTrackResponse(
 
     @JsonNaming(SnakeCaseStrategy.class)
     public record TrackResponseDto(
-            String platform,
             String id,
             String title,
             List<String> artists,
@@ -26,7 +25,6 @@ public record SearchTrackResponse(
     ) {
         public static TrackResponseDto from(Track track) {
             return new TrackResponseDto(
-                    track.platform().name(),
                     track.id().toString(),
                     track.title(),
                     track.artists().stream().map(Artist::name).toList(),

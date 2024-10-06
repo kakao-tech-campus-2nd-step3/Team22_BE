@@ -72,7 +72,11 @@ public class SpotifySearchGateway implements TrackSearchGateway {
             SearchItems tracks
     ) {
         public List<Track> convertToTrackList() {
-            return tracks.items.stream().map(TrackDto::toTrack).toList();
+            return tracks.items
+                    .stream()
+                    .map(TrackDto::toTrack)
+                    .filter(track -> track.id() != null)
+                    .toList();
         }
     }
 
@@ -85,7 +89,7 @@ public class SpotifySearchGateway implements TrackSearchGateway {
 
     @JsonNaming(SnakeCaseStrategy.class)
     private record TrackDto(
-            String id,
+            ExternalIds externalIds,
             String name,
             Long durationMs,
             String previewUrl,
@@ -94,8 +98,7 @@ public class SpotifySearchGateway implements TrackSearchGateway {
     ) {
         public Track toTrack() {
             return Track.of(
-                    MusicPlatform.SPOTIFY,
-                    Identifier.fromString(id),
+                    Identifier.fromString(externalIds.isrc),
                     name,
                     artists.stream().map(ArtistDto::toArtist).toList(),
                     album.toAlbum(),
@@ -103,6 +106,12 @@ public class SpotifySearchGateway implements TrackSearchGateway {
                     Duration.ofMillis(durationMs)
             );
         }
+    }
+
+    @JsonNaming(SnakeCaseStrategy.class)
+    private record ExternalIds(
+            String isrc
+    ) {
     }
 
     @JsonNaming(SnakeCaseStrategy.class)

@@ -19,8 +19,8 @@ public class TrackBatchUpserterImpl implements TrackBatchUpserter {
     @Transactional
     public void upsert(List<SimpleTrackDto> tracks) {
         String sql = """
-                   INSERT INTO `tracks` (platform, platform_track_id, title, album_title, serialized_artists, album_cover_url, preview_mp3_url, duration_in_seconds)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                   INSERT INTO `tracks` (id, title, album_title, serialized_artists, album_cover_url, preview_mp3_url, duration_in_seconds)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)
                    ON DUPLICATE KEY UPDATE title = VALUES(title), album_title = VALUES(album_title), serialized_artists = VALUES(serialized_artists),
                    album_cover_url = VALUES(album_cover_url), preview_mp3_url = VALUES(preview_mp3_url), duration_in_seconds = VALUES(duration_in_seconds)
                 """;
@@ -28,8 +28,7 @@ public class TrackBatchUpserterImpl implements TrackBatchUpserter {
         List<TrackEntity> trackEntities = tracks.stream().map(TrackEntity::from).toList();
         for (TrackEntity track : trackEntities) {
             Object[] values = {
-                    track.getPlatform().toString(),
-                    track.getPlatformTrackId(),
+                    track.getId(),
                     track.getTitle(),
                     track.getAlbumTitle(),
                     track.getArtists(),

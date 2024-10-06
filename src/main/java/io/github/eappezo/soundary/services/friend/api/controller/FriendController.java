@@ -2,7 +2,9 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.services.friend.api.dto.FriendDeleteRequest;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendListResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.FriendRejectRequest;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendRequest;
 import io.github.eappezo.soundary.services.friend.api.dto.FriendshipResponse;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
@@ -25,41 +27,45 @@ public class FriendController implements FriendAPI {
     private final FriendService friendService;
 
     @PostMapping()
-    public ResponseEntity<Void> sendOrAcceptFriendRequest(FriendRequest friendRequest) {
-        friendService.addFriend(FriendshipDTO.from(friendRequest));
+    public ResponseEntity<Void> sendOrAcceptFriendRequest(@AuthenticatedUser Identifier userId,
+        FriendRequest friendRequest) {
+        friendService.addFriend(FriendshipDTO.of(userId, friendRequest.toUserId()));
         return ResponseEntity.created(
-            URI.create("api/v1/friends/requests/sent" + friendRequest.toUserId())).build();
+            URI.create("api/v1/friends/requests/sent" + friendRequest.rawToUserId())).build();
     }
 
     @DeleteMapping("/requests")
-    public ResponseEntity<Void> rejectFriendRequest(FriendRequest friendRequest) {
-        friendService.rejectFriendRequest(FriendshipDTO.from(friendRequest));
+    public ResponseEntity<Void> rejectFriendRequest(@AuthenticatedUser Identifier userId,
+        FriendRejectRequest friendRejectRequest) {
+        friendService.rejectFriendRequest(FriendshipDTO.of(userId, friendRejectRequest.toUserId()));
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping()
-    public ResponseEntity<Void> deleteFriend(FriendRequest friendRequest) {
-        friendService.deleteFriend(FriendshipDTO.from(friendRequest));
+    public ResponseEntity<Void> deleteFriend(@AuthenticatedUser Identifier userId,
+        FriendDeleteRequest friendDeleteRequest) {
+        friendService.deleteFriend(FriendshipDTO.of(userId, friendDeleteRequest.toUserId()));
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping()
     public ResponseEntity<FriendListResponse> getFriendList(@AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getFriendListWithSelfJoin(userId)));
+            FriendListResponse.from(friendService.getFriendList(userId)));
     }
 
     @GetMapping("/requests/received")
     public ResponseEntity<FriendListResponse> getRequestReceivedList(
         @AuthenticatedUser Identifier userId) {
-        return ResponseEntity.ok(FriendListResponse.from(friendService.getRequestReceivedWithSelfJoin(userId)));
+        return ResponseEntity.ok(
+            FriendListResponse.from(friendService.getRequestReceived(userId)));
     }
 
     @GetMapping("/requests/sent")
     public ResponseEntity<FriendListResponse> getSentRequestFriendList(
         @AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getSentRequestWithSelfJoin(userId)));
+            FriendListResponse.from(friendService.getSentRequestList(userId)));
     }
 
     @GetMapping("/requests/sent/{toUserId}")

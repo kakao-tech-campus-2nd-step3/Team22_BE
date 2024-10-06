@@ -1,23 +1,25 @@
 package io.github.eappezo.soundary.services.friend.application;
 
-import io.github.eappezo.soundary.services.friend.domain.Friend;
-import io.github.eappezo.soundary.services.friend.domain.key.FriendKey;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntity;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendKey;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import java.util.Optional;
 
-public interface FriendRepository extends JpaRepository<Friend, FriendKey> {
+public interface FriendRepository {
 
-    List<Friend> findByFromUserId(String fromUserId);
+    Optional<FriendEntity> findById(FriendKey friendKey);
 
-    List<Friend> findByToUserId(String toUserId);
+    void save(FriendEntity friend);
 
-    @Query("SELECT t1 FROM Friend t1 JOIN Friend t2 ON t1.fromUserId = t2.toUserId AND t1.toUserId = t2.fromUserId WHERE t1.fromUserId = :fromUserId")
-    List<Friend> findFriend(String fromUserId);
+    void deleteById(FriendKey friendKey);
 
-    @Query("SELECT t1 FROM Friend t1 JOIN Friend t2 ON t1.fromUserId != t2.toUserId AND t1.toUserId = t2.fromUserId WHERE t1.toUserId = :toUserId")
-    List<Friend> findReceivedRequest(String toUserId);
+    List<FriendEntity> findByFromUserId(String fromUserId);
 
-    @Query("SELECT t1 FROM Friend t1 JOIN Friend t2 ON t1.fromUserId != t2.toUserId AND t1.toUserId = t2.fromUserId WHERE t1.fromUserId = :fromUserId")
-    List<Friend> findSentRequest(String fromUserId);
+    List<FriendEntity> findByToUserId(String toUserId);
+
+    List<FriendEntity> findFriend(String fromUserId);
+
+    List<FriendEntity> findReceivedRequest(String toUserId);
+
+    List<FriendEntity> findSentRequest(String fromUserId);
 }

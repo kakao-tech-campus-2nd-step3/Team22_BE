@@ -1,8 +1,7 @@
 package io.github.eappezo.soundary.core.persistence.infrastructure;
 
+import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import java.io.Serializable;
-
-import io.github.eappezo.soundary.core.identification.Identifier;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +15,10 @@ public class FriendKey implements Serializable {
     private String fromUserId;
     private String toUserId;
 
-    public static FriendKey of(Identifier fromUserId, Identifier toUserId) {
-        return new FriendKey(fromUserId.toString(), toUserId.toString());
+    public static FriendKey of(FriendshipDTO friendship) {
+        return new FriendKey(
+            friendship.from().toString(),
+            friendship.to().toString()
+        );
     }
 }

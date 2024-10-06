@@ -3,7 +3,7 @@ package io.github.eappezo.soundary.services.friend.api.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.eappezo.soundary.core.identification.Identifier;
 
-public record FriendRequest(
+public record FriendRejectRequest(
     @JsonProperty("to_user_id")
     String rawToUserId
 ) {

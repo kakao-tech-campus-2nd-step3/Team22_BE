@@ -1,15 +1,16 @@
 package io.github.eappezo.soundary.services.friend.application.service;
 
+import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntity;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendKey;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.services.friend.application.FriendRepository;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipInfo;
-import io.github.eappezo.soundary.services.friend.domain.Friend;
 import io.github.eappezo.soundary.services.friend.domain.exception.FriendsAPIFailedException;
-import io.github.eappezo.soundary.services.friend.domain.key.FriendKey;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class FriendService {
 
-    private final FriendRepository friendRepository;
+    private FriendRepository friendRepository;
     private final UserRepository userRepository;
 
     @Transactional
@@ -31,7 +32,7 @@ public class FriendService {
             throw new FriendsAPIFailedException();
         }
         friendRepository.save(
-            new Friend(from.getIdentifier().toString(), to.getIdentifier().toString()));
+            new FriendEntity(from.getIdentifier().toString(), to.getIdentifier().toString()));
     }
 
     public void rejectFriendRequest(FriendshipDTO friendshipDTO) {
@@ -50,94 +51,43 @@ public class FriendService {
             friendRepository.findById(getFriendKey(friendshipDTO)).orElseThrow());
     }
 
-    @Transactional
     public List<FriendInfo> getFriendList(Identifier fromUserId) {
-        List<Friend> friendList = friendRepository.findByFromUserId(fromUserId.toString());
+        List<FriendEntity> friendList = friendRepository.findFriend(fromUserId.toString());
         List<FriendInfo> friendInfoList = new ArrayList<>();
-
-        for (Friend it : friendList) {
-            if (isFriend(it)) {
-                friendInfoList.add(
-                    FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
-            }
+        for (FriendEntity it : friendList) {
+            friendInfoList.add(
+                FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
         }
 
         return friendInfoList;
-    }
-
-    public List<FriendInfo> getFriendListWithSelfJoin(Identifier fromUserId){
-        List<Friend> friendList = friendRepository.findFriend(fromUserId.toString());
-        List<FriendInfo> friendInfoList = new ArrayList<>();
-        for (Friend it : friendList) {
-            friendInfoList.add(
-                    FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
-        }
-
-        return  friendInfoList;
     }
 
     @Transactional
     public List<FriendInfo> getSentRequestList(Identifier fromUserId) {
-        List<Friend> friendList = friendRepository.findByFromUserId(fromUserId.toString());
+        List<FriendEntity> friendList = friendRepository.findSentRequest(fromUserId.toString());
         List<FriendInfo> friendInfoList = new ArrayList<>();
-
-        for (Friend it : friendList) {
-            if (!isFriend(it)) {
-                friendInfoList.add(
-                    FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
-            }
+        for (FriendEntity it : friendList) {
+            friendInfoList.add(
+                FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
         }
 
         return friendInfoList;
     }
 
     @Transactional
-    public List<FriendInfo> getSentRequestWithSelfJoin(Identifier fromUserId){
-        List<Friend> friendList = friendRepository.findSentRequest(fromUserId.toString());
+    public List<FriendInfo> getRequestReceived(Identifier toUserId) {
+        List<FriendEntity> friendList = friendRepository.findReceivedRequest(toUserId.toString());
         List<FriendInfo> friendInfoList = new ArrayList<>();
-        for (Friend it : friendList) {
+        for (FriendEntity it : friendList) {
             friendInfoList.add(
                 FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
-        }
-
-        return  friendInfoList;
-    }
-
-    @Transactional
-    public List<FriendInfo> getRequestReceivedList(Identifier toUserId) {
-        List<Friend> friendList = friendRepository.findByToUserId(toUserId.toString());
-        List<FriendInfo> friendInfoList = new ArrayList<>();
-
-        for (Friend it : friendList) {
-            if (!isFriend(it)) {
-                friendInfoList.add(
-                    FriendInfo.from(getUser(Identifier.fromString(it.getFromUserId()))));
-            }
         }
 
         return friendInfoList;
-    }
-
-    @Transactional
-    public List<FriendInfo> getRequestReceivedWithSelfJoin(Identifier toUserId){
-        List<Friend> friendList = friendRepository.findReceivedRequest(toUserId.toString());
-        List<FriendInfo> friendInfoList = new ArrayList<>();
-        for (Friend it : friendList) {
-            friendInfoList.add(
-                FriendInfo.from(getUser(Identifier.fromString(it.getToUserId()))));
-        }
-
-        return  friendInfoList;
-    }
-
-    private boolean isFriend(Friend friend) {
-        return friendRepository.findById(
-                new FriendKey(friend.getToUserId(), friend.getFromUserId()))
-            .isPresent();
     }
 
     private User getUser(Identifier identifier) {
-        return userRepository.findById(identifier).orElseThrow();
+        return userRepository.findById(identifier).orElseThrow(UserNotFoundException::new);
     }
 
     private FriendKey getFriendKey(FriendshipDTO friendshipDTO) {

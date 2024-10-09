@@ -1,6 +1,8 @@
-package io.github.eappezo.soundary.services.music.application;
+package io.github.eappezo.soundary.services.music.application.authentication;
 
+import io.github.eappezo.soundary.services.music.application.PlatformAccessToken;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
+import io.github.eappezo.soundary.services.music.domain.MusicPlatformAuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

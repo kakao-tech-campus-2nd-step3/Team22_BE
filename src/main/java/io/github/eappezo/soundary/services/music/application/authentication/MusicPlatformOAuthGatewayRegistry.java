@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.music.application;
+package io.github.eappezo.soundary.services.music.application.authentication;
 
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 

@@ -1,6 +1,6 @@
-package io.github.eappezo.soundary.services.music.application;
+package io.github.eappezo.soundary.services.music.domain;
 
-import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
+import io.github.eappezo.soundary.services.music.application.PlatformAccessToken;
 
 public interface MusicPlatformAuthenticationManager {
 

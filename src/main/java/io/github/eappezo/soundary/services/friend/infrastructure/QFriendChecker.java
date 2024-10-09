@@ -37,7 +37,7 @@ public class QFriendChecker implements FriendChecker {
                 fromTable.toUserId.in(rawFriendIds)
             )
             .fetch()
-            .getFirst().intValue() == rawFriendIds.size();
+            .getFirst() == rawFriendIds.size();
     }
 
 

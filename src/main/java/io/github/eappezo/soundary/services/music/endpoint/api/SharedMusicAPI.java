@@ -1,6 +1,5 @@
 package io.github.eappezo.soundary.services.music.endpoint.api;
 
-import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSharedMusicByMeResponse;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSharedMusicByOtherResponse;

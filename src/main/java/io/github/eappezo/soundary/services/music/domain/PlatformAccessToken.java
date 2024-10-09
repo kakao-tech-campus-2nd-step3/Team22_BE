@@ -1,6 +1,4 @@
-package io.github.eappezo.soundary.services.music.application;
-
-import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
+package io.github.eappezo.soundary.services.music.domain;
 
 public record PlatformAccessToken(
         MusicPlatform platform,

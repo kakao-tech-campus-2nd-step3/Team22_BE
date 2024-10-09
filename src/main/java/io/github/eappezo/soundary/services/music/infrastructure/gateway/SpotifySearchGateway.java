@@ -2,11 +2,11 @@ package io.github.eappezo.soundary.services.music.infrastructure.gateway;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import io.github.eappezo.soundary.services.music.application.*;
 import io.github.eappezo.soundary.services.music.application.search.SearchedTrackDto;
 import io.github.eappezo.soundary.services.music.application.search.TrackSearchGateway;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatformAuthenticationManager;
+import io.github.eappezo.soundary.services.music.domain.PlatformAccessToken;
 import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.domain.exception.TrackSearchError;
 import lombok.RequiredArgsConstructor;

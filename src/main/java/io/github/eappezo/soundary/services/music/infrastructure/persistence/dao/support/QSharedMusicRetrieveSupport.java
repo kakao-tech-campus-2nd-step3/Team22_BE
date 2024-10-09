@@ -2,8 +2,8 @@ package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicByMeDto;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicByOtherDto;
+import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
+import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<SharedMusicByMeDto> getSharedMusicFrom(Identifier userId) {
+    public List<SentSharedMusicDto> getSharedMusicFrom(Identifier userId) {
         return jpaQueryFactory
                 .select(
                         new QSharedMusicByMeProjection(
@@ -50,7 +50,7 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
     }
 
     @Override
-    public List<SharedMusicByOtherDto> getSharedMusicTo(Identifier userId) {
+    public List<ReceivedSharedMusicDto> getSharedMusicTo(Identifier userId) {
         return jpaQueryFactory
                 .select(
                         new QSharedMusicByOtherProjection(

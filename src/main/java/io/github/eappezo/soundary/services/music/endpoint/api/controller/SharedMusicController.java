@@ -2,12 +2,12 @@ package io.github.eappezo.soundary.services.music.endpoint.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicByMeDto;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicByOtherDto;
+import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
+import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.service.SharedMusicService;
 import io.github.eappezo.soundary.services.music.endpoint.api.SharedMusicAPI;
-import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSharedMusicByMeResponse;
-import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSharedMusicByOtherResponse;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSentSharedMusicResponse;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveReceivedSharedMusicResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -23,22 +23,22 @@ public class SharedMusicController implements SharedMusicAPI {
 
     @Override
     @GetMapping("/sent")
-    public RetrieveSharedMusicByMeResponse retrieveSentSharedMusics(
+    public RetrieveSentSharedMusicResponse retrieveSentSharedMusics(
             @AuthenticatedUser Identifier userId
     ) {
-        List<SharedMusicByMeDto> sharedMusics = sharedMusicService.getSharedMusicFrom(userId);
+        List<SentSharedMusicDto> sharedMusics = sharedMusicService.getSentSharedMusic(userId);
 
-        return RetrieveSharedMusicByMeResponse.from(sharedMusics);
+        return RetrieveSentSharedMusicResponse.from(sharedMusics);
     }
 
     @Override
     @GetMapping("/received")
-    public RetrieveSharedMusicByOtherResponse retrieveReceivedSharedMusics(
+    public RetrieveReceivedSharedMusicResponse retrieveReceivedSharedMusics(
             @AuthenticatedUser Identifier userId
     ) {
-        List<SharedMusicByOtherDto> sharedMusics = sharedMusicService.getSharedMusicTo(userId);
+        List<ReceivedSharedMusicDto> sharedMusics = sharedMusicService.getReceivedSharedMusic(userId);
 
-        return RetrieveSharedMusicByOtherResponse.from(sharedMusics);
+        return RetrieveReceivedSharedMusicResponse.from(sharedMusics);
     }
 
     @Override

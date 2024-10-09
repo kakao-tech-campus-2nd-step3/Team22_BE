@@ -1,7 +1,7 @@
 package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao.support;
 
 import com.querydsl.core.annotations.QueryProjection;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicByOtherDto;
+import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
 import jakarta.annotation.Nullable;
 
@@ -27,8 +27,8 @@ public record SharedMusicByOtherProjection(
     public SharedMusicByOtherProjection {
     }
 
-    public SharedMusicByOtherDto toDto() {
-        return new SharedMusicByOtherDto(
+    public ReceivedSharedMusicDto toDto() {
+        return new ReceivedSharedMusicDto(
                 sharedMusicId,
                 getSharedUserInfo(),
                 getTrack(),
@@ -37,8 +37,8 @@ public record SharedMusicByOtherProjection(
         );
     }
 
-    private SharedMusicByOtherDto.SharedUserInfo getSharedUserInfo() {
-        return new SharedMusicByOtherDto.SharedUserInfo(
+    private ReceivedSharedMusicDto.SharedUserInfo getSharedUserInfo() {
+        return new ReceivedSharedMusicDto.SharedUserInfo(
                 fromUserId,
                 fromUserDisplayId,
                 fromUserNickname,

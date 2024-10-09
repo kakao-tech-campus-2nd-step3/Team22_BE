@@ -2,7 +2,7 @@ package io.github.eappezo.soundary.services.music.application.share;
 
 import java.time.LocalDateTime;
 
-public record SharedMusicByOtherDto(
+public record ReceivedSharedMusicDto(
         String id,
         SharedUserInfo fromUser,
         SimpleTrackDto track,

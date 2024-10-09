@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.music.infrastructure.persistence.batch;
+package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao.batch;
 
 import io.github.eappezo.soundary.core.identification.IdentifierGenerator;
 import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;

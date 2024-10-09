@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.music.infrastructure.persistence.batch;
+package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao.batch;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.identification.IdentifierGenerator;
@@ -6,12 +6,11 @@ import io.github.eappezo.soundary.services.music.application.share.MusicShareSup
 import io.github.eappezo.soundary.services.music.domain.SharedMusic;
 import io.github.eappezo.soundary.services.music.domain.Track;
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.SharedMusicEntity;
-import io.github.eappezo.soundary.services.music.infrastructure.persistence.repository.JpaSharedMusicRepository;
+import io.github.eappezo.soundary.services.music.infrastructure.persistence.dao.JpaSharedMusicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

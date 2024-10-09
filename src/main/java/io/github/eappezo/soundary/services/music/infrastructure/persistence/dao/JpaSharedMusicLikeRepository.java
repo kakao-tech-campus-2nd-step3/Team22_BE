@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.music.infrastructure.persistence.repository;
+package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao;
 
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.SharedMusicLikeEntity;
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.SharedMusicLikeEntityKey;

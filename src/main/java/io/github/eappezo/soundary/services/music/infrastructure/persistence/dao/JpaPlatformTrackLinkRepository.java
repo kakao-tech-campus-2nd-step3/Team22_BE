@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.music.infrastructure.persistence.repository;
+package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao;
 
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.PlatformTrackLinkEntity;
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.PlatformTrackLinkEntityKey;

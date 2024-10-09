@@ -2,8 +2,8 @@ package io.github.eappezo.soundary.services.music.application.share.service;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.friend.FriendChecker;
-import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.application.share.MusicShareSupport;
+import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.domain.SharedMusic;
 import io.github.eappezo.soundary.services.music.domain.Track;
 import io.github.eappezo.soundary.services.music.domain.TrackRepository;

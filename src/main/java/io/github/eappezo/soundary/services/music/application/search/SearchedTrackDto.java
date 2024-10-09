@@ -1,6 +1,6 @@
 package io.github.eappezo.soundary.services.music.application.search;
 
-import io.github.eappezo.soundary.services.music.application.PlatformTrackId;
+import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import jakarta.annotation.Nullable;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package io.github.eappezo.soundary.services.music.infrastructure.persistence.batch;
 
 import io.github.eappezo.soundary.core.identification.IdentifierGenerator;
-import io.github.eappezo.soundary.services.music.application.PlatformTrackId;
+import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.application.search.SearchedTrackDto;
 import io.github.eappezo.soundary.services.music.application.search.TrackBatchInserter;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;

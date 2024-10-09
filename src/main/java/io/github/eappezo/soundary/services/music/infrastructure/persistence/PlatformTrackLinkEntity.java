@@ -4,10 +4,12 @@ import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "platform_track_link")
 @IdClass(PlatformTrackLinkEntityKey.class)
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlatformTrackLinkEntity {

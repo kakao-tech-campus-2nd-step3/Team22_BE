@@ -7,7 +7,7 @@ import io.github.eappezo.soundary.services.music.application.search.SearchedTrac
 import io.github.eappezo.soundary.services.music.application.search.TrackSearchGateway;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatformAuthenticationManager;
-import io.github.eappezo.soundary.services.music.application.PlatformTrackId;
+import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.domain.exception.TrackSearchError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,6 @@ import java.time.Duration;
 import java.util.List;
 
 import static io.github.eappezo.soundary.core.DecodeInputStreamUtil.decodeInputStream;
-import static java.util.stream.Collectors.joining;
 
 @Component
 @Slf4j

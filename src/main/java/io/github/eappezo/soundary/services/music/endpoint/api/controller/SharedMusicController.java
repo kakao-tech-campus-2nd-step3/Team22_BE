@@ -2,8 +2,11 @@ package io.github.eappezo.soundary.services.music.endpoint.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicByMeDto;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicByOtherDto;
 import io.github.eappezo.soundary.services.music.application.share.service.SharedMusicService;
-import io.github.eappezo.soundary.services.music.domain.SharedMusic;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSharedMusicByMeResponse;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSharedMusicByOtherResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +21,21 @@ public class SharedMusicController {
     private final SharedMusicService sharedMusicService;
 
     @GetMapping("/sent")
-    public void getSentSharedMusics(@AuthenticatedUser Identifier userId) {
-        List<SharedMusic> sharedMusics = sharedMusicService.getSharedMusicFrom(userId);
+    public RetrieveSharedMusicByMeResponse retrieveSentSharedMusics(
+            @AuthenticatedUser Identifier userId
+    ) {
+        List<SharedMusicByMeDto> sharedMusics = sharedMusicService.getSharedMusicFrom(userId);
+
+        return RetrieveSharedMusicByMeResponse.from(sharedMusics);
     }
 
     @GetMapping("/received")
-    public void getReceivedSharedMusics(@AuthenticatedUser Identifier userId) {
-        List<SharedMusic> sharedMusics = sharedMusicService.getSharedMusicTo(userId);
+    public RetrieveSharedMusicByOtherResponse retrieveReceivedSharedMusics(
+            @AuthenticatedUser Identifier userId
+    ) {
+        List<SharedMusicByOtherDto> sharedMusics = sharedMusicService.getSharedMusicTo(userId);
+
+        return RetrieveSharedMusicByOtherResponse.from(sharedMusics);
     }
 
     @PostMapping("/received/{rawSharedMusicId}/likes")

@@ -1,6 +1,8 @@
 package io.github.eappezo.soundary.services.music.application.share.service;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicByMeDto;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicByOtherDto;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikeSupport;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
 import io.github.eappezo.soundary.services.music.domain.SharedMusic;
@@ -19,11 +21,11 @@ public class SharedMusicService {
     private final SharedMusicRetrieveSupport sharedMusicRetrieveSupport;
     private final SharedMusicLikeSupport sharedMusicLikeSupport;
 
-    public List<SharedMusic> getSharedMusicFrom(Identifier userId) {
+    public List<SharedMusicByMeDto> getSharedMusicFrom(Identifier userId) {
         return sharedMusicRetrieveSupport.getSharedMusicFrom(userId);
     }
 
-    public List<SharedMusic> getSharedMusicTo(Identifier userId) {
+    public List<SharedMusicByOtherDto> getSharedMusicTo(Identifier userId) {
         return sharedMusicRetrieveSupport.getSharedMusicTo(userId);
     }
 
@@ -35,6 +37,7 @@ public class SharedMusicService {
         sharedMusicLikeSupport.like(userId, sharedMusicId);
     }
 
+    @Transactional
     public void unlikeMusic(Identifier userId, Identifier sharedMusicId) {
         if (sharedMusicRepository.notExists(sharedMusicId)) {
             throw new NotExistsSharedMusicException();

@@ -29,11 +29,11 @@ public class TrackEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "album_title")
-    private String albumTitle;
-
     @Column(name = "serialized_artists")
     private String artists;
+
+    @Column(name = "album_title")
+    private String albumTitle;
 
     @Column(name = "album_cover_url")
     private String albumCoverUrl;
@@ -48,7 +48,7 @@ public class TrackEntity {
         return Track.of(
                 Identifier.fromString(id),
                 title,
-                Arrays.stream(artists.split(", ")).map(Artist::new).toList(),
+                Arrays.stream(artists.split(ARTISTS_DELIMITER)).map(Artist::new).toList(),
                 new Album(albumTitle, albumCoverUrl),
                 previewMp3Url,
                 Duration.ofSeconds(durationInSeconds)

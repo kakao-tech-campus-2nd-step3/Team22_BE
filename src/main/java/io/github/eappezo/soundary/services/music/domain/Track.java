@@ -12,18 +12,18 @@ public class Track {
     private final String title;
     private final Album album;
     private final List<Artist> artist;
-    private String previewMp3Url;
+    @Nullable private final String previewMp3Url;
     private final Duration duration;
 
     public static Track of(
-            Identifier isrc,
+            Identifier id,
             String title,
             List<Artist> artist,
             Album album,
-            String previewMp3Url,
+            @Nullable String previewMp3Url,
             Duration duration
     ) {
-        return new Track(isrc, title, artist, album, previewMp3Url, duration);
+        return new Track(id, title, artist, album, previewMp3Url, duration);
     }
 
     public static Track of(

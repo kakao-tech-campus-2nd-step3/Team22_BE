@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "user_roles")
 @IdClass(UserRoleEntityKey.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

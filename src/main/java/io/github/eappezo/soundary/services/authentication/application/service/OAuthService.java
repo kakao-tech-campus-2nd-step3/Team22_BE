@@ -6,7 +6,7 @@ import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.services.authentication.application.*;
 import io.github.eappezo.soundary.services.authentication.domain.SocialAccountRepository;
-import io.github.eappezo.soundary.services.authentication.domain.SocialUserCreationSupport;
+import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -29,14 +29,14 @@ public class SharedMusicService {
 
     @Transactional
     public void likeMusic(Identifier userId, Identifier sharedMusicId) {
-        if (sharedMusicRepository.findById(sharedMusicId).isEmpty()) {
+        if (sharedMusicRepository.exists(sharedMusicId)) {
             throw new NotExistsSharedMusicException();
         }
         sharedMusicLikeSupport.like(userId, sharedMusicId);
     }
 
     public void unlikeMusic(Identifier userId, Identifier sharedMusicId) {
-        if (sharedMusicRepository.findById(sharedMusicId).isEmpty()) {
+        if (sharedMusicRepository.notExists(sharedMusicId)) {
             throw new NotExistsSharedMusicException();
         }
         sharedMusicLikeSupport.unlike(userId, sharedMusicId);

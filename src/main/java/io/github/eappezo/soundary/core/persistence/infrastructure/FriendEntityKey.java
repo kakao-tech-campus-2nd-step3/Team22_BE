@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class FriendKey implements Serializable {
+public class FriendEntityKey implements Serializable {
     private String fromUserId;
     private String toUserId;
 
-    public static FriendKey of(FriendshipDTO friendship) {
-        return new FriendKey(
+    public static FriendEntityKey of(FriendshipDTO friendship) {
+        return new FriendEntityKey(
             friendship.from().toString(),
             friendship.to().toString()
         );

@@ -9,6 +9,7 @@ import io.github.eappezo.soundary.services.music.infrastructure.persistence.Shar
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.dao.JpaSharedMusicLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class SharedMusicLikeSupportImpl implements SharedMusicLikeSupport {
     private final JpaSharedMusicLikeRepository jpaSharedMusicLikeRepository;
 
     @Override
+    @Transactional
     public void like(Identifier userId, Identifier sharedMusicId) {
         SharedMusicLikeEntityKey key = SharedMusicLikeEntityKey.of(sharedMusicId, userId);
         if (jpaSharedMusicLikeRepository.existsById(key)) {
@@ -25,6 +27,7 @@ public class SharedMusicLikeSupportImpl implements SharedMusicLikeSupport {
     }
 
     @Override
+    @Transactional
     public void unlike(Identifier userId, Identifier sharedMusicId) {
         SharedMusicLikeEntityKey key = SharedMusicLikeEntityKey.of(sharedMusicId, userId);
         if (!jpaSharedMusicLikeRepository.existsById(key)) {

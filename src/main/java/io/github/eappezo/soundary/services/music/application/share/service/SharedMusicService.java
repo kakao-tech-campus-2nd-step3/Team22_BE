@@ -5,7 +5,6 @@ import io.github.eappezo.soundary.services.music.application.share.SharedMusicBy
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicByOtherDto;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikeSupport;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
-import io.github.eappezo.soundary.services.music.domain.SharedMusic;
 import io.github.eappezo.soundary.services.music.domain.SharedMusicRepository;
 import io.github.eappezo.soundary.services.music.domain.exception.NotExistsSharedMusicException;
 import lombok.RequiredArgsConstructor;

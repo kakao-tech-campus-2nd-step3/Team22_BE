@@ -13,8 +13,8 @@ import lombok.*;
 @EqualsAndHashCode
 public class SharedMusicTargetEntity {
     @Id
-    private String sharedMusicId;
+    private String targetUserId;
 
     @Id
-    private String targetUserId;
+    private String sharedMusicId;
 }

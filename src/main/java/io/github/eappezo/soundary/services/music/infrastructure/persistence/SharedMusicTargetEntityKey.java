@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class SharedMusicTargetEntityKey {
-    private String sharedMusicId;
     private String targetUserId;
+    private String sharedMusicId;
 }

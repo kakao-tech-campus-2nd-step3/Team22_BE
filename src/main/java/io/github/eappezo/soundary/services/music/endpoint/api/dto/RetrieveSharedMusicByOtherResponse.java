@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicByOtherDto;
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -29,7 +30,9 @@ public record RetrieveSharedMusicByOtherResponse(
             FromUserResponseDto fromUser,
             TrackResponseDto track,
             String comment,
-            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime sharedAt
+            @Schema(example = "2024-11-23 00:00:00", type = "string")
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+            LocalDateTime sharedAt
     ) {
         public static SharedMusicResponseDto from(SharedMusicByOtherDto sharedMusic) {
             return new SharedMusicResponseDto(

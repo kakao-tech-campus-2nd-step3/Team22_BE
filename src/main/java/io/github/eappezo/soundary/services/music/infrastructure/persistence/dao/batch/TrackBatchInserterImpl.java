@@ -1,15 +1,15 @@
 package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao.batch;
 
 import io.github.eappezo.soundary.core.identification.IdentifierGenerator;
-import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.application.search.SearchedTrackDto;
 import io.github.eappezo.soundary.services.music.application.search.TrackBatchInserter;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
+import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.TrackEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.joining;
 
 @Slf4j
-@Repository
+@Component
 @RequiredArgsConstructor
 public class TrackBatchInserterImpl implements TrackBatchInserter {
     private final IdentifierGenerator identifierGenerator;
@@ -71,9 +71,9 @@ public class TrackBatchInserterImpl implements TrackBatchInserter {
 
     private List<SearchedTrackDto> filterExistingTrack(List<SearchedTrackDto> tracks) {
         String sql = """
-                SELECT platform, platform_track_id
-                FROM platform_track_link WHERE (platform, platform_track_id) IN (%s)
-        """;
+                        SELECT platform, platform_track_id
+                        FROM platform_track_link WHERE (platform, platform_track_id) IN (%s)
+                """;
         String inSql = tracks.stream()
                 .map(track -> String.format("('%s', '%s')",
                         track.id().platform(),

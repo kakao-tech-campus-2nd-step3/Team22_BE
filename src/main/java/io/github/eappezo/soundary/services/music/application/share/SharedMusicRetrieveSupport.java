@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface SharedMusicRetrieveSupport {
 
-    List<SentSharedMusicDto> getSharedMusicFrom(Identifier userId);
+    List<SentSharedMusicDto> getSentSharedMusic(Identifier userId);
 
-    List<ReceivedSharedMusicDto> getSharedMusicTo(Identifier userId);
+    List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId);
 
 }

@@ -21,11 +21,11 @@ public class SharedMusicService {
     private final SharedMusicLikeSupport sharedMusicLikeSupport;
 
     public List<SentSharedMusicDto> getSentSharedMusic(Identifier userId) {
-        return sharedMusicRetrieveSupport.getSharedMusicFrom(userId);
+        return sharedMusicRetrieveSupport.getSentSharedMusic(userId);
     }
 
     public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
-        return sharedMusicRetrieveSupport.getSharedMusicTo(userId);
+        return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId);
     }
 
     @Transactional

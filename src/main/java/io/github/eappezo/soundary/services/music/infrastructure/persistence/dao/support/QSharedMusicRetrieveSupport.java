@@ -21,10 +21,10 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<SentSharedMusicDto> getSharedMusicFrom(Identifier userId) {
+    public List<SentSharedMusicDto> getSentSharedMusic(Identifier userId) {
         return jpaQueryFactory
                 .select(
-                        new QSharedMusicByMeProjection(
+                        new QSentSharedMusicProjection(
                                 sharedMusicEntity.id,
                                 sharedMusicEntity.trackId,
                                 trackEntity.title,
@@ -45,15 +45,15 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                 )
                 .fetch()
                 .stream()
-                .map(SharedMusicByMeProjection::toDto)
+                .map(SentSharedMusicProjection::toDto)
                 .toList();
     }
 
     @Override
-    public List<ReceivedSharedMusicDto> getSharedMusicTo(Identifier userId) {
+    public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
         return jpaQueryFactory
                 .select(
-                        new QSharedMusicByOtherProjection(
+                        new QReceivedSharedMusicProjection(
                                 sharedMusicEntity.id,
                                 sharedMusicEntity.fromUserId,
                                 userEntity.displayId,
@@ -82,7 +82,7 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                 )
                 .fetch()
                 .stream()
-                .map(SharedMusicByOtherProjection::toDto)
+                .map(ReceivedSharedMusicProjection::toDto)
                 .toList();
     }
 }

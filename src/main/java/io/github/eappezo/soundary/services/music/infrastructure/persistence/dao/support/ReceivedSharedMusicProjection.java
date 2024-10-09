@@ -7,7 +7,7 @@ import jakarta.annotation.Nullable;
 
 import java.time.LocalDateTime;
 
-public record SharedMusicByOtherProjection(
+public record ReceivedSharedMusicProjection(
         String sharedMusicId,
         String fromUserId,
         String fromUserDisplayId,
@@ -24,7 +24,7 @@ public record SharedMusicByOtherProjection(
         LocalDateTime sharedAt
 ) {
     @QueryProjection
-    public SharedMusicByOtherProjection {
+    public ReceivedSharedMusicProjection {
     }
 
     public ReceivedSharedMusicDto toDto() {

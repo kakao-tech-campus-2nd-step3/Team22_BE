@@ -1,7 +1,6 @@
 package io.github.eappezo.soundary.services.music.infrastructure.persistence;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.application.SimpleTrackDto;
 import io.github.eappezo.soundary.services.music.domain.Album;
 import io.github.eappezo.soundary.services.music.domain.Artist;
 import io.github.eappezo.soundary.services.music.domain.Track;
@@ -19,6 +18,8 @@ import java.util.Arrays;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class TrackEntity {
+    public static final String ARTISTS_DELIMITER = ", ";
+
     @Id
     @Column(name = "id")
     private String id;
@@ -40,18 +41,6 @@ public class TrackEntity {
 
     @Column(name = "duration_in_seconds")
     private Long durationInSeconds;
-
-    public static TrackEntity from(SimpleTrackDto track) {
-        return new TrackEntity(
-                track.id(),
-                track.title(),
-                track.album(),
-                track.artists(),
-                track.albumCoverUrl(),
-                track.previewMp3Url(),
-                track.durationInSeconds()
-        );
-    }
 
     public Track toDomain() {
         return Track.of(

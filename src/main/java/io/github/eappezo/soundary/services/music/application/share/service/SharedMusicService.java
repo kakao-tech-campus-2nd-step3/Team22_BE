@@ -6,6 +6,7 @@ import io.github.eappezo.soundary.services.music.application.share.ReceivedShare
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikeSupport;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
 import io.github.eappezo.soundary.services.music.domain.SharedMusicRepository;
+import io.github.eappezo.soundary.services.music.domain.exception.AlreadyLikedSharedMusicException;
 import io.github.eappezo.soundary.services.music.domain.exception.NotExistsSharedMusicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class SharedMusicService {
     @Transactional
     public void likeMusic(Identifier userId, Identifier sharedMusicId) {
         if (sharedMusicRepository.exists(sharedMusicId)) {
-            throw new NotExistsSharedMusicException();
+            throw new AlreadyLikedSharedMusicException();
         }
         sharedMusicLikeSupport.like(userId, sharedMusicId);
     }

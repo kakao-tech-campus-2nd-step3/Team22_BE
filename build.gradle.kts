@@ -63,8 +63,12 @@ dependencies {
     //docs
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 
-    implementation (platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation ("com.google.firebase:firebase-analytics")
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation("com.google.firebase:firebase-analytics")
 }
 
 tasks.test {

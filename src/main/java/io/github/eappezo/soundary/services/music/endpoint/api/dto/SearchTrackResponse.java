@@ -2,35 +2,35 @@ package io.github.eappezo.soundary.services.music.endpoint.api.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import io.github.eappezo.soundary.services.music.domain.Artist;
-import io.github.eappezo.soundary.services.music.domain.Track;
+import io.github.eappezo.soundary.services.music.application.search.SearchedTrackDto;
+import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 
 import java.util.List;
 
 public record SearchTrackResponse(
-        List<TrackDto> tracks
+        List<TrackResponseDto> tracks
 ) {
-    public static SearchTrackResponse from(List<Track> tracks) {
-        return new SearchTrackResponse(tracks.stream().map(TrackDto::from).toList());
+    public static SearchTrackResponse from(List<SearchedTrackDto> tracks) {
+        return new SearchTrackResponse(tracks.stream().map(TrackResponseDto::from).toList());
     }
 
     @JsonNaming(SnakeCaseStrategy.class)
-    public record TrackDto(
-            String id,
-            String platform,
+    public record TrackResponseDto(
+            MusicPlatform platform,
+            String platformTrackId,
             String title,
             List<String> artists,
             Long duration,
             String albumCoverUrl,
             String previewMp3Url
     ) {
-        public static TrackDto from(Track track) {
-            return new TrackDto(
-                    track.id(),
-                    track.platform().name(),
+        public static TrackResponseDto from(SearchedTrackDto track) {
+            return new TrackResponseDto(
+                    track.id().platform(),
+                    track.id().platformTrackId(),
                     track.title(),
-                    track.artists().stream().map(Artist::name).toList(),
-                    track.duration().getSeconds(),
+                    track.artists(),
+                    track.durationInSeconds(),
                     track.albumCoverUrl(),
                     track.previewMp3Url()
             );

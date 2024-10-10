@@ -7,11 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "friends")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(FriendKey.class)
+@IdClass(FriendEntityKey.class)
 public class FriendEntity extends BaseEntity {
     @Id
     private String fromUserId;

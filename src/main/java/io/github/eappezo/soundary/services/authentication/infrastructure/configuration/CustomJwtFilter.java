@@ -41,23 +41,23 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             @Nonnull HttpServletResponse response,
             @Nonnull FilterChain filterChain
     ) throws ServletException, IOException {
-        String token = getBearerToken(request);
-        if (token == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
         try {
+            String token = getBearerToken(request);
+            if (token == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }
             APIAuthentication authentication = jwtTokenExtractor.extractAuthenticationFrom(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (ExpiredJwtException exception) {
-            sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_EXPIRED);
+            writeAuthenticationErrorResponse(response, AuthenticationErrorCode.AUTHENTICATION_EXPIRED);
             return;
-        } catch (JwtException exception) {
-            sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
+        } catch (JwtException | AuthenticationFailedException exception) {
+            writeAuthenticationErrorResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
             return;
         } catch (Exception exception) {
             log.error(stackTraceOf(exception));
-            sendUnauthorizedResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
+            writeAuthenticationErrorResponse(response, AuthenticationErrorCode.AUTHENTICATION_FAILED);
             return;
         }
         filterChain.doFilter(request, response);
@@ -74,7 +74,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
         return token.substring(7);
     }
 
-    private void sendUnauthorizedResponse(
+    private void writeAuthenticationErrorResponse(
             HttpServletResponse response,
             AuthenticationErrorCode errorCode
     ) throws IOException {

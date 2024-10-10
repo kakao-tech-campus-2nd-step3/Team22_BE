@@ -25,16 +25,16 @@ public class MusicShareService {
     @Transactional
     public SharedMusic shareMusic(
             Identifier fromUserId,
-            List<Identifier> toUserIds,
+            List<Identifier> targetUserIds,
             PlatformTrackId platformTrackId,
             String comment
     ) {
-        if (!friendChecker.isFriendWith(fromUserId, toUserIds)) {
+        if (!friendChecker.isFriendWith(fromUserId, targetUserIds)) {
             throw new NotFriendException();
         }
         Track track = trackRepository
                 .findByPlatformTrackId(platformTrackId)
                 .orElseThrow(TrackNotFoundException::new);
-        return musicShareSupport.shareTrack(fromUserId, toUserIds, track, comment);
+        return musicShareSupport.shareTrack(fromUserId, targetUserIds, track, comment);
     }
 }

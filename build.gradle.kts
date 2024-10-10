@@ -50,6 +50,9 @@ dependencies {
 
     //docs
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+
+    // Firebase Admin SDK
+    implementation("com.google.firebase:firebase-admin:9.1.1")
 }
 
 tasks.test {

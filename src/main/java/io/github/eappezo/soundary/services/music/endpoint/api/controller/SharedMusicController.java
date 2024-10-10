@@ -45,17 +45,17 @@ public class SharedMusicController implements SharedMusicAPI {
     @PostMapping("/received/{shared-music-id}/likes")
     public void likeSharedMusic(
             @AuthenticatedUser Identifier userId,
-            @PathVariable(name = "shared-music-id") String rawSharedMusicId
+            @PathVariable(name = "shared-music-id") Identifier shareMusicId
     ) {
-        sharedMusicService.likeMusic(userId, Identifier.fromString(rawSharedMusicId));
+        sharedMusicService.likeMusic(userId, shareMusicId);
     }
 
     @Override
     @DeleteMapping("/received/{shared-music-id}/likes")
     public void unlikeSharedMusic(
             @AuthenticatedUser Identifier userId,
-            @PathVariable(name = "shared-music-id") String rawSharedMusicId
+            @PathVariable(name = "shared-music-id") Identifier sharedMusicId
     ) {
-        sharedMusicService.unlikeMusic(userId, Identifier.fromString(rawSharedMusicId));
+        sharedMusicService.unlikeMusic(userId, sharedMusicId);
     }
 }

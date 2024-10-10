@@ -22,12 +22,12 @@ public interface SharedMusicAPI {
 
     void likeSharedMusic(
             @Parameter(hidden = true) Identifier userId,
-            @PathVariable(name = "shared-music-id") String rawSharedMusicId
+            @PathVariable(name = "shared-music-id") Identifier sharedMusicId
     );
 
     void unlikeSharedMusic(
             @Parameter(hidden = true) Identifier userId,
-            @PathVariable(name = "shared-music-id")  String rawSharedMusicId
+            @PathVariable(name = "shared-music-id")  Identifier sharedMusicId
     );
 
 }

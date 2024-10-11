@@ -14,7 +14,7 @@ public record UserLabelDto(
         return new UserLabelDto(
             userId.toString(),
             labelAddRequest.labels().stream()
-                .map(label -> Label.valueOf(label.toUpperCase()))
+                .map(label -> Label.getLabel(label.toUpperCase()))
                 .toList()
         );
     }

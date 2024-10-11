@@ -28,7 +28,8 @@ public class LabelService {
 
     public void deleteLabel(Identifier userId, String label) {
 
-        labelRepository.deleteById(getUserLabelEntityKey(userId.toString(), Label.valueOf(label)));
+        labelRepository.deleteById(
+            getUserLabelEntityKey(userId.toString(), Label.getLabel(label.toUpperCase())));
     }
 
     public UserLabelList getUserLabelList(Identifier userId) {

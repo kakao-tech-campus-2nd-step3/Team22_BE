@@ -3,6 +3,7 @@ package io.github.eappezo.soundary.services.label.application.service;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.label.application.LabelRepository;
 import io.github.eappezo.soundary.services.label.application.dto.UserLabelDto;
+import io.github.eappezo.soundary.services.label.application.dto.UserLabelList;
 import io.github.eappezo.soundary.services.label.domain.Label;
 import io.github.eappezo.soundary.services.label.domain.UserLabelEntity;
 import io.github.eappezo.soundary.services.label.domain.UserLabelEntityKey;
@@ -28,6 +29,10 @@ public class LabelService {
     public void deleteLabel(Identifier userId, String label) {
 
         labelRepository.deleteById(getUserLabelEntityKey(userId.toString(), Label.valueOf(label)));
+    }
+
+    public UserLabelList getUserLabelList(Identifier userId) {
+        return UserLabelList.from(labelRepository.findByUserId(userId));
     }
 
     private UserLabelEntityKey getUserLabelEntityKey(String userId, Label label) {

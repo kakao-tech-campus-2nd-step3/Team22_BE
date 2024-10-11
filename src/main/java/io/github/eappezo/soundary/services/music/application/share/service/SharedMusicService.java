@@ -1,10 +1,9 @@
 package io.github.eappezo.soundary.services.music.application.share.service;
 
+import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikeSupport;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
+import io.github.eappezo.soundary.core.persistence.PersistenceOperationGateway;
+import io.github.eappezo.soundary.services.music.application.share.*;
 import io.github.eappezo.soundary.services.music.domain.SharedMusicRepository;
 import io.github.eappezo.soundary.services.music.domain.exception.AlreadyLikedSharedMusicException;
 import io.github.eappezo.soundary.services.music.domain.exception.NotExistsSharedMusicException;
@@ -20,13 +19,21 @@ public class SharedMusicService {
     private final SharedMusicRepository sharedMusicRepository;
     private final SharedMusicRetrieveSupport sharedMusicRetrieveSupport;
     private final SharedMusicLikeSupport sharedMusicLikeSupport;
+    private final PersistenceOperationGateway persistenceOperationGateway;
 
-    public List<SentSharedMusicDto> getSentSharedMusic(Identifier userId) {
-        return sharedMusicRetrieveSupport.getSentSharedMusic(userId);
+    public Page<SentSharedMusicDto> getSentSharedMusic(
+            Identifier userId,
+            SentSharedMusicQueryCondition condition
+    ) {
+        return persistenceOperationGateway.executeReadOnlyOperation(
+                () -> sharedMusicRetrieveSupport.getSentSharedMusic(userId, condition)
+        );
     }
 
     public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
-        return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId);
+        return persistenceOperationGateway.executeReadOnlyOperation(
+                () -> sharedMusicRetrieveSupport.getReceivedSharedMusic(userId)
+        );
     }
 
     @Transactional

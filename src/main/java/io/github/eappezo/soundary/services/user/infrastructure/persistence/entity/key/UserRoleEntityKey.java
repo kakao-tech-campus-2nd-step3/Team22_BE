@@ -2,6 +2,7 @@ package io.github.eappezo.soundary.services.user.infrastructure.persistence.enti
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.UserRole;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class UserRoleEntityKey {
+public class UserRoleEntityKey implements Serializable {
     private String userId = "";
     private UserRole role = UserRole.PENDING;
 

@@ -3,7 +3,7 @@ package io.github.eappezo.soundary.services.friend.application.service;
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntity;
-import io.github.eappezo.soundary.core.persistence.infrastructure.FriendKey;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntityKey;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.services.friend.application.FriendRepository;
@@ -43,7 +43,7 @@ public class FriendService {
     public void deleteFriend(FriendshipDTO friendshipDTO) {
         friendRepository.deleteById(getFriendKey(friendshipDTO));
         friendRepository.deleteById(
-            new FriendKey(friendshipDTO.to().toString(), friendshipDTO.from().toString()));
+            new FriendEntityKey(friendshipDTO.to().toString(), friendshipDTO.from().toString()));
     }
 
     public FriendshipInfo getFriend(FriendshipDTO friendshipDTO) {
@@ -90,7 +90,7 @@ public class FriendService {
         return userRepository.findById(identifier).orElseThrow(UserNotFoundException::new);
     }
 
-    private FriendKey getFriendKey(FriendshipDTO friendshipDTO) {
-        return new FriendKey(friendshipDTO.from().toString(), friendshipDTO.to().toString());
+    private FriendEntityKey getFriendKey(FriendshipDTO friendshipDTO) {
+        return new FriendEntityKey(friendshipDTO.from().toString(), friendshipDTO.to().toString());
     }
 }

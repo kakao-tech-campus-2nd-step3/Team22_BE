@@ -1,6 +1,6 @@
 package io.github.eappezo.soundary.services.music.infrastructure;
 
-import io.github.eappezo.soundary.services.music.application.MusicPlatformAuthenticationCacheAdvice;
+import io.github.eappezo.soundary.services.music.application.authentication.MusicPlatformAuthenticationCacheAdvice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;

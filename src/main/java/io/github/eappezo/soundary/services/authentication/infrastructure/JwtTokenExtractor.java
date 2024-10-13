@@ -2,7 +2,6 @@ package io.github.eappezo.soundary.services.authentication.infrastructure;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.UserRole;
-import io.github.eappezo.soundary.services.authentication.infrastructure.security.APIAuthentication;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;

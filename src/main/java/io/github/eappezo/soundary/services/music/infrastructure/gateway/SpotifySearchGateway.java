@@ -2,13 +2,12 @@ package io.github.eappezo.soundary.services.music.infrastructure.gateway;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import io.github.eappezo.soundary.services.music.application.MusicPlatformAuthenticationManager;
-import io.github.eappezo.soundary.services.music.application.PlatformAccessToken;
-import io.github.eappezo.soundary.services.music.application.TrackSearchGateway;
-import io.github.eappezo.soundary.services.music.domain.Album;
-import io.github.eappezo.soundary.services.music.domain.Artist;
+import io.github.eappezo.soundary.services.music.application.search.SearchedTrackDto;
+import io.github.eappezo.soundary.services.music.application.search.TrackSearchGateway;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
-import io.github.eappezo.soundary.services.music.domain.Track;
+import io.github.eappezo.soundary.services.music.domain.MusicPlatformAuthenticationManager;
+import io.github.eappezo.soundary.services.music.domain.PlatformAccessToken;
+import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.domain.exception.TrackSearchError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +30,12 @@ public class SpotifySearchGateway implements TrackSearchGateway {
     private final MusicPlatformAuthenticationManager authenticationManager;
 
     @Override
-    public List<Track> search(String query) {
+    public List<SearchedTrackDto> search(String query) {
         PlatformAccessToken token = authenticationManager.getAccessToken(getPlatform());
-        String uri = new StringBuilder("https://api.spotify.com/v1/search?q=")
-                .append(query)
-                .append("&type=track&limit=")
-                .append(limit)
-                .toString();
+        String uri = String.format(
+                "https://api.spotify.com/v1/search?q=%s&type=track&limit=%d",
+                query, limit
+        );
         MusicSearchResponse searchResponse = restClient
                 .get()
                 .uri(uri)
@@ -70,8 +68,11 @@ public class SpotifySearchGateway implements TrackSearchGateway {
     private record MusicSearchResponse(
             SearchItems tracks
     ) {
-        public List<Track> convertToTrackList() {
-            return tracks.items.stream().map(TrackDto::toTrack).toList();
+        public List<SearchedTrackDto> convertToTrackList() {
+            return tracks.items
+                    .stream()
+                    .map(TrackDto::toTrack)
+                    .toList();
         }
     }
 
@@ -91,26 +92,29 @@ public class SpotifySearchGateway implements TrackSearchGateway {
             AlbumDto album,
             List<ArtistDto> artists
     ) {
-        public Track toTrack() {
-            return Track.of(
-                    id,
-                    MusicPlatform.SPOTIFY,
+        public SearchedTrackDto toTrack() {
+            return new SearchedTrackDto(
+                    PlatformTrackId.of(MusicPlatform.SPOTIFY, id),
                     name,
-                    artists.stream().map(ArtistDto::toArtist).toList(),
-                    album.toAlbum(),
+                    artists.stream().map(ArtistDto::name).toList(),
+                    album.name(),
+                    album.images.getFirst().url(),
                     previewUrl,
-                    Duration.ofMillis(durationMs)
+                    Duration.ofMillis(durationMs).getSeconds()
             );
         }
+    }
+
+    @JsonNaming(SnakeCaseStrategy.class)
+    private record ExternalIds(
+            String isrc
+    ) {
     }
 
     @JsonNaming(SnakeCaseStrategy.class)
     private record ArtistDto(
             String name
     ) {
-        public Artist toArtist() {
-            return new Artist(name);
-        }
     }
 
     @JsonNaming(SnakeCaseStrategy.class)
@@ -118,9 +122,6 @@ public class SpotifySearchGateway implements TrackSearchGateway {
             String name,
             List<TrackCoverDto> images
     ) {
-        public Album toAlbum() {
-            return new Album(name, images.getFirst().url());
-        }
     }
 
     @JsonNaming(SnakeCaseStrategy.class)

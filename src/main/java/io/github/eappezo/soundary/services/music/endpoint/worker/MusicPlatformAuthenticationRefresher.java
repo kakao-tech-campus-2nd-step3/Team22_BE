@@ -1,6 +1,6 @@
 package io.github.eappezo.soundary.services.music.endpoint.worker;
 
-import io.github.eappezo.soundary.services.music.application.service.MusicPlatformAuthenticationRefreshService;
+import io.github.eappezo.soundary.services.music.application.authentication.service.MusicPlatformAuthenticationRefreshService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

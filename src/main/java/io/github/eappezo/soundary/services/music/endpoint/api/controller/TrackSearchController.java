@@ -1,8 +1,8 @@
 package io.github.eappezo.soundary.services.music.endpoint.api.controller;
 
-import io.github.eappezo.soundary.services.music.application.service.TrackSearchService;
+import io.github.eappezo.soundary.services.music.application.search.SearchedTrackDto;
+import io.github.eappezo.soundary.services.music.application.search.service.TrackSearchService;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
-import io.github.eappezo.soundary.services.music.domain.Track;
 import io.github.eappezo.soundary.services.music.endpoint.api.TrackSearchAPI;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.SearchTrackResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class TrackSearchController implements TrackSearchAPI {
             @RequestParam(value = "platform", defaultValue = "SPOTIFY") String platform,
             @RequestParam("query") String query
     ) {
-        List<Track> tracks = musicSearchService.search(
+        List<SearchedTrackDto> tracks = musicSearchService.search(
                 MusicPlatform.fromString(platform),
                 query
         );

@@ -3,7 +3,7 @@ package io.github.eappezo.soundary.services.authentication.infrastructure;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRole;
-import io.github.eappezo.soundary.services.authentication.application.TokenProvider;
+import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
@@ -75,11 +75,11 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     private Date buildAccessTokenExpiration() {
-        return new Date(System.currentTimeMillis() + getAccessTokenExpirationTime());
+        return new Date(System.currentTimeMillis() + getAccessTokenExpirationTime() * 1000);
     }
 
     private Date buildRefreshTokenExpiration() {
-        return new Date(System.currentTimeMillis() + getRefreshTokenExpirationTime());
+        return new Date(System.currentTimeMillis() + getRefreshTokenExpirationTime() * 1000);
     }
 
     private Date now() {

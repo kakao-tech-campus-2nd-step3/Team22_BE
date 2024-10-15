@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.advice.configuration;
+package io.github.eappezo.soundary.advice.common.configuration;
 
 import io.github.eappezo.soundary.advice.IdentifierConverter;
 import lombok.RequiredArgsConstructor;

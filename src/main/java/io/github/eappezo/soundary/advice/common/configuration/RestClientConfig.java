@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.advice.configuration;
+package io.github.eappezo.soundary.advice.common.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

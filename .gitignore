@@ -43,4 +43,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-src/main/resources/soundaryFirebaseKey.json
+src/main/resources

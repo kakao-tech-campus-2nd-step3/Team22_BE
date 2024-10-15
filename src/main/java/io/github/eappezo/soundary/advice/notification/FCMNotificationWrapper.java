@@ -13,4 +13,19 @@ public class FCMNotificationWrapper implements Notification {
     public Message message() {
         return message;
     }
+
+    @Override
+    public String getTitle() {
+        return "";
+    }
+
+    @Override
+    public String getBody() {
+        return "";
+    }
+
+    @Override
+    public String getTargetToken() {
+        return "";
+    }
 }

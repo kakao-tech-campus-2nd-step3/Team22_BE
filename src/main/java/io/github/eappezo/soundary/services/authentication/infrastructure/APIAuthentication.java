@@ -16,7 +16,7 @@ public class APIAuthentication implements Authentication {
     private final Identifier userId;
     private final String accessToken;
     private final List<GrantedAuthority> roles;
-    private Boolean isAuthenticated;
+    private Boolean isAuthenticated = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

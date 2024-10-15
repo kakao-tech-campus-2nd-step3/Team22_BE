@@ -1,7 +1,7 @@
 package io.github.eappezo.soundary.services.friend.infrastructure;
 
 import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntity;
-import io.github.eappezo.soundary.core.persistence.infrastructure.FriendKey;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntityKey;
 import io.github.eappezo.soundary.services.friend.application.FriendRepository;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ public class FriendRepositoryImpl implements FriendRepository {
     private final JpaFriendRepository jpaFriendRepository;
 
     @Override
-    public Optional<FriendEntity> findById(FriendKey friendKey) {
+    public Optional<FriendEntity> findById(FriendEntityKey friendKey) {
         return jpaFriendRepository.findById(friendKey);
     }
 
@@ -24,7 +24,7 @@ public class FriendRepositoryImpl implements FriendRepository {
     }
 
     @Override
-    public void deleteById(FriendKey friendKey) {
+    public void deleteById(FriendEntityKey friendKey) {
         jpaFriendRepository.deleteById(friendKey);
     }
 

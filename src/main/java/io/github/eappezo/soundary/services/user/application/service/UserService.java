@@ -36,7 +36,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private User getUser(Identifier userId) {
+    public User getUser(Identifier userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 }

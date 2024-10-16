@@ -15,4 +15,5 @@ public interface UserRoleManager {
 
     List<UserRole> getRolesOf(Identifier userId);
 
+    UserRole getHighestPriorityRole(Identifier userId);
 }

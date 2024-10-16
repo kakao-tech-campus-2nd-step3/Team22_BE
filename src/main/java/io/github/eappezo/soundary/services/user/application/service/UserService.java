@@ -7,14 +7,19 @@ import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.user.api.dto.UserUpdateRequest;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.repository.UserRoleManagerImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserRoleManagerImpl userRoleManagerImpl;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserRoleManagerImpl userRoleManagerImpl) {
         this.userRepository = userRepository;
+        this.userRoleManagerImpl = userRoleManagerImpl;
     }
 
     public UserInfo getUserInfo(Identifier userId) {
@@ -29,14 +34,13 @@ public class UserService {
         return UserInfo.from(updateduser);
     }
 
-
     public void quitUser(Identifier userId) {
         User user = getUser(userId);
-        user.getRoles().add(UserRole.LEAVED);
-        userRepository.save(user);
+        userRoleManagerImpl.appendRole(userId, UserRole.LEAVED);
     }
 
     public User getUser(Identifier userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
+
 }

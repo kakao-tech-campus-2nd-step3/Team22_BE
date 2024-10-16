@@ -39,4 +39,13 @@ public class UserRoleManagerImpl implements UserRoleManager {
                 .map(UserRoleEntity::getRole)
                 .toList();
     }
+
+    @Override
+    public UserRole getHighestPriorityRole(Identifier userId) {
+        return jpaUserRoleRepository.findAllByUserIdOrderByRolePriorityDesc(userId.toString())
+                .stream()
+                .map(UserRoleEntity::getRole)
+                .findFirst()
+                .orElse(null);
+    }
 }

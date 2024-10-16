@@ -10,6 +10,8 @@ import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import io.github.eappezo.soundary.services.user.infrastructure.persistence.repository.UserRoleManagerImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -32,7 +34,6 @@ public class UserService {
         return UserInfo.from(updateduser);
     }
 
-
     public void quitUser(Identifier userId) {
         User user = getUser(userId);
         userRoleManagerImpl.appendRole(userId, UserRole.LEAVED);
@@ -41,4 +42,12 @@ public class UserService {
     private User getUser(Identifier userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
+
+    private UserRole getUserRole(Identifier userId) {
+        List<UserRole> roles = userRoleManagerImpl.getRolesOf(userId);
+        return roles.stream()
+                .max((role1, role2) -> Integer.compare(role1.getPriority(), role2.getPriority()))
+                .orElse(null);
+    }
+
 }

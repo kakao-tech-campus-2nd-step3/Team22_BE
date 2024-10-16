@@ -43,11 +43,4 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
-    public UserRole getUserRole(Identifier userId) {
-        List<UserRole> roles = userRoleManagerImpl.getRolesOf(userId);
-        return roles.stream()
-                .max((role1, role2) -> Integer.compare(role1.getPriority(), role2.getPriority()))
-                .orElse(null);
-    }
-
 }

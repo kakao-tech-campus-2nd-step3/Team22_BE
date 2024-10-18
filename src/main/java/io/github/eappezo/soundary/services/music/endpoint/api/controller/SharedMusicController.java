@@ -1,17 +1,21 @@
 package io.github.eappezo.soundary.services.music.endpoint.api.controller;
 
+import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
+import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicQueryCondition;
 import io.github.eappezo.soundary.services.music.application.share.service.SharedMusicService;
 import io.github.eappezo.soundary.services.music.endpoint.api.SharedMusicAPI;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveSentSharedMusicResponse;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveReceivedSharedMusicResponse;
-import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSentSharedMusicResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -23,12 +27,24 @@ public class SharedMusicController implements SharedMusicAPI {
 
     @Override
     @GetMapping("/sent")
-    public RetrieveSentSharedMusicResponse retrieveSentSharedMusics(
-            @AuthenticatedUser Identifier userId
+    public PagedRetrieveSentSharedMusicResponse retrieveSentSharedMusics(
+            @AuthenticatedUser Identifier userId,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size,
+            @RequestParam(name = "start-date", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime startDate,
+            @RequestParam(name = "end-date", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate
     ) {
-        List<SentSharedMusicDto> sharedMusics = sharedMusicService.getSentSharedMusic(userId);
+        SentSharedMusicQueryCondition condition = new SentSharedMusicQueryCondition(
+                page,
+                size,
+                startDate,
+                endDate
+        );
+        Page<SentSharedMusicDto> sharedMusics = sharedMusicService.getSentSharedMusic(userId, condition);
 
-        return RetrieveSentSharedMusicResponse.from(sharedMusics);
+        return PagedRetrieveSentSharedMusicResponse.from(sharedMusics);
     }
 
     @Override

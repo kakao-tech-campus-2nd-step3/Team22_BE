@@ -21,10 +21,12 @@ public class SharedMusicService {
     private final SharedMusicRetrieveSupport sharedMusicRetrieveSupport;
     private final SharedMusicLikeSupport sharedMusicLikeSupport;
 
+    @Transactional(readOnly = true)
     public List<SentSharedMusicDto> getSentSharedMusic(Identifier userId) {
         return sharedMusicRetrieveSupport.getSentSharedMusic(userId);
     }
 
+    @Transactional(readOnly = true)
     public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
         return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId);
     }

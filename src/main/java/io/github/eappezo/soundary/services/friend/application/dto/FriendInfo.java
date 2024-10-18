@@ -4,10 +4,9 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 
 public record FriendInfo(
-    Identifier identifier,
+    Identifier id,
     String displayId,
     String nickname,
-    String description,
     String profileImageUrl
 ) {
     public static FriendInfo from(User user){
@@ -15,7 +14,6 @@ public record FriendInfo(
             user.getIdentifier(),
             user.getDisplayId(),
             user.getNickname(),
-            user.getDescription(),
             user.getProfileImageUrl());
     }
 }

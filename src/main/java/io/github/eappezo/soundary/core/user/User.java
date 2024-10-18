@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -37,7 +38,7 @@ public class User {
         );
     }
 
-    public User updtaeUserInfo(
+    public User updateUserInfo(
             @Nullable String nickname,
             @Nullable String description,
             @Nullable String profileImageUrl
@@ -51,5 +52,11 @@ public class User {
                 this.roles,
                 this.signupAt
         );
+    }
+
+    public UserRole getPrimaryRole() {
+        return this.roles.stream()
+                .max(Comparator.comparingInt(UserRole::getPriority))
+                .orElseThrow(IllegalStateException::new);  // roles가 비어있을 경우 기본값을 반환
     }
 }

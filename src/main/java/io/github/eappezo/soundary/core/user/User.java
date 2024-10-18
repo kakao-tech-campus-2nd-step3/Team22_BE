@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -55,7 +56,7 @@ public class User {
 
     public UserRole getPrimaryRole() {
         return this.roles.stream()
-                .max((role1, role2) -> Integer.compare(role1.getPriority(), role2.getPriority()))
-                .orElse(UserRole.PENDING);  // roles가 비어있을 경우 기본값을 반환
+                .max(Comparator.comparingInt(UserRole::getPriority))
+                .orElseThrow(IllegalStateException::new);  // roles가 비어있을 경우 기본값을 반환
     }
 }

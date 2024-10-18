@@ -12,4 +12,8 @@ public record FriendshipDTO(
             targetUserId
         );
     }
+
+    public FriendshipDTO reverse() {
+        return new FriendshipDTO(to, from);
+    }
 }

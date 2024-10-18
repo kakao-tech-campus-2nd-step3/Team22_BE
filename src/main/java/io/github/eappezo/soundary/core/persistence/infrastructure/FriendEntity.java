@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.core.persistence.infrastructure;
 
+import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -18,4 +19,11 @@ public class FriendEntity extends BaseEntity {
 
     @Id
     private String toUserId;
+
+    public static FriendEntity from(FriendshipDTO friendship) {
+        return new FriendEntity(
+            friendship.from().toString(),
+            friendship.to().toString()
+        );
+    }
 }

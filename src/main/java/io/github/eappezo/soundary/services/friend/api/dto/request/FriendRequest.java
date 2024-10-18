@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.friend.api.dto;
+package io.github.eappezo.soundary.services.friend.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.eappezo.soundary.core.identification.Identifier;

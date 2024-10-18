@@ -46,6 +46,11 @@ public class OAuthService {
                 user.getIdentifier(),
                 RefreshTokenDto.newRefreshToken(refreshToken)
         );
-        return new LoginResultDto(accessToken, refreshToken, expirationTime);
+        return new LoginResultDto(
+                user.getPrimaryRole(),
+                accessToken,
+                refreshToken,
+                expirationTime
+        );
     }
 }

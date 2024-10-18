@@ -1,8 +1,8 @@
 package io.github.eappezo.soundary.services.music.application.share.service;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
+import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikeSupport;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
 import io.github.eappezo.soundary.services.music.domain.SharedMusicRepository;
@@ -21,10 +21,12 @@ public class SharedMusicService {
     private final SharedMusicRetrieveSupport sharedMusicRetrieveSupport;
     private final SharedMusicLikeSupport sharedMusicLikeSupport;
 
+    @Transactional(readOnly = true)
     public List<SentSharedMusicDto> getSentSharedMusic(Identifier userId) {
         return sharedMusicRetrieveSupport.getSentSharedMusic(userId);
     }
 
+    @Transactional(readOnly = true)
     public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
         return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId);
     }

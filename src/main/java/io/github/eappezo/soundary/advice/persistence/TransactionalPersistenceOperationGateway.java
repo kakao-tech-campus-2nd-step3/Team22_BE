@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.advice;
+package io.github.eappezo.soundary.advice.persistence;
 
 import io.github.eappezo.soundary.core.persistence.PersistenceOperation;
 import io.github.eappezo.soundary.core.persistence.PersistenceOperationGateway;

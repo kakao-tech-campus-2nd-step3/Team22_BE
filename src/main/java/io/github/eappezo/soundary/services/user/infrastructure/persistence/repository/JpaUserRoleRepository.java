@@ -13,5 +13,4 @@ public interface JpaUserRoleRepository extends JpaRepository<UserRoleEntity, Use
 
     void deleteAllByUserId(String userId);
 
-    List<UserRoleEntity> findAllByUserIdOrderByRolePriorityDesc(String userId);
 }

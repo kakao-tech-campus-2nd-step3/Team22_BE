@@ -1,25 +1,16 @@
 package io.github.eappezo.soundary.services.friend.application;
 
-import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntity;
-import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntityKey;
-import java.util.List;
-import java.util.Optional;
+import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 
 public interface FriendRepository {
 
-    Optional<FriendEntity> findById(FriendEntityKey friendKey);
+    boolean exists(FriendshipDTO friendship);
 
-    void save(FriendEntity friend);
+    int countFriends(Identifier userId);
 
-    void deleteById(FriendEntityKey friendKey);
+    void save(FriendshipDTO friendship);
 
-    List<FriendEntity> findByFromUserId(String fromUserId);
+    void delete(FriendshipDTO friendship);
 
-    List<FriendEntity> findByToUserId(String toUserId);
-
-    List<FriendEntity> findFriend(String fromUserId);
-
-    List<FriendEntity> findReceivedRequest(String toUserId);
-
-    List<FriendEntity> findSentRequest(String fromUserId);
 }

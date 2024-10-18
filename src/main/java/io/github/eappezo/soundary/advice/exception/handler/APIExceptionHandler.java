@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.advice.handler;
+package io.github.eappezo.soundary.advice.exception.handler;
 
 import io.github.eappezo.soundary.core.exception.APIException;
 import io.github.eappezo.soundary.core.exception.ErrorResponse;

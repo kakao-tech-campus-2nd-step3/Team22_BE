@@ -1,11 +1,12 @@
 package io.github.eappezo.soundary.core.persistence.infrastructure;
 
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor

@@ -9,14 +9,13 @@ import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendRequestInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import io.github.eappezo.soundary.services.friend.domain.exception.AlreadySentRequestException;
-
-import java.util.List;
-
 import io.github.eappezo.soundary.services.friend.domain.exception.FriendLimitException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

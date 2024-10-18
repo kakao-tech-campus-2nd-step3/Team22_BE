@@ -1,8 +1,8 @@
 package io.github.eappezo.soundary.services.music.endpoint.api;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSentSharedMusicResponse;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveReceivedSharedMusicResponse;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveSentSharedMusicResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PathVariable;

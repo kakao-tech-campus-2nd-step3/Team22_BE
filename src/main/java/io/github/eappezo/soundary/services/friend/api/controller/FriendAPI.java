@@ -2,10 +2,10 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
+import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.response.ReceivedFriendRequestsResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.response.SentFriendRequestsResponse;
-import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
-import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

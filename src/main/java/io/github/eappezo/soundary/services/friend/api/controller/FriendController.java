@@ -2,19 +2,19 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
+import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.response.ReceivedFriendRequestsResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.response.SentFriendRequestsResponse;
-import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
-import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendRequestInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import io.github.eappezo.soundary.services.friend.application.service.FriendService;
-import java.net.URI;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/friends")

@@ -1,6 +1,7 @@
 package io.github.eappezo.soundary.services.friend.api.dto.response;
 
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
+
 import java.util.List;
 
 public record FriendsResponse(

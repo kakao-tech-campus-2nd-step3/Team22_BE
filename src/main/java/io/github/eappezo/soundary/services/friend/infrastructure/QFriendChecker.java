@@ -5,13 +5,11 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntityKey;
 import io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity;
 import io.github.eappezo.soundary.core.user.friend.FriendChecker;
-import java.util.List;
-
-import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor

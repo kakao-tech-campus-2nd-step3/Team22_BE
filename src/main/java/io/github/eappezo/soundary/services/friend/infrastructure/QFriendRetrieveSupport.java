@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity.friendEntity;
 import static io.github.eappezo.soundary.core.persistence.infrastructure.QUserEntity.userEntity;
 
 @Repository

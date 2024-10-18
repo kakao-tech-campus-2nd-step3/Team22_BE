@@ -36,4 +36,9 @@ public class UserRepositoryImpl implements UserRepository {
         return jpaUserRepository.findById(userId.toString())
                 .map(userEntity -> userEntityMapper.mapToUser(userEntity, userRoles));
     }
+
+    @Override
+    public boolean existsById(Identifier userId) {
+        return jpaUserRepository.existsById(userId.toString());
+    }
 }

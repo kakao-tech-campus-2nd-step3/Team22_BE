@@ -37,7 +37,7 @@ public class User {
         );
     }
 
-    public User updtaeUserInfo(
+    public User updateUserInfo(
             @Nullable String nickname,
             @Nullable String description,
             @Nullable String profileImageUrl
@@ -51,5 +51,11 @@ public class User {
                 this.roles,
                 this.signupAt
         );
+    }
+
+    public UserRole getPrimaryRole() {
+        return this.roles.stream()
+                .max((role1, role2) -> Integer.compare(role1.getPriority(), role2.getPriority()))
+                .orElse(UserRole.PENDING);  // roles가 비어있을 경우 기본값을 반환
     }
 }

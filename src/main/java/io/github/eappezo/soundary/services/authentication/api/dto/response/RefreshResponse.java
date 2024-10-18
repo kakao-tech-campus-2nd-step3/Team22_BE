@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.authentication.api.dto;
+package io.github.eappezo.soundary.services.authentication.api.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.eappezo.soundary.services.authentication.application.RefreshResultDto;

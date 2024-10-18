@@ -1,14 +1,4 @@
-app:
-  music-platforms:
-    spotify:
-      token-uri: ${SPOTIFY_TOKEN_URI}
-      client-id: ${SPOTIFY_CLIENT_ID}
-      client-secret: ${SPOTIFY_CLIENT_SECRET}
 spring:
-  data:
-    redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_URL}

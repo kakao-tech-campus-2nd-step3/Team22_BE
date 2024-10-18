@@ -1,18 +1,7 @@
 spring:
-  jpa:
-    open-in-view: false
-  data:
-    redis:
-      repositories:
-        enabled: false
   profiles:
     active: local
-logging:
-  level:
-    org.springframework.jdbc.core.JdbcTemplate: DEBUG
 app:
-  max-friends-count: 20
-  music-search-limit: 10
   headers:
     auth-token-header: Authorization
   user:

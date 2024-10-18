@@ -42,5 +42,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-src/main/resources/soundaryFCMKey.json

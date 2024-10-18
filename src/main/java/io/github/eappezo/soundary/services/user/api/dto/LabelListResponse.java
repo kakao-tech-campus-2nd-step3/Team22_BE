@@ -1,6 +1,6 @@
-package io.github.eappezo.soundary.services.label.api.dto;
+package io.github.eappezo.soundary.services.user.api.dto;
 
-import io.github.eappezo.soundary.services.label.application.dto.UserLabelList;
+import io.github.eappezo.soundary.services.user.application.dto.UserLabelList;
 
 public record LabelListResponse(
     UserLabelList userLabelList

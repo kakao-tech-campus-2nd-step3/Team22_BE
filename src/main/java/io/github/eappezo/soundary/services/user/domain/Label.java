@@ -1,6 +1,6 @@
-package io.github.eappezo.soundary.services.label.domain;
+package io.github.eappezo.soundary.services.user.domain;
 
-import io.github.eappezo.soundary.services.label.domain.exception.LabelInvalidValueException;
+import io.github.eappezo.soundary.services.user.domain.exception.LabelInvalidValueException;
 
 public enum Label {
     CLASSIC,

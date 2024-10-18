@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.label.api.dto;
+package io.github.eappezo.soundary.services.user.api.dto;
 
 import java.util.List;
 

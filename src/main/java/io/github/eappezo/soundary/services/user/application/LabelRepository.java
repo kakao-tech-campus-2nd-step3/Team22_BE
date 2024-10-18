@@ -1,8 +1,8 @@
-package io.github.eappezo.soundary.services.label.application;
+package io.github.eappezo.soundary.services.user.application;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.label.domain.UserLabelEntity;
-import io.github.eappezo.soundary.services.label.domain.UserLabelEntityKey;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.UserLabelEntity;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.key.UserLabelEntityKey;
 import java.util.List;
 import java.util.Optional;
 

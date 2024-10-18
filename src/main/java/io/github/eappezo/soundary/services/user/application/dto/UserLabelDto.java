@@ -1,8 +1,8 @@
-package io.github.eappezo.soundary.services.label.application.dto;
+package io.github.eappezo.soundary.services.user.application.dto;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.label.api.dto.LabelAddRequest;
-import io.github.eappezo.soundary.services.label.domain.Label;
+import io.github.eappezo.soundary.services.user.api.dto.LabelAddRequest;
+import io.github.eappezo.soundary.services.user.domain.Label;
 import java.util.List;
 
 public record UserLabelDto(

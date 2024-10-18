@@ -1,12 +1,12 @@
-package io.github.eappezo.soundary.services.label.application.service;
+package io.github.eappezo.soundary.services.user.application.service;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.label.application.LabelRepository;
-import io.github.eappezo.soundary.services.label.application.dto.UserLabelDto;
-import io.github.eappezo.soundary.services.label.application.dto.UserLabelList;
-import io.github.eappezo.soundary.services.label.domain.Label;
-import io.github.eappezo.soundary.services.label.domain.UserLabelEntity;
-import io.github.eappezo.soundary.services.label.domain.UserLabelEntityKey;
+import io.github.eappezo.soundary.services.user.application.LabelRepository;
+import io.github.eappezo.soundary.services.user.application.dto.UserLabelDto;
+import io.github.eappezo.soundary.services.user.application.dto.UserLabelList;
+import io.github.eappezo.soundary.services.user.domain.Label;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.UserLabelEntity;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.key.UserLabelEntityKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

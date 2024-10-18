@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.label.domain.exception;
+package io.github.eappezo.soundary.services.user.domain.exception;
 
 import io.github.eappezo.soundary.core.exception.APIException;
 

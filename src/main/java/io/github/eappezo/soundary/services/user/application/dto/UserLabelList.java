@@ -1,7 +1,7 @@
-package io.github.eappezo.soundary.services.label.application.dto;
+package io.github.eappezo.soundary.services.user.application.dto;
 
-import io.github.eappezo.soundary.services.label.domain.Label;
-import io.github.eappezo.soundary.services.label.domain.UserLabelEntity;
+import io.github.eappezo.soundary.services.user.domain.Label;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.UserLabelEntity;
 import java.util.List;
 
 public record UserLabelList(

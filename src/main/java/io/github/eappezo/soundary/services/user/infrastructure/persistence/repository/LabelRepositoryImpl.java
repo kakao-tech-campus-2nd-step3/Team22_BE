@@ -1,9 +1,9 @@
-package io.github.eappezo.soundary.services.label.infrastructure;
+package io.github.eappezo.soundary.services.user.infrastructure.persistence.repository;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.label.application.LabelRepository;
-import io.github.eappezo.soundary.services.label.domain.UserLabelEntity;
-import io.github.eappezo.soundary.services.label.domain.UserLabelEntityKey;
+import io.github.eappezo.soundary.services.user.application.LabelRepository;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.UserLabelEntity;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.key.UserLabelEntityKey;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

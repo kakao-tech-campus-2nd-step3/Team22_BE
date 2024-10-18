@@ -1,9 +1,8 @@
-package io.github.eappezo.soundary.services.label.api.controller;
+package io.github.eappezo.soundary.services.user.api.controller;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.label.api.dto.LabelAddRequest;
-import io.github.eappezo.soundary.services.label.api.dto.LabelDeleteRequest;
-import io.github.eappezo.soundary.services.label.api.dto.LabelListResponse;
+import io.github.eappezo.soundary.services.user.api.dto.LabelAddRequest;
+import io.github.eappezo.soundary.services.user.api.dto.LabelListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,7 +28,7 @@ public interface LabelAPI {
         @ApiResponse(responseCode = "204", description = "유저 라벨 삭제 성공")
     })
     ResponseEntity<Void> deleteLabel(
-        @Parameter(hidden = true) Identifier userId, LabelDeleteRequest labelDeleteRequest
+        @Parameter(hidden = true) Identifier userId, String label
     );
 
     @Operation(summary = "라벨 목록 조회", description = "유저가 설정한 라벨 목록을 조회한다")

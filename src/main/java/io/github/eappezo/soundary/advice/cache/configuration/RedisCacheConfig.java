@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.advice.common.configuration;
+package io.github.eappezo.soundary.advice.cache.configuration;
 
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;

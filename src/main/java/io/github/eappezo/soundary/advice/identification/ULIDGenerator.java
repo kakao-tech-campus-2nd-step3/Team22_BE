@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.advice;
+package io.github.eappezo.soundary.advice.identification;
 
 import com.github.f4b6a3.ulid.UlidCreator;
 import io.github.eappezo.soundary.core.identification.Identifier;

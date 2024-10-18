@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.advice.common.configuration;
+package io.github.eappezo.soundary.advice.persistence.configuration;
 
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;

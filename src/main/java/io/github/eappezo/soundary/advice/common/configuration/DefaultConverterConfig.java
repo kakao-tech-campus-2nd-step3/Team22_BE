@@ -1,6 +1,6 @@
 package io.github.eappezo.soundary.advice.common.configuration;
 
-import io.github.eappezo.soundary.advice.IdentifierConverter;
+import io.github.eappezo.soundary.advice.identification.IdentifierConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

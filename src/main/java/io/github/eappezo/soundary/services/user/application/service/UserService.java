@@ -6,20 +6,18 @@ import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.user.api.dto.UserUpdateRequest;
+import io.github.eappezo.soundary.services.user.application.UserRoleManager;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
-import io.github.eappezo.soundary.services.user.infrastructure.persistence.repository.UserRoleManagerImpl;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final UserRoleManagerImpl userRoleManagerImpl;
+    private final UserRoleManager userRoleManager;
 
-    public UserService(UserRepository userRepository, UserRoleManagerImpl userRoleManagerImpl) {
+    public UserService(UserRepository userRepository, UserRoleManager userRoleManager) {
         this.userRepository = userRepository;
-        this.userRoleManagerImpl = userRoleManagerImpl;
+        this.userRoleManager = userRoleManager;
     }
 
     public UserInfo getUserInfo(Identifier userId) {
@@ -29,14 +27,14 @@ public class UserService {
 
     public UserInfo updateUser(Identifier userId, UserUpdateRequest request) {
         User user = getUser(userId);
-        User updateduser = user.updtaeUserInfo(request.nickname(), request.description(), request.profileImageUrl());
+        User updateduser = user.updateUserInfo(request.nickname(), request.description(), request.profileImageUrl());
         userRepository.save(updateduser);
         return UserInfo.from(updateduser);
     }
 
     public void quitUser(Identifier userId) {
         User user = getUser(userId);
-        userRoleManagerImpl.appendRole(userId, UserRole.LEAVED);
+        userRoleManager.appendRole(userId, UserRole.LEAVED);
     }
 
     private User getUser(Identifier userId) {

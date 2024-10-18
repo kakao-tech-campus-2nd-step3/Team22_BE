@@ -10,6 +10,4 @@ public interface UserRepository {
 
     Optional<User> findById(Identifier userId);
 
-    boolean existsById(Identifier userId);
-
 }

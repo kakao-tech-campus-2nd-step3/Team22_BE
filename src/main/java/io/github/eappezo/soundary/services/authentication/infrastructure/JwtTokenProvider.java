@@ -3,8 +3,7 @@ package io.github.eappezo.soundary.services.authentication.infrastructure;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRole;
-import io.github.eappezo.soundary.services.authentication.application.TokenPayloadDto;
-import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
+import io.github.eappezo.soundary.services.authentication.application.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
@@ -49,36 +48,21 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String generateAccessToken(TokenPayloadDto payload) {
-        return Jwts.builder()
-                .claims(jwtClaimsProvider.buildClaims(payload.userId(), payload.roles()))
-                .issuedAt(now())
-                .expiration(buildAccessTokenExpiration())
-                .signWith(secretKey)
-                .compact();
-    }
-
-    @Override
-    public String generateRefreshToken(TokenPayloadDto payload) {
-        return Jwts.builder()
-                .claims(jwtClaimsProvider.buildClaims(payload.userId(), payload.roles()))
-                .issuedAt(now())
-                .expiration(buildRefreshTokenExpiration())
-                .signWith(secretKey)
-                .compact();
-    }
-
-    @Override
-    public TokenPayloadDto extractPayloadFrom(String token) {
+    public String generateAccessTokenFromRefreshToken(String refreshToken) {
         Claims claims = Jwts
                 .parser()
                 .verifyWith(secretKey)
                 .build()
-                .parseSignedClaims(token)
+                .parseSignedClaims(refreshToken)
                 .getPayload();
         Identifier userId = jwtClaimsProvider.extractUserId(claims);
         List<UserRole> roles = jwtClaimsProvider.extractRoles(claims);
-        return new TokenPayloadDto(userId, roles);
+        return Jwts.builder()
+                .claims(jwtClaimsProvider.buildClaims(userId, roles))
+                .issuedAt(now())
+                .expiration(buildAccessTokenExpiration())
+                .signWith(secretKey)
+                .compact();
     }
 
     @Override
@@ -91,11 +75,11 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     private Date buildAccessTokenExpiration() {
-        return new Date(System.currentTimeMillis() + getAccessTokenExpirationTime() * 1000);
+        return new Date(System.currentTimeMillis() + getAccessTokenExpirationTime());
     }
 
     private Date buildRefreshTokenExpiration() {
-        return new Date(System.currentTimeMillis() + getRefreshTokenExpirationTime() * 1000);
+        return new Date(System.currentTimeMillis() + getRefreshTokenExpirationTime());
     }
 
     private Date now() {

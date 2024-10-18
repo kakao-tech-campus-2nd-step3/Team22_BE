@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "social_accounts")
+@Entity
 @IdClass(SocialAccountEntityKey.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

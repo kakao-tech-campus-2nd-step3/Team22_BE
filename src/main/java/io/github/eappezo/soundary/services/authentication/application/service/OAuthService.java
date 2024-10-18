@@ -6,7 +6,7 @@ import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.services.authentication.application.*;
 import io.github.eappezo.soundary.services.authentication.domain.SocialAccountRepository;
-import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
+import io.github.eappezo.soundary.services.authentication.domain.SocialUserCreationSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +18,15 @@ public class OAuthService {
     private final SocialUserCreationSupport socialUserCreationSupport;
     private final SocialAccountRepository socialAccountRepository;
     private final UserRepository userRepository;
-    private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final PersistenceOperationGateway persistenceOperationGateway;
 
     public LoginResultDto login(OAuthRequestDto request) {
         OAuthGateway oauthGateway = oAuthGatewayRegistry.getOAuthGateway(request.platform());
         OAuthResult result = oauthGateway.authenticate(request.token());
-        return persistenceOperationGateway.executeOperation(() -> {
-            User user = getSocialUserOrCreateBy(result);
-            return createAuthentication(user);
-        });
+        User user = persistenceOperationGateway.executeOperation(() ->
+                getSocialUserOrCreateBy(result)
+        );
+        return createAuthentication(user);
     }
 
     private User getSocialUserOrCreateBy(OAuthResult oAuthResult) {
@@ -42,15 +41,6 @@ public class OAuthService {
         String refreshToken = tokenProvider.generateRefreshTokenFrom(user);
         Long expirationTime = tokenProvider.getAccessTokenExpirationTime();
 
-        userRefreshTokenRepository.save(
-                user.getIdentifier(),
-                RefreshTokenDto.newRefreshToken(refreshToken)
-        );
-        return new LoginResultDto(
-                user.getPrimaryRole(),
-                accessToken,
-                refreshToken,
-                expirationTime
-        );
+        return new LoginResultDto(accessToken, refreshToken, expirationTime);
     }
 }

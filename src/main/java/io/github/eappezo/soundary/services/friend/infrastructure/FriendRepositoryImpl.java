@@ -1,55 +1,56 @@
 package io.github.eappezo.soundary.services.friend.infrastructure;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntity;
 import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntityKey;
+import io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity;
 import io.github.eappezo.soundary.services.friend.application.FriendRepository;
 import java.util.List;
 import java.util.Optional;
+
+import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import static io.github.eappezo.soundary.core.persistence.infrastructure.QUserEntity.userEntity;
 
 @Repository
 @RequiredArgsConstructor
 public class FriendRepositoryImpl implements FriendRepository {
     private final JpaFriendRepository jpaFriendRepository;
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Optional<FriendEntity> findById(FriendEntityKey friendKey) {
-        return jpaFriendRepository.findById(friendKey);
+    public boolean exists(FriendshipDTO friendship) {
+        return jpaFriendRepository.existsById(FriendEntityKey.from(friendship));
     }
 
     @Override
-    public void save(FriendEntity friend) {
-        jpaFriendRepository.save(friend);
+    public int countFriends(Identifier userId) {
+        QFriendEntity fromTable = new QFriendEntity("fromTable");
+        QFriendEntity toTable = new QFriendEntity("toTable");
+        String rawUserId = userId.toString();
+
+        return jpaQueryFactory
+                .select(fromTable.fromUserId.count())
+                .from(fromTable)
+                .join(toTable)
+                .on(
+                        fromTable.toUserId.eq(toTable.fromUserId)
+                                .and(toTable.toUserId.eq(fromTable.fromUserId))
+                )
+                .where(fromTable.fromUserId.eq(rawUserId))
+                .fetchFirst().intValue();
     }
 
     @Override
-    public void deleteById(FriendEntityKey friendKey) {
-        jpaFriendRepository.deleteById(friendKey);
+    public void save(FriendshipDTO friend) {
+        jpaFriendRepository.save(FriendEntity.from(friend));
     }
 
     @Override
-    public List<FriendEntity> findByFromUserId(String fromUserId) {
-        return jpaFriendRepository.findByFromUserId(fromUserId);
-    }
-
-    @Override
-    public List<FriendEntity> findByToUserId(String toUserId) {
-        return jpaFriendRepository.findByToUserId(toUserId);
-    }
-
-    @Override
-    public List<FriendEntity> findFriend(String fromUserId) {
-        return findFriend(fromUserId);
-    }
-
-    @Override
-    public List<FriendEntity> findReceivedRequest(String toUserId) {
-        return findReceivedRequest(toUserId);
-    }
-
-    @Override
-    public List<FriendEntity> findSentRequest(String fromUserId) {
-        return findSentRequest(fromUserId);
+    public void delete(FriendshipDTO friendship) {
+        jpaFriendRepository.deleteById(FriendEntityKey.from(friendship));
     }
 }

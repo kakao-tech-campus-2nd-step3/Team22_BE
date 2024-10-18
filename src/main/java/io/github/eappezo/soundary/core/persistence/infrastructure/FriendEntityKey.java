@@ -15,7 +15,7 @@ public class FriendEntityKey implements Serializable {
     private String fromUserId;
     private String toUserId;
 
-    public static FriendEntityKey of(FriendshipDTO friendship) {
+    public static FriendEntityKey from(FriendshipDTO friendship) {
         return new FriendEntityKey(
             friendship.from().toString(),
             friendship.to().toString()

@@ -11,6 +11,7 @@ logging:
   level:
     org.springframework.jdbc.core.JdbcTemplate: DEBUG
 app:
+  max-friends-count: 20
   music-search-limit: 10
   headers:
     auth-token-header: Authorization

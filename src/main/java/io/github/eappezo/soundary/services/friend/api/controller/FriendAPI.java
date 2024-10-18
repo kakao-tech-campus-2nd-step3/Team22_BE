@@ -2,11 +2,10 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendDeleteRequest;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendListResponse;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendRejectRequest;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendRequest;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendshipResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.response.ReceivedFriendRequestsResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.response.SentFriendRequestsResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,36 +26,37 @@ public interface FriendAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "친구 요청 거절 성공")
     })
-    ResponseEntity<Void> rejectFriendRequest(@AuthenticatedUser Identifier userId, FriendRejectRequest friendRejectRequest);
+    ResponseEntity<Void> rejectFriendRequest(
+            @AuthenticatedUser Identifier userId,
+            @PathVariable("target-user-id") Identifier targetUserId
+    );
 
     @Operation(summary = "친구 삭제", description = "친구 관계를 서로에게서 삭제합니다.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "202", description = "친구 삭제 성공")
     })
-    ResponseEntity<Void> deleteFriend(@AuthenticatedUser Identifier userId, FriendDeleteRequest friendDeleteRequest);
+    ResponseEntity<Void> deleteFriend(
+            @AuthenticatedUser Identifier userId,
+            @PathVariable("target-user-id") Identifier targetUserId
+    );
 
     @Operation(summary = "친구 목록 조회", description = "친구 목록을 조회합니다.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "친구 목록 조회 성공")
     })
-    ResponseEntity<FriendListResponse> getFriendList(@AuthenticatedUser Identifier userId);
-
-    @Operation(summary = "보낸 친구 요청 목록 조회", description = "보낸 친구 요청의 목록을 조회합니다.")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "보낸 친구 요청 목록 조회 성공")
-    })
-    ResponseEntity<FriendListResponse> getRequestReceivedList(@AuthenticatedUser Identifier userId);
+    ResponseEntity<FriendsResponse> getFriends(@AuthenticatedUser Identifier userId);
 
     @Operation(summary = "받은 친구 요청 목록 조회", description = "받은 친구 요청의 목록을 조회합니다.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "받은 친구 요청 목록 조회 성공")
+            @ApiResponse(responseCode = "200", description = "받은 친구 요청 목록 조회 성공")
     })
-    ResponseEntity<FriendListResponse> getSentRequestFriendList(
-        @AuthenticatedUser Identifier userId);
+    ResponseEntity<ReceivedFriendRequestsResponse> getReceivedRequests(@AuthenticatedUser Identifier userId);
 
-    @Operation(summary = "보낸 요청 조회", description = "보낸 친구/수락 요청을 조회합니다.")
+    @Operation(summary = "보낸 친구 요청 목록 조회", description = "보낸 친구 요청의 목록을 조회합니다.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "친구 요청 조회 성공")
+            @ApiResponse(responseCode = "200", description = "보낸 친구 요청 목록 조회 성공")
     })
-    ResponseEntity<FriendshipResponse> getSentRequest(@AuthenticatedUser Identifier userId, @PathVariable String toUserId);
+    ResponseEntity<SentFriendRequestsResponse> getSentRequests(
+        @AuthenticatedUser Identifier userId
+    );
 }

@@ -2,15 +2,18 @@ package io.github.eappezo.soundary.services.friend.infrastructure;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.persistence.infrastructure.FriendEntityKey;
 import io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity;
 import io.github.eappezo.soundary.core.user.friend.FriendChecker;
 import java.util.List;
+
+import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
+import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Slf4j
 @RequiredArgsConstructor
 public class QFriendChecker implements FriendChecker {
     private final JPAQueryFactory jpaQueryFactory;
@@ -42,6 +45,8 @@ public class QFriendChecker implements FriendChecker {
 
     @Override
     public boolean isFriend(Identifier userId, Identifier friendId) {
-        return false;
+        FriendshipDTO friendship = new FriendshipDTO(userId, friendId);
+        return jpaFriendRepository.existsById(FriendEntityKey.from(friendship))
+               && jpaFriendRepository.existsById(FriendEntityKey.from(friendship.reverse()));
     }
 }

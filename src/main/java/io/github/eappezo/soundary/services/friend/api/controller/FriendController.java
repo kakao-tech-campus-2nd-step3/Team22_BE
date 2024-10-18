@@ -2,78 +2,78 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendDeleteRequest;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendListResponse;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendRejectRequest;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendRequest;
-import io.github.eappezo.soundary.services.friend.api.dto.FriendshipResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.response.ReceivedFriendRequestsResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.response.SentFriendRequestsResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
+import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
+import io.github.eappezo.soundary.services.friend.application.dto.FriendRequestInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
 import io.github.eappezo.soundary.services.friend.application.service.FriendService;
 import java.net.URI;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/friends")
 @AllArgsConstructor
 public class FriendController implements FriendAPI {
-
     private final FriendService friendService;
 
-    @PostMapping()
-    public ResponseEntity<Void> sendOrAcceptFriendRequest(@AuthenticatedUser Identifier userId,
-        FriendRequest friendRequest) {
+    @PostMapping
+    public ResponseEntity<Void> sendOrAcceptFriendRequest(
+            @AuthenticatedUser Identifier userId,
+            FriendRequest friendRequest
+    ) {
         friendService.addFriend(FriendshipDTO.of(userId, friendRequest.toUserId()));
+
         return ResponseEntity.created(
-            URI.create("api/v1/friends/requests/sent" + friendRequest.rawToUserId())).build();
+            URI.create("api/v1/friends/requests/sent" + friendRequest.rawToUserId())
+        ).build();
     }
 
-    @DeleteMapping("/requests")
-    public ResponseEntity<Void> rejectFriendRequest(@AuthenticatedUser Identifier userId,
-        FriendRejectRequest friendRejectRequest) {
-        friendService.rejectFriendRequest(FriendshipDTO.of(userId, friendRejectRequest.toUserId()));
+    @DeleteMapping("/requests/received/{target-user-id}")
+    public ResponseEntity<Void> rejectFriendRequest(
+            @AuthenticatedUser Identifier userId,
+            @PathVariable("target-user-id") Identifier targetUserId
+    ) {
+        friendService.rejectFriendRequest(FriendshipDTO.of(userId, targetUserId));
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping()
-    public ResponseEntity<Void> deleteFriend(@AuthenticatedUser Identifier userId,
-        FriendDeleteRequest friendDeleteRequest) {
-        friendService.deleteFriend(FriendshipDTO.of(userId, friendDeleteRequest.toUserId()));
+    @DeleteMapping("/{target-user-id}")
+    public ResponseEntity<Void> deleteFriend(
+            @AuthenticatedUser Identifier userId,
+            @PathVariable("target-user-id") Identifier targetUserId
+    ) {
+        friendService.deleteFriend(FriendshipDTO.of(userId, targetUserId));
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping()
-    public ResponseEntity<FriendListResponse> getFriendList(@AuthenticatedUser Identifier userId) {
+    @GetMapping
+    public ResponseEntity<FriendsResponse> getFriends(@AuthenticatedUser Identifier userId) {
         return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getFriendList(userId)));
+            FriendsResponse.from(friendService.getFriendList(userId))
+        );
     }
 
     @GetMapping("/requests/received")
-    public ResponseEntity<FriendListResponse> getRequestReceivedList(
-        @AuthenticatedUser Identifier userId) {
-        return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getRequestReceived(userId)));
+    public ResponseEntity<ReceivedFriendRequestsResponse> getReceivedRequests(
+        @AuthenticatedUser Identifier userId
+    ) {
+        List<FriendRequestInfo> receivedRequests = friendService.getReceivedRequests(userId);
+
+        return ResponseEntity.ok(ReceivedFriendRequestsResponse.from(receivedRequests));
     }
 
     @GetMapping("/requests/sent")
-    public ResponseEntity<FriendListResponse> getSentRequestFriendList(
-        @AuthenticatedUser Identifier userId) {
-        return ResponseEntity.ok(
-            FriendListResponse.from(friendService.getSentRequestList(userId)));
-    }
+    public ResponseEntity<SentFriendRequestsResponse> getSentRequests(
+        @AuthenticatedUser Identifier userId
+    ) {
+        List<FriendRequestInfo> sentRequests = friendService.getSentRequests(userId);
 
-    @GetMapping("/requests/sent/{toUserId}")
-    public ResponseEntity<FriendshipResponse> getSentRequest(
-        @AuthenticatedUser Identifier fromUserId, @PathVariable String toUserId) {
-        return ResponseEntity.ok(
-            FriendshipResponse.from(friendService.getFriend(
-                new FriendshipDTO(fromUserId, Identifier.fromString(toUserId)))));
+        return ResponseEntity.ok(SentFriendRequestsResponse.from(sentRequests));
     }
-
 }

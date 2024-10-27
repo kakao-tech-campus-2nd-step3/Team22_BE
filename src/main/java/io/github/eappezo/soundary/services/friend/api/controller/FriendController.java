@@ -1,8 +1,10 @@
 package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
+import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.Label;
+import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
 import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.response.ReceivedFriendRequestsResponse;
@@ -18,6 +20,7 @@ import java.net.URI;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singleton;
 
 @RestController
 @RequestMapping("/api/v1/friends")
@@ -29,13 +32,10 @@ public class FriendController implements FriendAPI {
     @PostMapping
     public ResponseEntity<Void> sendOrAcceptFriendRequest(
             @AuthenticatedUser Identifier userId,
-            FriendRequest friendRequest
+            @RequestBody FriendRequest friendRequest
     ) {
-        friendService.addFriend(FriendshipDTO.of(userId, friendRequest.toUserId()));
-
-        return ResponseEntity.created(
-            URI.create("api/v1/friends/requests/sent" + friendRequest.rawToUserId())
-        ).build();
+        friendService.addFriend(userId, friendRequest.targetDisplayId());
+        return ResponseEntity.noContent().build();
     }
 
     @Override

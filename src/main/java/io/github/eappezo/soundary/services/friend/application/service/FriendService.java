@@ -9,7 +9,8 @@ import io.github.eappezo.soundary.services.friend.application.FriendRetrieveSupp
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendRequestInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
-import io.github.eappezo.soundary.services.friend.domain.exception.AlreadySentRequestException;
+import io.github.eappezo.soundary.services.friend.domain.exception.CannotSentRequestException;
+import io.github.eappezo.soundary.services.friend.domain.exception.CannotRequestToMyselfException;
 import io.github.eappezo.soundary.services.friend.domain.exception.FriendLimitException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,20 +30,21 @@ public class FriendService {
     private Long maxFriendsCount;
 
     @Transactional
-    public void addFriend(FriendshipDTO friendship) {
-        if (!userRepository.existsById(friendship.to())) {
-            throw new UserNotFoundException();
+    public void addFriend(Identifier userId, String targetDisplayId) {
+        Identifier targetUserId = userRepository
+                .findIdByDisplayId(targetDisplayId)
+                .orElseThrow(UserNotFoundException::new);
+        if (userId.equals(targetUserId)) {
+            throw new CannotRequestToMyselfException();
         }
-        if (!userRepository.existsById(friendship.from())) {
-            throw new UserNotFoundException();
-        }
+        FriendshipDTO friendship = FriendshipDTO.of(userId, targetUserId);
         if (friendRepository.exists(friendship)) {
-            throw new AlreadySentRequestException();
+            throw new CannotSentRequestException();
         }
-        if (friendRepository.countFriends(friendship.from()) >= maxFriendsCount) {
+        if (friendRepository.countFriends(userId) >= maxFriendsCount) {
             throw new FriendLimitException();
         }
-        if (friendRepository.countFriends(friendship.to()) >= maxFriendsCount) {
+        if (friendRepository.countFriends(targetUserId) >= maxFriendsCount) {
             throw new FriendLimitException();
         }
         friendRepository.save(friendship);

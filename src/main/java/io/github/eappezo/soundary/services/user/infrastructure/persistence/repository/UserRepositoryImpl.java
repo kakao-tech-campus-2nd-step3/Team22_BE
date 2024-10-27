@@ -38,6 +38,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<Identifier> findIdByDisplayId(String displayId) {
+        Optional<Identifier> result = jpaUserRepository
+                .findUserIdByDisplayId(displayId)
+                .map(Identifier::fromString);
+        System.out.println(result.isEmpty());
+        return result;
+    }
+
+    @Override
     public boolean existsById(Identifier userId) {
         return jpaUserRepository.existsById(userId.toString());
     }

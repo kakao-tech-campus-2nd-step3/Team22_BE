@@ -10,6 +10,8 @@ public interface UserRepository {
 
     Optional<User> findById(Identifier userId);
 
+    Optional<Identifier> findIdByDisplayId(String displayId);
+
     boolean existsById(Identifier userId);
 
 }

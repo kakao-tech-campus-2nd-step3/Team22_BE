@@ -2,6 +2,7 @@ package io.github.eappezo.soundary.services.friend.application.service;
 
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.services.friend.application.FriendRepository;
 import io.github.eappezo.soundary.services.friend.application.FriendRetrieveSupport;
@@ -59,8 +60,8 @@ public class FriendService {
     }
 
     @Transactional(readOnly = true)
-    public List<FriendInfo> getFriendList(Identifier userId) {
-        return friendRetrieveSupport.findFriends(userId);
+    public List<FriendInfo> getFriendList(Identifier userId, List<Label> labels) {
+        return friendRetrieveSupport.findFriends(userId, labels);
     }
 
     @Transactional(readOnly = true)

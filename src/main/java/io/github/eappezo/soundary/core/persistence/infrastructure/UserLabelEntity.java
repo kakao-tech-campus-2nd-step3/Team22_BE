@@ -1,8 +1,6 @@
-package io.github.eappezo.soundary.services.user.infrastructure.persistence.entity;
+package io.github.eappezo.soundary.core.persistence.infrastructure;
 
-import io.github.eappezo.soundary.core.persistence.infrastructure.BaseEntity;
-import io.github.eappezo.soundary.services.user.domain.Label;
-import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.key.UserLabelEntityKey;
+import io.github.eappezo.soundary.core.user.Label;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

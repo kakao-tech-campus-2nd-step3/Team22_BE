@@ -3,6 +3,8 @@ package io.github.eappezo.soundary.services.friend.infrastructure;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity;
+import io.github.eappezo.soundary.core.persistence.infrastructure.QUserLabelEntity;
+import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.friend.application.FriendRetrieveSupport;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendRequestInfo;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static io.github.eappezo.soundary.core.persistence.infrastructure.QUserEntity.userEntity;
+import static io.github.eappezo.soundary.core.persistence.infrastructure.QUserLabelEntity.userLabelEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,12 +22,12 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<FriendInfo> findFriends(Identifier userId) {
+    public List<FriendInfo> findFriends(Identifier userId, List<Label> labels) {
         QFriendEntity fromTable = new QFriendEntity("fromTable");
         QFriendEntity toTable = new QFriendEntity("toTable");
         String rawUserId = userId.toString();
 
-        return jpaQueryFactory
+        final var query = jpaQueryFactory
                 .select(
                         new QFriendInfoProjection(
                                 fromTable.toUserId,
@@ -36,12 +39,25 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                 .from(fromTable)
                 .join(toTable)
                 .on(
-                        fromTable.toUserId.eq(toTable.fromUserId)
-                                .and(toTable.toUserId.eq(fromTable.fromUserId))
+                        fromTable.toUserId.eq(toTable.fromUserId),
+                        toTable.toUserId.eq(fromTable.fromUserId),
+                        fromTable.fromUserId.eq(rawUserId)
                 )
-                .where(fromTable.fromUserId.eq(rawUserId))
                 .join(userEntity)
-                .on(fromTable.toUserId.eq(userEntity.id))
+                .on(fromTable.toUserId.eq(userEntity.id));
+        if (labels.isEmpty()) {
+            return query.fetch()
+                    .stream()
+                    .map(FriendInfoProjection::toDto)
+                    .toList();
+        }
+        return query
+                .join(userLabelEntity)
+                .on(
+                        userEntity.id.eq(userLabelEntity.userId),
+                        userLabelEntity.label.in(labels)
+                )
+                .groupBy(fromTable.toUserId)
                 .fetch()
                 .stream()
                 .map(FriendInfoProjection::toDto)

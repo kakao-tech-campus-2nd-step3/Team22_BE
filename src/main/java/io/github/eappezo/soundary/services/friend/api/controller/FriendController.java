@@ -2,6 +2,7 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
 import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.response.ReceivedFriendRequestsResponse;
@@ -16,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+
 @RestController
 @RequestMapping("/api/v1/friends")
 @AllArgsConstructor
 public class FriendController implements FriendAPI {
     private final FriendService friendService;
 
+    @Override
     @PostMapping
     public ResponseEntity<Void> sendOrAcceptFriendRequest(
             @AuthenticatedUser Identifier userId,
@@ -34,6 +38,7 @@ public class FriendController implements FriendAPI {
         ).build();
     }
 
+    @Override
     @DeleteMapping("/requests/received/{target-user-id}")
     public ResponseEntity<Void> rejectFriendRequest(
             @AuthenticatedUser Identifier userId,
@@ -43,6 +48,7 @@ public class FriendController implements FriendAPI {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
     @DeleteMapping("/{target-user-id}")
     public ResponseEntity<Void> deleteFriend(
             @AuthenticatedUser Identifier userId,
@@ -52,13 +58,21 @@ public class FriendController implements FriendAPI {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
     @GetMapping
-    public ResponseEntity<FriendsResponse> getFriends(@AuthenticatedUser Identifier userId) {
+    public ResponseEntity<FriendsResponse> getFriends(
+            @AuthenticatedUser Identifier userId,
+            @RequestParam(required = false) List<Label> label
+    ) {
+        if (label == null) {
+            label = emptyList();
+        }
         return ResponseEntity.ok(
-            FriendsResponse.from(friendService.getFriendList(userId))
+            FriendsResponse.from(friendService.getFriendList(userId, label))
         );
     }
 
+    @Override
     @GetMapping("/requests/received")
     public ResponseEntity<ReceivedFriendRequestsResponse> getReceivedRequests(
         @AuthenticatedUser Identifier userId
@@ -68,6 +82,7 @@ public class FriendController implements FriendAPI {
         return ResponseEntity.ok(ReceivedFriendRequestsResponse.from(receivedRequests));
     }
 
+    @Override
     @GetMapping("/requests/sent")
     public ResponseEntity<SentFriendRequestsResponse> getSentRequests(
         @AuthenticatedUser Identifier userId

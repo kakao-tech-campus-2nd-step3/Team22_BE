@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.user.domain;
+package io.github.eappezo.soundary.core.user;
 
 import io.github.eappezo.soundary.services.user.domain.exception.LabelInvalidValueException;
 
@@ -11,10 +11,10 @@ public enum Label {
     RNB,
     EDM;
 
-    public static Label getLabel(String label){
-        try{
+    public static Label from(String label) {
+        try {
             return Label.valueOf(label);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new LabelInvalidValueException();
         }
     }

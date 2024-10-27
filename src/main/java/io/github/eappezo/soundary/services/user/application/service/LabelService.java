@@ -4,9 +4,9 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.services.user.application.dto.UserLabelDto;
 import io.github.eappezo.soundary.services.user.application.dto.UserLabelList;
-import io.github.eappezo.soundary.services.user.domain.Label;
-import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.UserLabelEntity;
-import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.key.UserLabelEntityKey;
+import io.github.eappezo.soundary.core.user.Label;
+import io.github.eappezo.soundary.core.persistence.infrastructure.UserLabelEntity;
+import io.github.eappezo.soundary.core.persistence.infrastructure.UserLabelEntityKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class LabelService {
     public void deleteLabel(Identifier userId, String label) {
 
         labelRepository.deleteById(
-            getUserLabelEntityKey(userId.toString(), Label.getLabel(label.toUpperCase())));
+            getUserLabelEntityKey(userId.toString(), Label.from(label.toUpperCase())));
     }
 
     public UserLabelList getUserLabelList(Identifier userId) {

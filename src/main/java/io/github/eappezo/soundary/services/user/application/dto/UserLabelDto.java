@@ -2,7 +2,7 @@ package io.github.eappezo.soundary.services.user.application.dto;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.user.api.dto.LabelAddRequest;
-import io.github.eappezo.soundary.services.user.domain.Label;
+import io.github.eappezo.soundary.core.user.Label;
 import java.util.List;
 
 public record UserLabelDto(
@@ -14,7 +14,7 @@ public record UserLabelDto(
         return new UserLabelDto(
             userId.toString(),
             labelAddRequest.labels().stream()
-                .map(label -> Label.getLabel(label.toUpperCase()))
+                .map(label -> Label.from(label.toUpperCase()))
                 .toList()
         );
     }

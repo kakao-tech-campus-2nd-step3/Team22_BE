@@ -21,6 +21,7 @@ public record ReceivedSharedMusicProjection(
         @Nullable String previewMp3Url,
         Long durationInSeconds,
         String comment,
+        Boolean isLiked,
         LocalDateTime sharedAt
 ) {
     @QueryProjection
@@ -33,6 +34,7 @@ public record ReceivedSharedMusicProjection(
                 getSharedUserInfo(),
                 getTrack(),
                 comment,
+                isLiked,
                 sharedAt
         );
     }

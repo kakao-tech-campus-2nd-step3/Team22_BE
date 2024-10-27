@@ -30,6 +30,7 @@ public record RetrieveReceivedSharedMusicResponse(
             FromUserResponseDto fromUser,
             TrackResponseDto track,
             String comment,
+            Boolean isLiked,
             @Schema(example = "2024-11-23 00:00:00", type = "string")
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime sharedAt
@@ -40,6 +41,7 @@ public record RetrieveReceivedSharedMusicResponse(
                     FromUserResponseDto.from(sharedMusic.fromUser()),
                     TrackResponseDto.from(sharedMusic.track()),
                     sharedMusic.comment(),
+                    sharedMusic.isLiked(),
                     sharedMusic.sharedAt()
             );
         }

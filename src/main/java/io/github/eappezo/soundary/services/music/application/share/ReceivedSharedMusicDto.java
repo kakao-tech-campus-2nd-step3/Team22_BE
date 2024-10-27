@@ -7,6 +7,7 @@ public record ReceivedSharedMusicDto(
         SharedUserInfo fromUser,
         SimpleTrackDto track,
         String comment,
+        Boolean isLiked,
         LocalDateTime sharedAt
 ) {
     public record SharedUserInfo(

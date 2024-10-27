@@ -17,6 +17,7 @@ import java.util.List;
 
 import static io.github.eappezo.soundary.core.persistence.infrastructure.QUserEntity.userEntity;
 import static io.github.eappezo.soundary.services.music.infrastructure.persistence.QSharedMusicEntity.sharedMusicEntity;
+import static io.github.eappezo.soundary.services.music.infrastructure.persistence.QSharedMusicLikeEntity.sharedMusicLikeEntity;
 import static io.github.eappezo.soundary.services.music.infrastructure.persistence.QSharedMusicTargetEntity.sharedMusicTargetEntity;
 import static io.github.eappezo.soundary.services.music.infrastructure.persistence.QTrackEntity.trackEntity;
 
@@ -90,6 +91,8 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
 
     @Override
     public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
+        String rawUserId = userId.toString();
+
         return jpaQueryFactory
                 .select(
                         new QReceivedSharedMusicProjection(
@@ -106,18 +109,24 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                                 trackEntity.previewMp3Url,
                                 trackEntity.durationInSeconds,
                                 sharedMusicEntity.comment,
+                                sharedMusicLikeEntity.likedUserId.isNotNull(),
                                 sharedMusicEntity.createdAt
                         )
                 )
                 .from(sharedMusicTargetEntity)
                 .join(sharedMusicEntity)
-                .on(sharedMusicTargetEntity.sharedMusicId.eq(sharedMusicEntity.id))
+                .on(
+                        sharedMusicTargetEntity.sharedMusicId.eq(sharedMusicEntity.id),
+                        sharedMusicTargetEntity.targetUserId.eq(rawUserId)
+                )
                 .join(trackEntity)
                 .on(sharedMusicEntity.trackId.eq(trackEntity.id))
                 .join(userEntity)
                 .on(sharedMusicEntity.fromUserId.eq(userEntity.id))
-                .where(
-                        sharedMusicTargetEntity.targetUserId.eq(userId.toString())
+                .leftJoin(sharedMusicLikeEntity)
+                .on(
+                        sharedMusicLikeEntity.sharedMusicId.eq(sharedMusicEntity.id),
+                        sharedMusicLikeEntity.likedUserId.eq(rawUserId)
                 )
                 .fetch()
                 .stream()

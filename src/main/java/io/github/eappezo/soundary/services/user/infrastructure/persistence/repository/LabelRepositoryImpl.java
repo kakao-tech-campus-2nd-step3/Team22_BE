@@ -42,12 +42,16 @@ public class LabelRepositoryImpl implements LabelRepository {
     }
 
     @Override
-    public void deleteById(UserLabelEntityKey userLabelEntityKey) {
-        jpaLabelRepository.deleteById(userLabelEntityKey);
+    public void deleteLabel(Identifier userId, Label label) {
+        jpaLabelRepository.deleteById(UserLabelEntityKey.of(userId, label));
     }
 
     @Override
-    public List<UserLabelEntity> findByUserId(Identifier userId) {
-        return jpaLabelRepository.findByUserId(userId.toString());
+    public List<Label> findByUserId(Identifier userId) {
+        return jpaLabelRepository
+                .findByUserId(userId.toString())
+                .stream()
+                .map(UserLabelEntity::getLabel)
+                .toList();
     }
 }

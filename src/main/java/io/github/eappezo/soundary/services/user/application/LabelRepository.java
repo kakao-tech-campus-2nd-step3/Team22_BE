@@ -14,7 +14,7 @@ public interface LabelRepository {
 
     void saveAll(Identifier userId, List<Label> labels);
 
-    void deleteById(UserLabelEntityKey userLabelEntityKey);
+    void deleteLabel(Identifier userId, Label label);
 
-    List<UserLabelEntity> findByUserId(Identifier userId);
+    List<Label> findByUserId(Identifier userId);
 }

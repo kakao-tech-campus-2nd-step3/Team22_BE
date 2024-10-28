@@ -6,7 +6,6 @@ import io.github.eappezo.soundary.services.music.application.search.TrackBatchIn
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
-import io.github.eappezo.soundary.services.music.infrastructure.persistence.TrackEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,21 +23,18 @@ import static java.util.stream.Collectors.joining;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TrackBatchInserterImpl implements TrackBatchInserter {
+public class JdbcTrackBatchInserter implements TrackBatchInserter {
     private final IdentifierGenerator identifierGenerator;
     private final JdbcTemplate jdbcTemplate;
 
     private static final String linkBatchSql = """
-            INSERT INTO platform_track_link (platform, platform_track_id, track_id)
+            INSERT IGNORE INTO platform_track_link (platform, platform_track_id, track_id)
             VALUES (?, ?, ?)
-            ON DUPLICATE KEY UPDATE track_id = VALUES(track_id)
             """;
 
     private static final String insertBatchSql = """
-            INSERT INTO `tracks` (id, title, album_title, serialized_artists, album_cover_url, preview_mp3_url, duration_in_seconds)
+            INSERT IGNORE INTO `tracks` (id, title, album_title, serialized_artists, album_cover_url, preview_mp3_url, duration_in_seconds)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE title = VALUES(title), album_title = VALUES(album_title), serialized_artists = VALUES(serialized_artists),
-            album_cover_url = VALUES(album_cover_url), preview_mp3_url = VALUES(preview_mp3_url), duration_in_seconds = VALUES(duration_in_seconds)
             """;
 
     @Override

@@ -4,6 +4,7 @@ import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.persistence.PersistenceOperationGateway;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
+import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.authentication.application.*;
 import io.github.eappezo.soundary.services.authentication.domain.SocialAccountRepository;
 import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
@@ -31,10 +32,16 @@ public class OAuthService {
     }
 
     private User getSocialUserOrCreateBy(OAuthResult oAuthResult) {
-        return socialAccountRepository
+        User user = socialAccountRepository
                 .findUserIdBy(oAuthResult.platform(), oAuthResult.socialId())
                 .map((it) -> userRepository.findById(it).orElseThrow(UserNotFoundException::new))
                 .orElseGet(() -> socialUserCreationSupport.registerNewSocialUserBy(oAuthResult));
+        if (user.isLeaved()) {
+            socialAccountRepository.removeById(oAuthResult.platform(), oAuthResult.socialId());
+            userRefreshTokenRepository.deleteByUserId(user.getIdentifier());
+            return socialUserCreationSupport.registerNewSocialUserBy(oAuthResult);
+        }
+        return user;
     }
 
     private LoginResultDto createAuthentication(User user) {

@@ -62,13 +62,18 @@ public class FriendController implements FriendAPI {
     @GetMapping
     public ResponseEntity<FriendsResponse> getFriends(
             @AuthenticatedUser Identifier userId,
-            @RequestParam(required = false) List<Label> label
+            @RequestParam(name = "label", required = false) List<String> rawLabels
     ) {
-        if (label == null) {
-            label = emptyList();
+        List<Label> labels;
+        if (rawLabels == null) {
+            labels = emptyList();
+        } else {
+            labels = rawLabels.stream()
+                .map((label) -> Label.from(label.toUpperCase()))
+                .toList();
         }
         return ResponseEntity.ok(
-            FriendsResponse.from(friendService.getFriendList(userId, label))
+            FriendsResponse.from(friendService.getFriendList(userId, labels))
         );
     }
 

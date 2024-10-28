@@ -2,7 +2,6 @@ package io.github.eappezo.soundary.services.friend.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.friend.api.dto.request.FriendRequest;
 import io.github.eappezo.soundary.services.friend.api.dto.response.FriendsResponse;
 import io.github.eappezo.soundary.services.friend.api.dto.response.ReceivedFriendRequestsResponse;
@@ -50,7 +49,7 @@ public interface FriendAPI {
     })
     ResponseEntity<FriendsResponse> getFriends(
             @AuthenticatedUser Identifier userId,
-            @RequestParam List<Label> label
+            @RequestParam(name = "label", required = false) List<String> rawLabels
     );
 
     @Operation(summary = "받은 친구 요청 목록 조회", description = "받은 친구 요청의 목록을 조회합니다.")

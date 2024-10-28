@@ -25,12 +25,13 @@ public class SecurityConfig {
                         (auth) -> {
                             auth.requestMatchers("/api/login").anonymous();
                             auth.requestMatchers("/api/refresh").anonymous();
+                            auth.requestMatchers("/api/v1/me/default-info").hasRole("ROLE_PENDING");
                             auth.requestMatchers(
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**",
                                     "/exception/**"
                             ).permitAll();
-                            auth.anyRequest().authenticated();
+                            auth.anyRequest().hasRole("ROLE_USER");
                         }
                 )
                 .csrf(AbstractHttpConfigurer::disable)

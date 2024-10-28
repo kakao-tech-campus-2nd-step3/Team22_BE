@@ -1,6 +1,7 @@
 package io.github.eappezo.soundary.services.user.api.controller;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.user.api.dto.LabelAddRequest;
 import io.github.eappezo.soundary.services.user.api.dto.LabelListResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +20,7 @@ public interface LabelAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "유저 라벨 추가 성공")
     })
-    ResponseEntity<Void> addLabel(
+    void addLabel(
         @Parameter(hidden = true) Identifier userId, LabelAddRequest labelAddRequest
     );
 
@@ -27,7 +28,7 @@ public interface LabelAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "유저 라벨 삭제 성공")
     })
-    ResponseEntity<Void> deleteLabel(
+    void deleteLabel(
         @Parameter(hidden = true) Identifier userId, String label
     );
 
@@ -35,7 +36,7 @@ public interface LabelAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "유저 라벨 목록 조회 성공")
     })
-    ResponseEntity<LabelListResponse> getLabelList(
+    LabelListResponse getLabels(
         @Parameter(hidden = true) Identifier userId
     );
 

@@ -9,7 +9,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class FCMKeyManager implements Serializable {
+public class FCMKey implements Serializable {
     private String userId;
     private String fcmToken;
 }

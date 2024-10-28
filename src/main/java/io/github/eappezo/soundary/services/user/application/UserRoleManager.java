@@ -15,4 +15,6 @@ public interface UserRoleManager {
 
     List<UserRole> getRolesOf(Identifier userId);
 
+    boolean hasRole(Identifier userId, UserRole role);
+
 }

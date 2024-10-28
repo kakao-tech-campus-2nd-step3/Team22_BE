@@ -2,14 +2,14 @@ package io.github.eappezo.soundary.services.user.domain.exception;
 
 import io.github.eappezo.soundary.core.exception.ErrorCode;
 
-public enum LabelErrorCode implements ErrorCode {
-
-    LABEL_INVALID_VALUE("L001", "전달된 label 값이 정의된 값이 아님");
+public enum UserErrorCode implements ErrorCode {
+    LABEL_INVALID_VALUE("U001", "전달된 label 값이 정의된 값이 아님"),
+    ALREADY_INITIALIZED_USER("U002", "이미 초기화된 사용자 정보가 존재함"),;
 
     private final String code;
     private final String message;
 
-    LabelErrorCode(String code, String message) {
+    UserErrorCode(String code, String message) {
         this.code = code;
         this.message = message;
     }

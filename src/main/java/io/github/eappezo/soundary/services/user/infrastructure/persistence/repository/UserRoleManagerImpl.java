@@ -39,4 +39,9 @@ public class UserRoleManagerImpl implements UserRoleManager {
                 .map(UserRoleEntity::getRole)
                 .toList();
     }
+
+    @Override
+    public boolean hasRole(Identifier userId, UserRole role) {
+        return jpaUserRoleRepository.existsById(UserRoleEntityKey.of(userId, role));
+    }
 }

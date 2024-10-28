@@ -6,14 +6,14 @@ import io.github.eappezo.soundary.core.user.Label;
 import java.util.List;
 
 public record UserLabelDto(
-    String userId,
+    Identifier userId,
     List<Label> labels
 ) {
 
     public static UserLabelDto from(Identifier userId, LabelAddRequest labelAddRequest) {
         return new UserLabelDto(
-            userId.toString(),
-            labelAddRequest.labels().stream()
+            userId,
+            labelAddRequest.rawLabels().stream()
                 .map(label -> Label.from(label.toUpperCase()))
                 .toList()
         );

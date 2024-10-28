@@ -5,6 +5,6 @@ import io.github.eappezo.soundary.core.exception.APIException;
 public class LabelInvalidValueException extends APIException {
 
     public LabelInvalidValueException() {
-        super(LabelErrorCode.LABEL_INVALID_VALUE);
+        super(UserErrorCode.LABEL_INVALID_VALUE);
     }
 }

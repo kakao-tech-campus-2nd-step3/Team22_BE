@@ -38,25 +38,13 @@ public class User {
         );
     }
 
-    public User updateUserInfo(
-            @Nullable String nickname,
-            @Nullable String description,
-            @Nullable String profileImageUrl
-    ){
-        return new User(
-                this.identifier,
-                this.displayId,
-                nickname != null ? nickname : this.nickname,
-                description != null ? description : this.description,
-                profileImageUrl != null ? profileImageUrl : this.profileImageUrl,
-                this.roles,
-                this.signupAt
-        );
-    }
-
     public UserRole getPrimaryRole() {
         return this.roles.stream()
                 .max(Comparator.comparingInt(UserRole::getPriority))
                 .orElseThrow(IllegalStateException::new);  // roles가 비어있을 경우 기본값을 반환
+    }
+
+    public boolean isLeaved() {
+        return this.roles.contains(UserRole.LEAVED);
     }
 }

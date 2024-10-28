@@ -1,6 +1,8 @@
 package io.github.eappezo.soundary.services.user.api.controller;
 
+import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.user.api.dto.LabelAddRequest;
 import io.github.eappezo.soundary.services.user.api.dto.LabelListResponse;
 import io.github.eappezo.soundary.services.user.application.dto.UserLabelDto;
@@ -19,28 +21,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/labels")
 @RequiredArgsConstructor
 public class LabelController implements LabelAPI {
-
     private final LabelService labelService;
 
     @Override
-    @PostMapping()
-    public ResponseEntity<Void> addLabel(Identifier userId, LabelAddRequest labelAddRequest) {
-        labelService.addLabel(UserLabelDto.from(userId, labelAddRequest));
-        return ResponseEntity.created(URI.create("api/v1/labels" + userId)).build();
+    @PostMapping
+    public void addLabel(
+            Identifier userId,
+            LabelAddRequest request
+    ) {
+        labelService.addLabel(userId, request.labels());
     }
 
     @Override
     @DeleteMapping("/{label}")
-    public ResponseEntity<Void> deleteLabel(Identifier userId,
-        @PathVariable String label) {
-        labelService.deleteLabel(userId, label);
-        return ResponseEntity.noContent().build();
+    public void deleteLabel(
+            @AuthenticatedUser Identifier userId,
+            @PathVariable("label") String label
+    ) {
+        labelService.deleteLabel(userId, Label.from(label.toUpperCase()));
     }
 
     @Override
-    @GetMapping()
-    public ResponseEntity<LabelListResponse> getLabelList(Identifier userId) {
-        return ResponseEntity.ok(LabelListResponse.from(labelService.getUserLabelList(userId)));
+    @GetMapping
+    public LabelListResponse getLabels(
+            @AuthenticatedUser Identifier userId
+    ) {
+        return LabelListResponse.from(labelService.getUserLabelList(userId));
     }
-
 }

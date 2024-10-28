@@ -9,29 +9,29 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class UserDeviceService {
-    private final UserDeviceRepository userDeviceRepository;
+    private final JpaUserDeviceRepository jpaUserDeviceRepository;
 
     @Transactional
     public boolean addDevice(String userId, String fcmToken) {
-        if(userDeviceRepository.existsById(new FCMKeyManager(userId, fcmToken))){
+        if(jpaUserDeviceRepository.existsById(new FCMKey(userId, fcmToken))){
             return false;
         }
-        userDeviceRepository.deleteAllByFcmToken(fcmToken);
-        userDeviceRepository.save(new UserDevice(userId, fcmToken));
+        jpaUserDeviceRepository.deleteAllByFcmToken(fcmToken);
+        jpaUserDeviceRepository.save(new UserDevice(userId, fcmToken));
         return true;
     }
 
     @Transactional
     public boolean removeDevice(String userId, String fcmToken) {
-        if(!userDeviceRepository.existsById(new FCMKeyManager(userId, fcmToken))){
+        if(!jpaUserDeviceRepository.existsById(new FCMKey(userId, fcmToken))){
             return false;
         }
-        userDeviceRepository.deleteById(new FCMKeyManager(userId, fcmToken));
+        jpaUserDeviceRepository.deleteById(new FCMKey(userId, fcmToken));
         return true;
     }
 
     public List<String> getFcmTokensByUserId(String userId){
-        return userDeviceRepository.findAllByUserId(userId)
+        return jpaUserDeviceRepository.findAllByUserId(userId)
                 .stream()
                 .map(UserDevice::getFcmToken)
                 .toList();
@@ -39,6 +39,6 @@ public class UserDeviceService {
 
     @Transactional
     public void removeAllDevicesByUserId(String userId){
-        userDeviceRepository.deleteAllByUserId(userId);
+        jpaUserDeviceRepository.deleteAllByUserId(userId);
     }
 }

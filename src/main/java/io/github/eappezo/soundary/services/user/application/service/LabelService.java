@@ -10,26 +10,21 @@ import io.github.eappezo.soundary.core.persistence.infrastructure.UserLabelEntit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class LabelService {
-
     private final LabelRepository labelRepository;
 
-    public void addLabel(UserLabelDto userLabelDto) {
-        String userId = userLabelDto.userId();
-
-        labelRepository.saveAll(
-            userLabelDto.labels().stream()
-                .map(label -> new UserLabelEntity(userId, label))
-                .toList()
-        );
+    public void addLabel(Identifier userId, List<Label> labels) {
+        labelRepository.saveAll(userId, labels);
     }
 
-    public void deleteLabel(Identifier userId, String label) {
-
+    public void deleteLabel(Identifier userId, Label label) {
         labelRepository.deleteById(
-            getUserLabelEntityKey(userId.toString(), Label.from(label.toUpperCase())));
+            getUserLabelEntityKey(userId.toString(), label)
+        );
     }
 
     public UserLabelList getUserLabelList(Identifier userId) {

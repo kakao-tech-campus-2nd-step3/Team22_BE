@@ -4,7 +4,6 @@ import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.persistence.PersistenceOperationGateway;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
-import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.authentication.application.*;
 import io.github.eappezo.soundary.services.authentication.domain.SocialAccountRepository;
 import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;

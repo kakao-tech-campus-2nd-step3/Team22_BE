@@ -22,14 +22,17 @@ public class SharedMusicService {
     @Transactional(readOnly = true)
     public Page<SentSharedMusicDto> getSentSharedMusic(
             Identifier userId,
-            SentSharedMusicQueryCondition condition
+            SharedMusicQueryCondition condition
     ) {
         return sharedMusicRetrieveSupport.getSentSharedMusic(userId, condition);
     }
 
     @Transactional(readOnly = true)
-    public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
-        return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId);
+    public Page<ReceivedSharedMusicDto> getReceivedSharedMusic(
+            Identifier userId,
+            SharedMusicQueryCondition condition
+    ) {
+        return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId, condition);
     }
 
     @Transactional

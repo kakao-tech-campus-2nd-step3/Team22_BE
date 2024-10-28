@@ -5,13 +5,14 @@ import jakarta.annotation.Nullable;
 
 import java.time.LocalDateTime;
 
-public record SentSharedMusicQueryCondition(
+public record SharedMusicQueryCondition(
         Integer page,
         Integer size,
+        Boolean onlyExposured,
         @Nullable LocalDateTime startDate,
         @Nullable LocalDateTime endDate
 ) {
-    public SentSharedMusicQueryCondition {
+    public SharedMusicQueryCondition {
         if (page < 0) {
             throw new InvalidRequestPayloadException();
         }

@@ -9,9 +9,12 @@ public interface SharedMusicRetrieveSupport {
 
     Page<SentSharedMusicDto> getSentSharedMusic(
             Identifier userId,
-            SentSharedMusicQueryCondition condition
+            SharedMusicQueryCondition condition
     );
 
-    List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId);
+    Page<ReceivedSharedMusicDto> getReceivedSharedMusic(
+            Identifier userId,
+            SharedMusicQueryCondition condition
+    );
 
 }

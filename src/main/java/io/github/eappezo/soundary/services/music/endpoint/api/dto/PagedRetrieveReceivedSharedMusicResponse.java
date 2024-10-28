@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,19 +14,23 @@ import java.util.Arrays;
 import java.util.List;
 
 @JsonNaming(SnakeCaseStrategy.class)
-public record RetrieveReceivedSharedMusicResponse(
-        List<ReceivedSentSharedMusicResponseDto> sharedMusics
+public record PagedRetrieveReceivedSharedMusicResponse(
+        long total,
+        int totalPages,
+        List<SharedMusicResponseDto> sharedMusics
 ) {
-    public static RetrieveReceivedSharedMusicResponse from(List<ReceivedSharedMusicDto> sharedMusics) {
-        return new RetrieveReceivedSharedMusicResponse(
-                sharedMusics.stream()
-                        .map(ReceivedSentSharedMusicResponseDto::from)
+    public static PagedRetrieveReceivedSharedMusicResponse from(Page<ReceivedSharedMusicDto> sharedMusics) {
+        return new PagedRetrieveReceivedSharedMusicResponse(
+                sharedMusics.total(),
+                sharedMusics.totalPages(),
+                sharedMusics.content().stream()
+                        .map(SharedMusicResponseDto::from)
                         .toList()
         );
     }
 
     @JsonNaming(SnakeCaseStrategy.class)
-    private record ReceivedSentSharedMusicResponseDto(
+    private record SharedMusicResponseDto(
             String id,
             FromUserResponseDto fromUser,
             TrackResponseDto track,
@@ -35,8 +40,8 @@ public record RetrieveReceivedSharedMusicResponse(
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime sharedAt
     ) {
-        public static ReceivedSentSharedMusicResponseDto from(ReceivedSharedMusicDto sharedMusic) {
-            return new ReceivedSentSharedMusicResponseDto(
+        public static SharedMusicResponseDto from(ReceivedSharedMusicDto sharedMusic) {
+            return new SharedMusicResponseDto(
                     sharedMusic.id(),
                     FromUserResponseDto.from(sharedMusic.fromUser()),
                     TrackResponseDto.from(sharedMusic.track()),

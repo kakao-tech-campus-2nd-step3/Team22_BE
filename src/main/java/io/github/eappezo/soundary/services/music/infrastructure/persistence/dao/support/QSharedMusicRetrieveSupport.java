@@ -6,10 +6,11 @@ import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicQueryCondition;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicQueryCondition;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -25,11 +26,12 @@ import static io.github.eappezo.soundary.services.music.infrastructure.persisten
 @RequiredArgsConstructor
 public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
     private final JPAQueryFactory jpaQueryFactory;
+    @Value("${app.shared-music.exposure-duration-days}") private int exposureDurationDays;
 
     @Override
     public Page<SentSharedMusicDto> getSentSharedMusic(
             Identifier userId,
-            SentSharedMusicQueryCondition condition
+            SharedMusicQueryCondition condition
     ) {
         long offset = condition.offset();
         String rawUserId = userId.toString();
@@ -39,7 +41,8 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                 .where(
                         sharedMusicEntity.fromUserId.eq(rawUserId),
                         creatAtAfterStartDate(condition.startDate()),
-                        creatAtBeforeEndDate(condition.endDate())
+                        creatAtBeforeEndDate(condition.endDate()),
+                        isWithinExposureDuration(condition.onlyExposured())
                 )
                 .fetchOne();
         assert total != null;
@@ -75,25 +78,25 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
         return new Page<>(condition.page(), condition.size(), total, contents);
     }
 
-    private BooleanExpression creatAtAfterStartDate(@Nullable LocalDateTime startDate) {
-        if (startDate == null) {
-            return null;
-        }
-        return sharedMusicEntity.createdAt.after(startDate);
-    }
-
-    private BooleanExpression creatAtBeforeEndDate(@Nullable LocalDateTime endDate) {
-        if (endDate == null) {
-            return null;
-        }
-        return sharedMusicEntity.createdAt.before(endDate);
-    }
-
     @Override
-    public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
+    public Page<ReceivedSharedMusicDto> getReceivedSharedMusic(
+            Identifier userId,
+            SharedMusicQueryCondition condition
+    ) {
+        long offset = condition.offset();
         String rawUserId = userId.toString();
-
-        return jpaQueryFactory
+        Long total = jpaQueryFactory
+                .select(sharedMusicTargetEntity.targetUserId.count())
+                .from(sharedMusicTargetEntity)
+                .where(
+                        sharedMusicTargetEntity.targetUserId.eq(rawUserId),
+                        creatAtAfterStartDate(condition.startDate()),
+                        creatAtBeforeEndDate(condition.endDate()),
+                        isWithinExposureDuration(condition.onlyExposured())
+                )
+                .fetchOne();
+        assert total != null;
+        List<ReceivedSharedMusicDto> contents = jpaQueryFactory
                 .select(
                         new QReceivedSharedMusicProjection(
                                 sharedMusicEntity.id,
@@ -128,9 +131,35 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                         sharedMusicLikeEntity.sharedMusicId.eq(sharedMusicEntity.id),
                         sharedMusicLikeEntity.likedUserId.eq(rawUserId)
                 )
+                .offset(offset)
+                .limit(condition.size())
                 .fetch()
                 .stream()
                 .map(ReceivedSharedMusicProjection::toDto)
                 .toList();
+        return new Page<>(condition.page(), condition.size(), total, contents);
+    }
+
+    private BooleanExpression creatAtAfterStartDate(@Nullable LocalDateTime startDate) {
+        if (startDate == null) {
+            return null;
+        }
+        return sharedMusicEntity.createdAt.after(startDate);
+    }
+
+    private BooleanExpression creatAtBeforeEndDate(@Nullable LocalDateTime endDate) {
+        if (endDate == null) {
+            return null;
+        }
+        return sharedMusicEntity.createdAt.before(endDate);
+    }
+
+    private BooleanExpression isWithinExposureDuration(boolean onlyExposured) {
+        if (!onlyExposured) {
+            return null;
+        }
+        return sharedMusicEntity
+                .createdAt
+                .after(LocalDateTime.now().minusDays(exposureDurationDays));
     }
 }

@@ -1,6 +1,6 @@
 package io.github.eappezo.soundary.services.music.infrastructure;
 
-import io.github.eappezo.soundary.services.music.application.authentication.MusicPlatformAuthenticationCacheAdvice;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicStatisticsCacheAdvice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 
 @Component
 @RequiredArgsConstructor
-public class DefaultMusicPlatformAuthenticationCacheAdvice implements MusicPlatformAuthenticationCacheAdvice {
+public class DefaultSharedMusicStatisticsCacheAdvice implements SharedMusicStatisticsCacheAdvice {
     private static final String DELIMITER = "::";
-    private final MusicPlatformAuthenticationCacheAdviceDelegate delegate;
+    private final SharedMusicStatisticsCacheAdviceDelegate delegate;
 
     public <T> T lookAside(Supplier<T> supplier, Object... keys) {
         return delegate.cache(generateKey(keys), supplier);
@@ -38,8 +38,8 @@ public class DefaultMusicPlatformAuthenticationCacheAdvice implements MusicPlatf
     }
 
     @Component
-    public static class MusicPlatformAuthenticationCacheAdviceDelegate {
-        private static final String CACHE_NAME = "MUSIC_PLATFORM_AUTHENTICATION";
+    public static class SharedMusicStatisticsCacheAdviceDelegate {
+        private static final String CACHE_NAME = "SHARED_MUSIC_STATISTICS";
 
         @Cacheable(value = CACHE_NAME, key = "#key")
         public <T> T cache(String key, Supplier<T> supplier) {

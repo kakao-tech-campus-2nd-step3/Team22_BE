@@ -13,6 +13,9 @@ logging:
 app:
   max-friends-count: 20
   music-search-limit: 10
+  shared-music:
+    statistics-limit: 10
+    exposure-duration-days: 30
   headers:
     auth-token-header: Authorization
   user:

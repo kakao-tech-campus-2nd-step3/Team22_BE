@@ -65,7 +65,11 @@ public record PagedRetrieveSentSharedMusicResponse(
             return new TrackResponseDto(
                     track.id(),
                     track.title(),
-                    Arrays.stream(track.serializedArtists().split(", ")).toList(),
+                    Arrays.stream(
+                            track
+                                    .serializedArtists()
+                                    .split(SimpleTrackDto.ARTISTS_DELIMITER)
+                    ).toList(),
                     track.albumCoverUrl(),
                     track.previewMp3Url(),
                     track.durationInSeconds()

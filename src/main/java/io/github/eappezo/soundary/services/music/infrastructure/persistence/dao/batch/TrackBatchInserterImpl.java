@@ -3,6 +3,7 @@ package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao
 import io.github.eappezo.soundary.core.identification.IdentifierGenerator;
 import io.github.eappezo.soundary.services.music.application.search.SearchedTrackDto;
 import io.github.eappezo.soundary.services.music.application.search.TrackBatchInserter;
+import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.TrackEntity;
@@ -52,7 +53,7 @@ public class TrackBatchInserterImpl implements TrackBatchInserter {
                     trackId,
                     track.title(),
                     track.album(),
-                    String.join(TrackEntity.ARTISTS_DELIMITER, track.artists()),
+                    String.join(SimpleTrackDto.ARTISTS_DELIMITER, track.artists()),
                     track.albumCoverUrl(),
                     track.previewMp3Url(),
                     track.durationInSeconds()

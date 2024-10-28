@@ -2,12 +2,12 @@ package io.github.eappezo.soundary.services.music.endpoint.api.controller;
 
 import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
+import io.github.eappezo.soundary.core.exception.common.NotAuthorizedException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicQueryCondition;
 import io.github.eappezo.soundary.services.music.application.share.service.SharedMusicService;
-import io.github.eappezo.soundary.services.music.domain.exception.CannotRetrieveSharedMusicOfOtherUserException;
 import io.github.eappezo.soundary.services.music.endpoint.api.SharedMusicAPI;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveSentSharedMusicResponse;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveReceivedSharedMusicResponse;
@@ -17,7 +17,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -40,7 +39,7 @@ public class SharedMusicController implements SharedMusicAPI {
             @RequestParam(name = "shared-by", required = false) Identifier fromUser
     ) {
         if (fromUser != null && !fromUser.equals(userId) && !onlyExposured) {
-            throw new CannotRetrieveSharedMusicOfOtherUserException();
+            throw new NotAuthorizedException();
         }
         if (fromUser == null) {
             fromUser = userId;

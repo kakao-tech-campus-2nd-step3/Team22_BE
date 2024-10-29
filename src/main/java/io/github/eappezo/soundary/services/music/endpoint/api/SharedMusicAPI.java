@@ -3,6 +3,7 @@ package io.github.eappezo.soundary.services.music.endpoint.api;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveReceivedSharedMusicResponse;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveSentSharedMusicResponse;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.SharedMusicLikesResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,6 +37,10 @@ public interface SharedMusicAPI {
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime startDate,
             @RequestParam(name = "end-date", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate
+    );
+
+    SharedMusicLikesResponse getLikesFromSharedMusic(
+            @PathVariable(name = "shared-music-id") Identifier sharedMusicId
     );
 
     void likeSharedMusic(

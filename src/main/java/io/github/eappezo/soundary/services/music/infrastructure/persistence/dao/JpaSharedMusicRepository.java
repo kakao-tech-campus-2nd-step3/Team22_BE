@@ -4,4 +4,7 @@ import io.github.eappezo.soundary.services.music.infrastructure.persistence.Shar
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaSharedMusicRepository extends JpaRepository<SharedMusicEntity, String> {
+
+    boolean existsByIdAndFromUserId(String id, String fromUserId);
+
 }

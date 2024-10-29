@@ -2,15 +2,16 @@ package io.github.eappezo.soundary.services.music.endpoint.api.controller;
 
 import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
-import io.github.eappezo.soundary.core.exception.common.NotAuthorizedException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikesDto;
 import io.github.eappezo.soundary.services.music.application.share.SharedMusicQueryCondition;
 import io.github.eappezo.soundary.services.music.application.share.service.SharedMusicService;
 import io.github.eappezo.soundary.services.music.endpoint.api.SharedMusicAPI;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveReceivedSharedMusicResponse;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveSentSharedMusicResponse;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.SharedMusicLikesResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,8 +39,8 @@ public class SharedMusicController implements SharedMusicAPI {
             @RequestParam(name = "only-exposured", defaultValue = "false") Boolean onlyExposured,
             @RequestParam(name = "shared-by", required = false) Identifier fromUser
     ) {
-        if (fromUser != null && !fromUser.equals(userId) && !onlyExposured) {
-            throw new NotAuthorizedException();
+        if (fromUser != null && !fromUser.equals(userId)) {
+            onlyExposured = true;
         }
         if (fromUser == null) {
             fromUser = userId;
@@ -82,12 +83,22 @@ public class SharedMusicController implements SharedMusicAPI {
     }
 
     @Override
+    @GetMapping("/sent/{shared-music-id}/likes")
+    public SharedMusicLikesResponse getLikesFromSharedMusic(
+            @PathVariable(name = "shared-music-id") Identifier sharedMusicId
+    ) {
+        SharedMusicLikesDto likes = sharedMusicService.getSharedMusicLikes(sharedMusicId);
+
+        return SharedMusicLikesResponse.from(likes);
+    }
+
+    @Override
     @PostMapping("/received/{shared-music-id}/likes")
     public void likeSharedMusic(
             @AuthenticatedUser Identifier userId,
-            @PathVariable(name = "shared-music-id") Identifier shareMusicId
+            @PathVariable(name = "shared-music-id") Identifier sharedMusicId
     ) {
-        sharedMusicService.likeMusic(userId, shareMusicId);
+        sharedMusicService.likeMusic(userId, sharedMusicId);
     }
 
     @Override

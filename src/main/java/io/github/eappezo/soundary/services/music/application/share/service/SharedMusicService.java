@@ -33,10 +33,22 @@ public class SharedMusicService {
         return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId, condition);
     }
 
+    @Transactional(readOnly = true)
+    public SharedMusicLikesDto getSharedMusicLikes(Identifier sharedMusicId) {
+        if (sharedMusicRepository.notExists(sharedMusicId)) {
+            throw new NotExistsSharedMusicException();
+        }
+        return sharedMusicRetrieveSupport.getSharedMusicLikes(sharedMusicId);
+    }
+
+
     @Transactional
     public void likeMusic(Identifier userId, Identifier sharedMusicId) {
         if (sharedMusicRepository.exists(sharedMusicId)) {
             throw new AlreadyLikedSharedMusicException();
+        }
+        if (!sharedMusicRepository.isSharedToUser(sharedMusicId, userId)) {
+            throw new NotExistsSharedMusicException();
         }
         sharedMusicLikeSupport.like(userId, sharedMusicId);
     }
@@ -44,6 +56,9 @@ public class SharedMusicService {
     @Transactional
     public void unlikeMusic(Identifier userId, Identifier sharedMusicId) {
         if (sharedMusicRepository.notExists(sharedMusicId)) {
+            throw new NotExistsSharedMusicException();
+        }
+        if (!sharedMusicRepository.isSharedToUser(sharedMusicId, userId)) {
             throw new NotExistsSharedMusicException();
         }
         sharedMusicLikeSupport.unlike(userId, sharedMusicId);

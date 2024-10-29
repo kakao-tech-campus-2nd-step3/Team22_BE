@@ -4,10 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicQueryCondition;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
+import io.github.eappezo.soundary.services.music.application.share.*;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -138,6 +135,33 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                 .map(ReceivedSharedMusicProjection::toDto)
                 .toList();
         return new Page<>(condition.page(), condition.size(), total, contents);
+    }
+
+    @Override
+    public SharedMusicLikesDto getSharedMusicLikes(Identifier sharedMusicId) {
+        int likes = jpaQueryFactory
+                .select(sharedMusicLikeEntity.likedUserId.count())
+                .from(sharedMusicLikeEntity)
+                .where(sharedMusicLikeEntity.sharedMusicId.eq(sharedMusicId.toString()))
+                .fetchOne().intValue();
+        List<SharedMusicLikesDto.LikedUser> likedUsers = jpaQueryFactory
+                .select(
+                        new QSharedMusicLikedUserProjection(
+                                sharedMusicLikeEntity.likedUserId,
+                                userEntity.displayId,
+                                userEntity.nickname,
+                                userEntity.profileImageUrl
+                        )
+                )
+                .from(sharedMusicLikeEntity)
+                .join(userEntity)
+                .on(sharedMusicLikeEntity.likedUserId.eq(userEntity.id))
+                .where(sharedMusicLikeEntity.sharedMusicId.eq(sharedMusicId.toString()))
+                .fetch()
+                .stream()
+                .map(SharedMusicLikedUserProjection::toLikedUser)
+                .toList();
+        return new SharedMusicLikesDto(likes, likedUsers);
     }
 
     private BooleanExpression creatAtAfterStartDate(@Nullable LocalDateTime startDate) {

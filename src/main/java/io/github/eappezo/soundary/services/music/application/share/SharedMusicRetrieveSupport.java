@@ -15,4 +15,6 @@ public interface SharedMusicRetrieveSupport {
             SharedMusicQueryCondition condition
     );
 
+    SharedMusicLikesDto getSharedMusicLikes(Identifier sharedMusicId);
+
 }

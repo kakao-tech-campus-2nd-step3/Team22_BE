@@ -2,6 +2,7 @@ package io.github.eappezo.soundary.services.user.application.service;
 
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.notification.UserDeviceRepository;
 import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
@@ -24,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserRoleManager userRoleManager;
     private final LabelRepository labelRepository;
+    private final UserDeviceRepository userDeviceRepository;
 
     @Transactional(readOnly = true)
     public UserInfo getUserInfo(Identifier userId) {
@@ -47,6 +49,7 @@ public class UserService {
 
         User updatedUser = patch.applyToUser(getUser(userId));
         userRepository.save(updatedUser);
+        userDeviceRepository.registerDevice(userId, userDeviceToken);
     }
 
     @Transactional

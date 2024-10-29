@@ -10,8 +10,8 @@ public interface UserDeviceRepository {
 
     boolean removeDevice(Identifier userId, String deviceToken);
 
-    List<String> getDevicesByUserId(String userId);
+    List<String> getDevicesByUserId(Identifier userId);
 
-    void removeAllDevicesByUserId(String userId);
+    void removeAllDevicesByUserId(Identifier userId);
 
 }

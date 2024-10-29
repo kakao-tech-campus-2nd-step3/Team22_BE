@@ -1,37 +1,20 @@
 package io.github.eappezo.soundary.advice.notification;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import io.github.eappezo.soundary.core.notification.Notification;
 
-public class FCMNotificationWrapper implements Notification {
-    private final Message message;
-    private final String title;
-    private final String body;
-    private final String targetToken;
-
-    public FCMNotificationWrapper(Message message, String title, String body, String targetToken) {
-        this.message = message;
-        this.title = title;
-        this.body = body;
-        this.targetToken = targetToken;
-    }
-
-    public Message message() {
-        return message;
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String getBody() {
-        return body;
-    }
-
-    @Override
-    public String getTargetToken() {
-        return targetToken;
+public record FCMNotificationWrapper(
+        String title,
+        String body
+) implements Notification {
+    public Message buildFCMMessage(String deviceToken) throws FirebaseMessagingException {
+        return Message.builder()
+                .setNotification(com.google.firebase.messaging.Notification.builder()
+                        .setTitle(title)
+                        .setBody(title)
+                        .build())
+                .setToken(deviceToken)  // 대상 디바이스의 등록 토큰
+                .build();
     }
 }

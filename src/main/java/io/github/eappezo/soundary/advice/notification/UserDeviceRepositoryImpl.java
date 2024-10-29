@@ -35,8 +35,8 @@ public class UserDeviceRepositoryImpl implements UserDeviceRepository {
     }
 
     @Override
-    public List<String> getDevicesByUserId(String userId){
-        return jpaUserDeviceRepository.findAllByUserId(userId)
+    public List<String> getDevicesByUserId(Identifier userId){
+        return jpaUserDeviceRepository.findAllByUserId(userId.toString())
                 .stream()
                 .map(UserDevice::getFcmToken)
                 .toList();
@@ -44,7 +44,7 @@ public class UserDeviceRepositoryImpl implements UserDeviceRepository {
 
     @Override
     @Transactional
-    public void removeAllDevicesByUserId(String userId){
-        jpaUserDeviceRepository.deleteAllByUserId(userId);
+    public void removeAllDevicesByUserId(Identifier userId){
+        jpaUserDeviceRepository.deleteAllByUserId(userId.toString());
     }
 }

@@ -2,10 +2,8 @@ package io.github.eappezo.soundary.core.notification;
 
 public interface Notification {
 
-    String getTitle();
+    String title();
 
-    String getBody();
-
-    String getTargetToken();
+    String body();
 
 }

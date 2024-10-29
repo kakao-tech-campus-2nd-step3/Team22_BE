@@ -1,13 +1,10 @@
 package io.github.eappezo.soundary.services.music.endpoint.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.eappezo.soundary.core.exception.APIException;
 import io.github.eappezo.soundary.core.exception.common.InvalidRequestPayloadException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 
 import java.util.List;
 

@@ -9,8 +9,8 @@ import io.github.eappezo.soundary.services.friend.application.FriendRetrieveSupp
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendRequestInfo;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendshipDTO;
-import io.github.eappezo.soundary.services.friend.domain.exception.CannotSentRequestException;
 import io.github.eappezo.soundary.services.friend.domain.exception.CannotRequestToMyselfException;
+import io.github.eappezo.soundary.services.friend.domain.exception.CannotSentRequestException;
 import io.github.eappezo.soundary.services.friend.domain.exception.FriendLimitException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

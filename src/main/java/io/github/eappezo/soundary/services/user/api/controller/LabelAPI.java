@@ -1,7 +1,6 @@
 package io.github.eappezo.soundary.services.user.api.controller;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.user.api.dto.LabelAddRequest;
 import io.github.eappezo.soundary.services.user.api.dto.LabelListResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +8,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

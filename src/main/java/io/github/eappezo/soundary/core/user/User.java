@@ -1,7 +1,6 @@
 package io.github.eappezo.soundary.core.user;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

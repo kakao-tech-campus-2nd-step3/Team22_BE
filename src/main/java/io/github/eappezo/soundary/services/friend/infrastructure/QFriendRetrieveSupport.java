@@ -3,7 +3,6 @@ package io.github.eappezo.soundary.services.friend.infrastructure;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity;
-import io.github.eappezo.soundary.core.persistence.infrastructure.QUserLabelEntity;
 import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.friend.application.FriendRetrieveSupport;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;

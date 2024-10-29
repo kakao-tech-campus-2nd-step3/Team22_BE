@@ -1,11 +1,7 @@
 package io.github.eappezo.soundary.core.persistence.infrastructure;
 
 import io.github.eappezo.soundary.core.user.Label;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

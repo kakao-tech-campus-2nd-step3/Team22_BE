@@ -2,7 +2,6 @@ package io.github.eappezo.soundary.services.music.endpoint.api.controller;
 
 import io.github.eappezo.soundary.services.music.application.share.MostLikedTracksDto;
 import io.github.eappezo.soundary.services.music.application.share.MostSharedTracksDto;
-import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
 import io.github.eappezo.soundary.services.music.application.share.service.SharedMusicStatisticsService;
 import io.github.eappezo.soundary.services.music.endpoint.api.SharedMusicStatisticsAPI;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.MostLikedTracksResponse;
@@ -11,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/shared-musics/statistics")

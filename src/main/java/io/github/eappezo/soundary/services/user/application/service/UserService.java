@@ -7,7 +7,6 @@ import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
-
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.services.user.application.UserRoleManager;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;

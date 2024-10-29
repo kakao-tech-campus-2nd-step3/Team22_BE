@@ -1,18 +1,18 @@
 package io.github.eappezo.soundary.services.user.infrastructure.persistence.repository;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.core.user.Label;
-import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.core.persistence.infrastructure.UserLabelEntity;
 import io.github.eappezo.soundary.core.persistence.infrastructure.UserLabelEntityKey;
+import io.github.eappezo.soundary.core.user.Label;
+import io.github.eappezo.soundary.services.user.application.LabelRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor

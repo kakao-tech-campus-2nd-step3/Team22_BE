@@ -1,10 +1,8 @@
 package io.github.eappezo.soundary.services.user.application.service;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.user.application.LabelRepository;
-import io.github.eappezo.soundary.services.user.application.dto.UserLabelList;
 import io.github.eappezo.soundary.core.user.Label;
-import io.github.eappezo.soundary.core.persistence.infrastructure.UserLabelEntityKey;
+import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

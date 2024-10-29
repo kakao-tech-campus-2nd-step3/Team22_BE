@@ -2,9 +2,10 @@ package io.github.eappezo.soundary.core.persistence.infrastructure;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.Label;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 @AllArgsConstructor
 @EqualsAndHashCode

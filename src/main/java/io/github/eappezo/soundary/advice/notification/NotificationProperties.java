@@ -18,7 +18,7 @@ public class NotificationProperties {
     private Map<String, NotificationFormat> notification;
 
     public NotificationFormat getFormat(NotificationType type) {
-        return notification.get(toDashCase(type.name()));
+        return notification.get(toDashCase(type));
     }
 
     public record NotificationFormat(
@@ -27,7 +27,7 @@ public class NotificationProperties {
     ) {
     }
 
-    private String toDashCase(String camelCase) {
-        return camelCase.replaceAll("([a-z])([A-Z]+)", "$1-$2").toLowerCase();
+    private String toDashCase(NotificationType type) {
+        return type.name().toLowerCase().replace("_", "-");
     }
 }

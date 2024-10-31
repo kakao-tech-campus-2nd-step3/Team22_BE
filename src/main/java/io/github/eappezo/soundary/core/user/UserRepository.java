@@ -14,4 +14,6 @@ public interface UserRepository {
 
     boolean existsById(Identifier userId);
 
+    boolean existsByDisplayId(String displayId);
+
 }

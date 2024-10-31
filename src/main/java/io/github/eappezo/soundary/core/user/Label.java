@@ -9,7 +9,12 @@ public enum Label {
     POP,
     HIPHOP,
     RNB,
-    EDM;
+    EDM,
+    BALLADE,
+    KPOP,
+    JPOP,
+    INDIE,
+    BAND;
 
     public static Label from(String label) {
         try {

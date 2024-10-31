@@ -6,7 +6,7 @@ import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.user.UserEntityMapper;
-import io.github.eappezo.soundary.services.user.application.UserRoleManager;
+import io.github.eappezo.soundary.core.user.UserRoleManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -49,5 +49,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean existsById(Identifier userId) {
         return jpaUserRepository.existsById(userId.toString());
+    }
+
+    @Override
+    public boolean existsByDisplayId(String displayId) {
+        return jpaUserRepository.existsByDisplayId(displayId);
     }
 }

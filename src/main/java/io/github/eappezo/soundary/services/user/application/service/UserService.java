@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.services.user.application.service;
 
+import io.github.eappezo.soundary.core.exception.common.AlreadyExistsUserException;
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.notification.UserDeviceRepository;
@@ -8,7 +9,7 @@ import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
-import io.github.eappezo.soundary.services.user.application.UserRoleManager;
+import io.github.eappezo.soundary.core.user.UserRoleManager;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
 import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
@@ -41,6 +42,9 @@ public class UserService {
     ) {
         if (!userRoleManager.hasRole(userId, UserRole.PENDING)) {
             throw new AlreadyInitializedUserException();
+        }
+        if (userRepository.existsByDisplayId(patch.displayId())) {
+            throw new AlreadyExistsUserException();
         }
         labelRepository.saveAll(userId, labels);
         userRoleManager.removeRole(userId, UserRole.PENDING);

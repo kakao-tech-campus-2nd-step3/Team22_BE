@@ -1,7 +1,6 @@
-package io.github.eappezo.soundary.services.user.application;
+package io.github.eappezo.soundary.core.user;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.core.user.UserRole;
 
 import java.util.List;
 

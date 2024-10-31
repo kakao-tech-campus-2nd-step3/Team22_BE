@@ -1,23 +1,31 @@
 package io.github.eappezo.soundary.services.authentication.application.service;
 
+import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.authentication.application.*;
 import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
 import io.github.eappezo.soundary.services.authentication.domain.exception.AuthenticationFailedException;
+import io.github.eappezo.soundary.core.user.UserRoleManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class RefreshService {
     private final TokenProvider tokenProvider;
+    private final UserRoleManager userRoleManager;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final RefreshTokenExtendStrategy refreshTokenExtendStrategy;
 
+    @Transactional
     public RefreshResultDto refresh(String refreshTokenValue) {
         TokenPayloadDto payload = tokenProvider.extractPayloadFrom(refreshTokenValue);
         RefreshTokenDto refreshToken = validateRefreshToken(refreshTokenValue, payload);
 
-        String accessToken = tokenProvider.generateAccessToken(payload);
+        List<UserRole> userRoles = userRoleManager.getRolesOf(payload.userId());
+        String accessToken = tokenProvider.generateAccessToken(payload.include(userRoles));
         Long expirationTime = tokenProvider.getAccessTokenExpirationTime();
 
         if (refreshTokenExtendStrategy.hasToExtend(refreshToken)) {

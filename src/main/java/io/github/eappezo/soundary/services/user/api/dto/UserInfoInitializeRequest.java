@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
+import jakarta.annotation.Nullable;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ public record UserInfoInitializeRequest(
         String deviceToken,
         String displayId,
         String nickname,
-        String description,
-        String profileImageUrl
+        @Nullable String description,
+        @Nullable String profileImageUrl
 ) {
     public UserPatch extractUserPatch() {
         return new UserPatch(displayId, nickname, description, profileImageUrl);

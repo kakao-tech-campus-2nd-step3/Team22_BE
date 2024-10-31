@@ -12,6 +12,8 @@ public interface UserDeviceRepository {
 
     List<String> getDevicesByUserId(Identifier userId);
 
+    List<String> getDevicesByUserIds(List<Identifier> userIds);
+
     void removeAllDevicesByUserId(Identifier userId);
 
 }

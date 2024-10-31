@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserDeviceRepository {
 
-    boolean registerDevice(Identifier userId, String deviceToken);
+    void registerDevice(Identifier userId, String deviceToken);
 
     boolean removeDevice(Identifier userId, String deviceToken);
 

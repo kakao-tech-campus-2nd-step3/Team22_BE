@@ -15,13 +15,9 @@ public class UserDeviceRepositoryImpl implements UserDeviceRepository {
 
     @Override
     @Transactional
-    public boolean registerDevice(Identifier userId, String deviceToken) {
-        if(jpaUserDeviceRepository.existsById(FCMKey.of(userId, deviceToken))){
-            return false;
-        }
+    public void registerDevice(Identifier userId, String deviceToken) {
         jpaUserDeviceRepository.deleteAllByFcmToken(deviceToken);
         jpaUserDeviceRepository.save(new UserDevice(userId.toString(), deviceToken));
-        return true;
     }
 
     @Override

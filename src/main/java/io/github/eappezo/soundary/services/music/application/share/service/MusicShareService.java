@@ -15,7 +15,6 @@ import io.github.eappezo.soundary.services.music.domain.exception.NotFriendExcep
 import io.github.eappezo.soundary.services.music.domain.exception.TrackNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

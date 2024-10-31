@@ -1,10 +1,10 @@
 package io.github.eappezo.soundary.services.authentication.application.service;
 
 import io.github.eappezo.soundary.core.user.UserRole;
+import io.github.eappezo.soundary.core.user.UserRoleManager;
 import io.github.eappezo.soundary.services.authentication.application.*;
 import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
 import io.github.eappezo.soundary.services.authentication.domain.exception.AuthenticationFailedException;
-import io.github.eappezo.soundary.core.user.UserRoleManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

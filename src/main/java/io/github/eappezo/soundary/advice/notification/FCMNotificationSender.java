@@ -1,6 +1,5 @@
 package io.github.eappezo.soundary.advice.notification;
 
-import io.github.eappezo.soundary.core.async.AsyncAdvice;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.notification.Notification;
 import io.github.eappezo.soundary.core.notification.NotificationSender;

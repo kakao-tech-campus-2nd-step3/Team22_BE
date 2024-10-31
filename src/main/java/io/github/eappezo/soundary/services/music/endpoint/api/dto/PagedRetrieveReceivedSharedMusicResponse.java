@@ -17,20 +17,20 @@ import java.util.List;
 public record PagedRetrieveReceivedSharedMusicResponse(
         long total,
         int totalPages,
-        List<SharedMusicResponseDto> sharedMusics
+        List<ReceivedSharedMusicResponseDto> sharedMusics
 ) {
     public static PagedRetrieveReceivedSharedMusicResponse from(Page<ReceivedSharedMusicDto> sharedMusics) {
         return new PagedRetrieveReceivedSharedMusicResponse(
                 sharedMusics.total(),
                 sharedMusics.totalPages(),
                 sharedMusics.content().stream()
-                        .map(SharedMusicResponseDto::from)
+                        .map(ReceivedSharedMusicResponseDto::from)
                         .toList()
         );
     }
 
     @JsonNaming(SnakeCaseStrategy.class)
-    private record SharedMusicResponseDto(
+    private record ReceivedSharedMusicResponseDto(
             String id,
             FromUserResponseDto fromUser,
             TrackResponseDto track,
@@ -40,8 +40,8 @@ public record PagedRetrieveReceivedSharedMusicResponse(
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime sharedAt
     ) {
-        public static SharedMusicResponseDto from(ReceivedSharedMusicDto sharedMusic) {
-            return new SharedMusicResponseDto(
+        public static ReceivedSharedMusicResponseDto from(ReceivedSharedMusicDto sharedMusic) {
+            return new ReceivedSharedMusicResponseDto(
                     sharedMusic.id(),
                     FromUserResponseDto.from(sharedMusic.fromUser()),
                     TrackResponseDto.from(sharedMusic.track()),

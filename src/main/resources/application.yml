@@ -24,3 +24,16 @@ oauth2:
   clients:
     kakao:
       resource-uri: https://kapi.kakao.com/v2/user/me
+notification:
+  music-shared:
+    title: "음악이 공유되었습니다."
+    body-format: "{sender} 님이 음악을 공유했습니다."
+  liked-shared-music:
+    title: "좋아요가 눌렸습니다."
+    body-format: "{sender} 님이 음악을 좋아합니다."
+  received-friend-request:
+    title: "친구 요청이 도착했습니다."
+    body-format: "{sender} 님이 친구 요청을 보냈습니다."
+  accepted-friend-request:
+    title: "친구 요청이 수락되었습니다."
+    body-format: "{sender} 님이 친구 요청을 수락했습니다."

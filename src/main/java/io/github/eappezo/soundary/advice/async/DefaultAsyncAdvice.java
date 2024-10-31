@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ThreadPoolAsyncAdvice implements AsyncAdvice {
+public class DefaultAsyncAdvice implements AsyncAdvice {
 
     @Async
     @Override

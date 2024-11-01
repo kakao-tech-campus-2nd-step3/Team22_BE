@@ -8,6 +8,6 @@ public interface CacheAdvice {
 
     <T> T update(Supplier<T> supplier, Object... keys);
 
-    <T> T evict(Supplier<T> supplier, Object... keys);
+    void evict(Object... keys);
 
 }

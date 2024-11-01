@@ -5,11 +5,12 @@ import io.github.eappezo.soundary.core.user.UserRole;
 
 import java.util.List;
 
-public record UserInfo(String displayId,
-                       String nickname,
-                       String description,
-                       String profileImageUrl,
-                       List<UserRole> roles
+public record UserInfo(
+        String displayId,
+        String nickname,
+        String description,
+        String profileImageUrl,
+        List<UserRole> roles
 ) {
     public static UserInfo from(User user) {
         return new UserInfo(

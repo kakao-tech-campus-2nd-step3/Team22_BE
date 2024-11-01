@@ -5,18 +5,19 @@ import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicQueryCondition;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikesDto;
+import io.github.eappezo.soundary.services.music.application.share.SharedMusicQueryCondition;
 import io.github.eappezo.soundary.services.music.application.share.service.SharedMusicService;
 import io.github.eappezo.soundary.services.music.endpoint.api.SharedMusicAPI;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveReceivedSharedMusicResponse;
 import io.github.eappezo.soundary.services.music.endpoint.api.dto.PagedRetrieveSentSharedMusicResponse;
-import io.github.eappezo.soundary.services.music.endpoint.api.dto.RetrieveReceivedSharedMusicResponse;
+import io.github.eappezo.soundary.services.music.endpoint.api.dto.SharedMusicLikesResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -34,36 +35,70 @@ public class SharedMusicController implements SharedMusicAPI {
             @RequestParam(name = "start-date", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime startDate,
             @RequestParam(name = "end-date", required = false)
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate,
+            @RequestParam(name = "only-exposured", defaultValue = "false") Boolean onlyExposured,
+            @RequestParam(name = "shared-by", required = false) Identifier fromUser
     ) {
-        SentSharedMusicQueryCondition condition = new SentSharedMusicQueryCondition(
+        if (fromUser != null && !fromUser.equals(userId)) {
+            onlyExposured = true;
+        }
+        if (fromUser == null) {
+            fromUser = userId;
+        }
+        SharedMusicQueryCondition condition = new SharedMusicQueryCondition(
                 page,
                 size,
+                onlyExposured,
                 startDate,
                 endDate
         );
-        Page<SentSharedMusicDto> sharedMusics = sharedMusicService.getSentSharedMusic(userId, condition);
+        Page<SentSharedMusicDto> sharedMusics = sharedMusicService.getSentSharedMusic(fromUser, condition);
 
         return PagedRetrieveSentSharedMusicResponse.from(sharedMusics);
     }
 
     @Override
     @GetMapping("/received")
-    public RetrieveReceivedSharedMusicResponse retrieveReceivedSharedMusics(
-            @AuthenticatedUser Identifier userId
+    public PagedRetrieveReceivedSharedMusicResponse retrieveReceivedSharedMusics(
+            @AuthenticatedUser Identifier userId,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size,
+            @RequestParam(name = "start-date", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime startDate,
+            @RequestParam(name = "end-date", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime endDate
     ) {
-        List<ReceivedSharedMusicDto> sharedMusics = sharedMusicService.getReceivedSharedMusic(userId);
+        SharedMusicQueryCondition condition = new SharedMusicQueryCondition(
+                page,
+                size,
+                true,
+                startDate,
+                endDate
+        );
+        Page<ReceivedSharedMusicDto> sharedMusics = sharedMusicService.getReceivedSharedMusic(
+                userId,
+                condition
+        );
+        return PagedRetrieveReceivedSharedMusicResponse.from(sharedMusics);
+    }
 
-        return RetrieveReceivedSharedMusicResponse.from(sharedMusics);
+    @Override
+    @GetMapping("/sent/{shared-music-id}/likes")
+    public SharedMusicLikesResponse getLikesFromSharedMusic(
+            @PathVariable(name = "shared-music-id") Identifier sharedMusicId
+    ) {
+        SharedMusicLikesDto likes = sharedMusicService.getSharedMusicLikes(sharedMusicId);
+
+        return SharedMusicLikesResponse.from(likes);
     }
 
     @Override
     @PostMapping("/received/{shared-music-id}/likes")
     public void likeSharedMusic(
             @AuthenticatedUser Identifier userId,
-            @PathVariable(name = "shared-music-id") Identifier shareMusicId
+            @PathVariable(name = "shared-music-id") Identifier sharedMusicId
     ) {
-        sharedMusicService.likeMusic(userId, shareMusicId);
+        sharedMusicService.likeMusic(userId, sharedMusicId);
     }
 
     @Override

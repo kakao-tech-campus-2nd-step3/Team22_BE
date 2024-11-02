@@ -8,6 +8,8 @@ public interface UserRefreshTokenRepository {
 
     void save(Identifier userId, RefreshTokenDto refreshToken);
 
+    void deleteByUserId(Identifier userId);
+
     Optional<RefreshTokenDto> findRefreshToken(Identifier userId);
 
 }

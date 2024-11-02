@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.services.authentication.infrastructure.configuration;
 
+import io.github.eappezo.soundary.core.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,12 +26,13 @@ public class SecurityConfig {
                         (auth) -> {
                             auth.requestMatchers("/api/login").anonymous();
                             auth.requestMatchers("/api/refresh").anonymous();
+                            auth.requestMatchers("/api/v1/me/default-info").hasRole(UserRole.PENDING.name());
                             auth.requestMatchers(
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**",
                                     "/exception/**"
                             ).permitAll();
-                            auth.anyRequest().authenticated();
+                            auth.anyRequest().hasRole(UserRole.USER.name());
                         }
                 )
                 .csrf(AbstractHttpConfigurer::disable)

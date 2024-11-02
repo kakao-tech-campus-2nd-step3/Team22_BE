@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,7 +18,7 @@ public interface LabelAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "유저 라벨 추가 성공")
     })
-    ResponseEntity<Void> addLabel(
+    void addLabel(
         @Parameter(hidden = true) Identifier userId, LabelAddRequest labelAddRequest
     );
 
@@ -27,7 +26,7 @@ public interface LabelAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "유저 라벨 삭제 성공")
     })
-    ResponseEntity<Void> deleteLabel(
+    void deleteLabel(
         @Parameter(hidden = true) Identifier userId, String label
     );
 
@@ -35,7 +34,7 @@ public interface LabelAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "유저 라벨 목록 조회 성공")
     })
-    ResponseEntity<LabelListResponse> getLabelList(
+    LabelListResponse getLabels(
         @Parameter(hidden = true) Identifier userId
     );
 

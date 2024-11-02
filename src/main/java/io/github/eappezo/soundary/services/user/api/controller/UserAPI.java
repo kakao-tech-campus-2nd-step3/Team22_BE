@@ -2,6 +2,7 @@ package io.github.eappezo.soundary.services.user.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.services.user.api.dto.UserInfoInitializeRequest;
 import io.github.eappezo.soundary.services.user.api.dto.UserInfoResponse;
 import io.github.eappezo.soundary.services.user.api.dto.UserUpdateRequest;
 import io.github.eappezo.soundary.services.user.api.dto.UserUpdateResponse;
@@ -9,7 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "사용자 관리 API", description = "사용자 정보 조회, 수정 및 탈퇴를 관리합니다.")
 public interface UserAPI {
@@ -18,20 +19,29 @@ public interface UserAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용자 정보 조회 성공")
     })
-    ResponseEntity<UserInfoResponse> getUserInfo(@AuthenticatedUser Identifier userId);
+    UserInfoResponse getMyInfo(@AuthenticatedUser Identifier userId);
+
+    @Operation(summary = "사용자 정보 초기화", description = "초기 사용자 정보를 추가합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "사용자 정보 조회 성공")
+    })
+    void initializeUser(
+            @AuthenticatedUser Identifier userId,
+            @RequestBody UserInfoInitializeRequest request
+    );
 
     @Operation(summary = "사용자 정보 수정", description = "사용자 정보를 수정합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용자 정보 수정 성공")
     })
-    ResponseEntity<UserUpdateResponse> updateUserInfo(
+    UserUpdateResponse updateMyInfo(
             @AuthenticatedUser Identifier userId,
-            UserUpdateRequest userUpdateRequest
+            @RequestBody UserUpdateRequest userUpdateRequest
     );
 
     @Operation(summary = "사용자 탈퇴", description = "사용자를 탈퇴시킵니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용자 탈퇴 성공")
     })
-    ResponseEntity<Object> quitUser(@AuthenticatedUser Identifier userId);
+    void quit(@AuthenticatedUser Identifier userId);
 }

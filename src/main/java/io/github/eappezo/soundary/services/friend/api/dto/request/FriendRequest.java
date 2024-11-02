@@ -1,13 +1,10 @@
 package io.github.eappezo.soundary.services.friend.api.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.eappezo.soundary.core.identification.Identifier;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+@JsonNaming(SnakeCaseStrategy.class)
 public record FriendRequest(
-    @JsonProperty("to_user_id")
-    String rawToUserId
+        String targetDisplayId
 ) {
-    public Identifier toUserId() {
-        return Identifier.fromString(rawToUserId);
-    }
 }

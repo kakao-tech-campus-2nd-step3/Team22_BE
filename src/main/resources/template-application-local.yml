@@ -5,6 +5,13 @@ app:
       client-id: ${SPOTIFY_CLIENT_ID}
       client-secret: ${SPOTIFY_CLIENT_SECRET}
 spring:
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 5
+        queue-capacity: 5
+        keep-alive: 30s
   data:
     redis:
       host: ${REDIS_HOST}

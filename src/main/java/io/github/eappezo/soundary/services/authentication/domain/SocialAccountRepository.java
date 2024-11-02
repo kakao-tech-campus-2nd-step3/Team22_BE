@@ -10,4 +10,6 @@ public interface SocialAccountRepository {
 
     void save(SocialAccount account);
 
+    void removeById(SocialPlatform platform, String socialId);
+
 }

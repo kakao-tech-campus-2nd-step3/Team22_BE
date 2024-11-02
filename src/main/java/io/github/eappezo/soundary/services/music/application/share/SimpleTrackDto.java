@@ -9,4 +9,5 @@ public record SimpleTrackDto(
         String previewMp3Url,
         Long durationInSeconds
 ) {
+    public static final String ARTISTS_DELIMITER = ":*,*: ";
 }

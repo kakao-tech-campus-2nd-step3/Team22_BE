@@ -11,7 +11,8 @@ public enum MusicErrorCode implements ErrorCode {
     NOT_FRIEND("M004", "친구가 아닌 사람에게는 음악을 공유할 수 없습니다."),
     NOT_EXISTS_SHARED_MUSIC("M005", "공유된 음악이 존재하지 않습니다."),
     ALREADY_LIKED_SHARED_MUSIC("M006", "이미 좋아요를 누른 음악입니다."),
-    NOT_LIKED_SHARED_MUSIC("M007", "좋아요를 누르지 않은 음악입니다.");
+    NOT_LIKED_SHARED_MUSIC("M007", "좋아요를 누르지 않은 음악입니다."),
+    CANNOT_RETRIEVE_SHARED_MUSIC_OF_OTHER_USER("M008", "다른 사용자의 공유 음악을 조회할 수 없습니다.");
 
     private final String code;
     private final String message;

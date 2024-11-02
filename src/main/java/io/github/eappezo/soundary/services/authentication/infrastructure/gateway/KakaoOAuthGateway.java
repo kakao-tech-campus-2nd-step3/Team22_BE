@@ -34,7 +34,6 @@ public class KakaoOAuthGateway implements OAuthGateway {
         return SocialPlatform.KAKAO;
     }
 
-    // TODO Circuit breaker 적용하기
     private KakaoResourceResponse getResource(String token) {
         OAuthClientConfig config = clientProperties.getClientConfig(SocialPlatform.KAKAO);
         return restClient

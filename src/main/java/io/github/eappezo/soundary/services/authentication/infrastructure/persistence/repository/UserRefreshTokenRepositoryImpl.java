@@ -20,6 +20,11 @@ public class UserRefreshTokenRepositoryImpl implements UserRefreshTokenRepositor
     }
 
     @Override
+    public void deleteByUserId(Identifier userId) {
+        jpaUserRefreshTokenRepository.deleteById(userId.toString());
+    }
+
+    @Override
     public Optional<RefreshTokenDto> findRefreshToken(Identifier userId) {
         return jpaUserRefreshTokenRepository
                 .findById(userId.toString())

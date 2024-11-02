@@ -5,4 +5,7 @@ import io.github.eappezo.soundary.services.authentication.infrastructure.persist
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaSocialAccountRepository extends JpaRepository<SocialAccountEntity, SocialAccountEntityKey> {
+
+    void deleteByUserId(String userId);
+
 }

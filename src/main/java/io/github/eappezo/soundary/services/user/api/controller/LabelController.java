@@ -18,8 +18,8 @@ public class LabelController implements LabelAPI {
     @Override
     @PostMapping
     public void addLabel(
-            Identifier userId,
-            LabelAddRequest request
+            @AuthenticatedUser Identifier userId,
+            @RequestBody LabelAddRequest request
     ) {
         labelService.addLabel(userId, request.labels());
     }

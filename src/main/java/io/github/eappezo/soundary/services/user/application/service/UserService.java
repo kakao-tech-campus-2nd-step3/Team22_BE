@@ -4,19 +4,16 @@ import io.github.eappezo.soundary.core.exception.common.AlreadyExistsUserExcepti
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.notification.UserDeviceRepository;
-import io.github.eappezo.soundary.core.user.Label;
-import io.github.eappezo.soundary.core.user.User;
-import io.github.eappezo.soundary.core.user.UserRepository;
-import io.github.eappezo.soundary.core.user.UserRole;
-import io.github.eappezo.soundary.core.user.UserRoleManager;
+import io.github.eappezo.soundary.core.user.*;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
 import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

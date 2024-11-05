@@ -6,7 +6,7 @@ public record FriendshipDTO(
     Identifier from,
     Identifier to
 ) {
-    public static FriendshipDTO of(Identifier userId, Identifier targetUserId){
+    public static FriendshipDTO of(Identifier userId, Identifier targetUserId) {
         return new FriendshipDTO(
             userId,
             targetUserId

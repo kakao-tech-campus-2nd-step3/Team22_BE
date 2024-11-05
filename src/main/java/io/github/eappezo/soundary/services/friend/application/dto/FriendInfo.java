@@ -9,7 +9,7 @@ public record FriendInfo(
     String nickname,
     String profileImageUrl
 ) {
-    public static FriendInfo from(User user){
+    public static FriendInfo from(User user) {
         return new FriendInfo(
             user.getIdentifier(),
             user.getDisplayId(),

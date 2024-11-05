@@ -7,7 +7,7 @@ import java.util.List;
 public record FriendsResponse(
     List<FriendResponse> friends
 ) {
-    public static FriendsResponse from(List<FriendInfo> friendInfoList){
+    public static FriendsResponse from(List<FriendInfo> friendInfoList) {
         List<FriendResponse> friendResponseList = friendInfoList.stream()
             .map(FriendResponse::from)
             .toList();

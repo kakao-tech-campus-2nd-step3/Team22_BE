@@ -85,6 +85,8 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
         Long total = jpaQueryFactory
                 .select(sharedMusicTargetEntity.targetUserId.count())
                 .from(sharedMusicTargetEntity)
+                .join(sharedMusicEntity)
+                .on(sharedMusicTargetEntity.sharedMusicId.eq(sharedMusicEntity.id))
                 .where(
                         sharedMusicTargetEntity.targetUserId.eq(rawUserId),
                         creatAtAfterStartDate(condition.startDate()),

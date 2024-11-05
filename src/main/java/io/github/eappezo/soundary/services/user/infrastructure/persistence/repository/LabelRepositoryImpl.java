@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,14 +20,9 @@ public class LabelRepositoryImpl implements LabelRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private static final String labelBatchSql = """
-           INSERT IGNORE INTO user_labels (user_id, label, created_at)
-           VALUES (?, ?, ?);
-           """;
-
-    @Override
-    public Optional<UserLabelEntity> findById(UserLabelEntityKey userLabelEntityKey) {
-        return jpaLabelRepository.findById(userLabelEntityKey);
-    }
+            INSERT IGNORE INTO user_labels (user_id, label, created_at)
+            VALUES (?, ?, ?);
+            """;
 
     @Override
     public void saveAll(Identifier userId, List<Label> labels) {

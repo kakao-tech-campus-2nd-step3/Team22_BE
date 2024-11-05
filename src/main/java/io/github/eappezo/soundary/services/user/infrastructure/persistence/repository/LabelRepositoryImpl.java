@@ -41,9 +41,9 @@ public class LabelRepositoryImpl implements LabelRepository {
     }
 
     @Override
-    public List<Label> findByUserId(Identifier userId) {
+    public List<Label> findAllByUserId(Identifier userId) {
         return jpaLabelRepository
-                .findByUserId(userId.toString())
+                .findAllByUserId(userId.toString())
                 .stream()
                 .map(UserLabelEntity::getLabel)
                 .toList();

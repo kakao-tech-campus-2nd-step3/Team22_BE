@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface JpaLabelRepository extends JpaRepository<UserLabelEntity, UserLabelEntityKey> {
 
-    List<UserLabelEntity> findByUserId(String userId);
+    List<UserLabelEntity> findAllByUserId(String userId);
+
 }

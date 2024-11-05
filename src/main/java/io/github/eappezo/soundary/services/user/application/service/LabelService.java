@@ -22,6 +22,6 @@ public class LabelService {
     }
 
     public List<Label> getUserLabelList(Identifier userId) {
-        return labelRepository.findByUserId(userId);
+        return labelRepository.findAllByUserId(userId);
     }
 }

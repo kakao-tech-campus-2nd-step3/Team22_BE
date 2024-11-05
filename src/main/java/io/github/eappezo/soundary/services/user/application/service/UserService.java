@@ -26,7 +26,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserInfo getUserInfo(Identifier userId) {
         User user = getUser(userId);
-        List<Label> labels = labelRepository.findByUserId(userId);
+        List<Label> labels = labelRepository.findAllByUserId(userId);
         return UserInfo.from(user, labels);
     }
 
@@ -35,7 +35,7 @@ public class UserService {
         User user = userRepository
                 .findByDisplayId(displayId)
                 .orElseThrow(UserNotFoundException::new);
-        List<Label> labels = labelRepository.findByUserId(user.getIdentifier());
+        List<Label> labels = labelRepository.findAllByUserId(user.getIdentifier());
         return UserInfo.from(user, labels);
     }
 
@@ -64,7 +64,7 @@ public class UserService {
     @Transactional
     public UserInfo updateUser(Identifier userId, UserPatch patch) {
         User updatedUser = patch.applyToUser(getUser(userId));
-        List<Label> labels = labelRepository.findByUserId(userId);
+        List<Label> labels = labelRepository.findAllByUserId(userId);
 
         userRepository.save(updatedUser);
         return UserInfo.from(updatedUser, labels);

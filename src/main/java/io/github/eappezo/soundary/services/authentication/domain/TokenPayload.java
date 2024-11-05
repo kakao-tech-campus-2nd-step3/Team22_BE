@@ -1,15 +1,15 @@
-package io.github.eappezo.soundary.services.authentication.application;
+package io.github.eappezo.soundary.services.authentication.domain;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.UserRole;
 
 import java.util.List;
 
-public record TokenPayloadDto(
+public record TokenPayload(
         Identifier userId,
         List<UserRole> roles
 ) {
-    public TokenPayloadDto include(List<UserRole> roles) {
-        return new TokenPayloadDto(userId, roles);
+    public TokenPayload include(List<UserRole> roles) {
+        return new TokenPayload(userId, roles);
     }
 }

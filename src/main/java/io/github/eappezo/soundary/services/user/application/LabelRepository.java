@@ -10,11 +10,10 @@ import java.util.Optional;
 
 public interface LabelRepository {
 
-    Optional<UserLabelEntity> findById(UserLabelEntityKey userLabelEntityKey);
-
     void saveAll(Identifier userId, List<Label> labels);
 
     void deleteLabel(Identifier userId, Label label);
 
     List<Label> findByUserId(Identifier userId);
+
 }

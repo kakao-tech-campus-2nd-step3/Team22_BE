@@ -29,12 +29,17 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserInfo getUserInfo(Identifier userId) {
         User user = getUser(userId);
-        return UserInfo.from(user);
+        List<Label> labels = labelRepository.findByUserId(userId);
+        return UserInfo.from(user, labels);
     }
 
     @Transactional(readOnly = true)
-    public UserInfo getUserInfoByDisplayId(String displayId){
-        return UserInfo.from(getUserByDisplayId(displayId));
+    public UserInfo getUserInfoByDisplayId(String displayId) {
+        User user = userRepository
+                .findByDisplayId(displayId)
+                .orElseThrow(UserNotFoundException::new);
+        List<Label> labels = labelRepository.findByUserId(user.getIdentifier());
+        return UserInfo.from(user, labels);
     }
 
     @Transactional
@@ -62,9 +67,10 @@ public class UserService {
     @Transactional
     public UserInfo updateUser(Identifier userId, UserPatch patch) {
         User updatedUser = patch.applyToUser(getUser(userId));
+        List<Label> labels = labelRepository.findByUserId(userId);
 
         userRepository.save(updatedUser);
-        return UserInfo.from(updatedUser);
+        return UserInfo.from(updatedUser, labels);
     }
 
     @Transactional
@@ -74,9 +80,5 @@ public class UserService {
 
     public User getUser(Identifier userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-    }
-
-    public User getUserByDisplayId(String displayId){
-        return userRepository.findByDisplayId(displayId).orElseThrow(UserNotFoundException::new);
     }
 }

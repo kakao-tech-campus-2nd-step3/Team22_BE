@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.services.user.api.dto;
 
+import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 
@@ -10,7 +11,8 @@ public record UserInfoResponse(
         String nickname,
         String description,
         String profileImageUrl,
-        List<UserRole>roles
+        List<UserRole>roles,
+        List<Label> labels
 ) {
     public static UserInfoResponse from(UserInfo userInfo) {
         return new UserInfoResponse(
@@ -18,6 +20,8 @@ public record UserInfoResponse(
                 userInfo.nickname(),
                 userInfo.description(),
                 userInfo.profileImageUrl(),
-                userInfo.roles());
+                userInfo.roles(),
+                userInfo.labels()
+        );
     }
 }

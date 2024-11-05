@@ -3,6 +3,7 @@ package io.github.eappezo.soundary.services.authentication.application.service;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.core.user.UserRoleManager;
 import io.github.eappezo.soundary.services.authentication.application.*;
+import io.github.eappezo.soundary.services.authentication.domain.TokenPayload;
 import io.github.eappezo.soundary.services.authentication.domain.TokenProvider;
 import io.github.eappezo.soundary.services.authentication.domain.exception.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class RefreshService {
 
     @Transactional
     public RefreshResultDto refresh(String refreshTokenValue) {
-        TokenPayloadDto payload = tokenProvider.extractPayloadFrom(refreshTokenValue);
+        TokenPayload payload = tokenProvider.extractPayloadFrom(refreshTokenValue);
         RefreshTokenDto refreshToken = validateRefreshToken(refreshTokenValue, payload);
 
         List<UserRole> userRoles = userRoleManager.getRolesOf(payload.userId());
@@ -38,7 +39,7 @@ public class RefreshService {
         return new RefreshResultDto(accessToken, null, expirationTime);
     }
 
-    private RefreshTokenDto validateRefreshToken(String refreshToken, TokenPayloadDto payload) {
+    private RefreshTokenDto validateRefreshToken(String refreshToken, TokenPayload payload) {
         RefreshTokenDto registeredRefreshToken = userRefreshTokenRepository
                 .findRefreshToken(payload.userId())
                 .orElseThrow(AuthenticationFailedException::new);

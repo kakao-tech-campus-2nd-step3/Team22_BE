@@ -6,33 +6,25 @@ import io.github.eappezo.soundary.core.persistence.infrastructure.UserLabelEntit
 import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class LabelRepositoryImpl implements LabelRepository {
     private final JpaLabelRepository jpaLabelRepository;
-    private final JdbcTemplate jdbcTemplate;
-
-    private static final String labelBatchSql = """
-            INSERT IGNORE INTO user_labels (user_id, label, created_at)
-            VALUES (?, ?, ?);
-            """;
 
     @Override
     public void saveAll(Identifier userId, List<Label> labels) {
-        String rawUserId = userId.toString();
-        LocalDateTime now = LocalDateTime.now();
-        List<Object[]> batchArgs = new ArrayList<>();
-        for (Label label : labels) {
-            batchArgs.add(new Object[]{rawUserId, label.toString(), now});
-        }
-        jdbcTemplate.batchUpdate(labelBatchSql, batchArgs);
+        List<UserLabelEntity> userLabelEntities = labels
+                .stream()
+                .map(label -> new UserLabelEntity(
+                        userId.toString(),
+                        label
+                ))
+                .toList();
+        jpaLabelRepository.saveAll(userLabelEntities);
     }
 
     @Override

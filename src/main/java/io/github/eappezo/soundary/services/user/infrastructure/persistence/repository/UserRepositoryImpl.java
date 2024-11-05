@@ -7,15 +7,15 @@ import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.core.user.UserRoleManager;
 import io.github.eappezo.soundary.services.user.UserEntityMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
+
     private final JpaUserRepository jpaUserRepository;
     private final UserRoleManager userRoleManager;
     private final UserEntityMapper userEntityMapper;
@@ -34,14 +34,21 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findById(Identifier userId) {
         List<UserRole> userRoles = userRoleManager.getRolesOf(userId);
         return jpaUserRepository.findById(userId.toString())
-                .map(userEntity -> userEntityMapper.mapToUser(userEntity, userRoles));
+            .map(userEntity -> userEntityMapper.mapToUser(userEntity, userRoles));
+    }
+
+    @Override
+    public Optional<User> findByDisplayId(String displayId) {
+        return jpaUserRepository.findByDisplayId(displayId)
+            .map(userEntity -> userEntityMapper.mapToUser(userEntity,
+                userRoleManager.getRolesOf(Identifier.fromString(userEntity.getId()))));
     }
 
     @Override
     public Optional<Identifier> findIdByDisplayId(String displayId) {
         return jpaUserRepository
-                .findUserIdByDisplayId(displayId)
-                .map(Identifier::fromString);
+            .findUserIdByDisplayId(displayId)
+            .map(Identifier::fromString);
     }
 
     @Override

@@ -17,12 +17,11 @@ import io.github.eappezo.soundary.services.friend.domain.exception.AlreadyFriend
 import io.github.eappezo.soundary.services.friend.domain.exception.AlreadySentFriendRequestException;
 import io.github.eappezo.soundary.services.friend.domain.exception.CannotRequestToMyselfException;
 import io.github.eappezo.soundary.services.friend.domain.exception.FriendLimitException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -97,8 +96,7 @@ public class FriendService {
     }
 
     private boolean isFriendLimit(Identifier fromUserId, Identifier targetUserId) {
-        return friendRepository.countFriends(fromUserId) >= maxFriendsCount
-               || friendRepository.countFriends(targetUserId) >= maxFriendsCount;
+        return friendRepository.countFriends(fromUserId) >= maxFriendsCount;
     }
 
     private enum FriendshipStatus {

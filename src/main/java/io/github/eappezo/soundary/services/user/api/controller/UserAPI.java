@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "사용자 관리 API", description = "사용자 정보 조회, 수정 및 탈퇴를 관리합니다.")
 public interface UserAPI {
@@ -44,4 +45,10 @@ public interface UserAPI {
             @ApiResponse(responseCode = "200", description = "사용자 탈퇴 성공")
     })
     void quit(@AuthenticatedUser Identifier userId);
+
+    @Operation(summary = "사용자 검색", description = "displayId로 사용자를 검색합니다.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "사용자 검색 성공")
+    })
+    UserInfoResponse getUserInfo(@RequestParam(name = "displayId") String displayId);
 }

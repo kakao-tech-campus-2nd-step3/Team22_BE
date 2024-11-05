@@ -8,6 +8,7 @@ import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -76,7 +77,8 @@ public record PagedRetrieveReceivedSharedMusicResponse(
             String title,
             List<String> artists,
             String albumCoverUrl,
-            String previewMp3Url,
+            @Schema(nullable = true)
+            @Nullable String previewMp3Url,
             Long durationInSeconds
     ) {
         public static TrackResponseDto from(SimpleTrackDto track) {

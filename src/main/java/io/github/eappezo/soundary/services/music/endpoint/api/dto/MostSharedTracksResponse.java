@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.services.music.application.share.MostSharedTracksDto;
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,7 @@ public record MostSharedTracksResponse(
             String title,
             List<String> artists,
             String albumCoverUrl,
+            @Schema(nullable = true)
             String previewMp3Url,
             Long durationInSeconds
     ) {

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "사용자 API", description = "사용자 정보를 관리합니다.")
 public interface UserAPI {
 
-    @Operation(summary = "사용자 검색", description = "displayId로 사용자를 검색합니다.")
+    @Operation(summary = "사용자 검색", description = "display-id로 사용자를 검색합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용자 검색 성공")
     })
-    UserInfoResponse getUserInfo(@RequestParam(name = "displayId") String displayId);
+    UserInfoResponse getUserInfo(@RequestParam(name = "display-id") String displayId);
 
 }

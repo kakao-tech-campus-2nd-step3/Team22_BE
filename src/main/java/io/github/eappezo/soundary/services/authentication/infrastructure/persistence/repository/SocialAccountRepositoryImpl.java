@@ -28,4 +28,9 @@ public class SocialAccountRepositoryImpl implements SocialAccountRepository {
     public void save(SocialAccount account) {
         jpaSocialAccountRepository.save(SocialAccountEntity.from(account));
     }
+
+    @Override
+    public void removeById(SocialPlatform platform, String socialId) {
+        jpaSocialAccountRepository.deleteById(SocialAccountEntityKey.of(platform, socialId));
+    }
 }

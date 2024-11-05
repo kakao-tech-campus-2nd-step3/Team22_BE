@@ -1,10 +1,13 @@
 package io.github.eappezo.soundary.services.authentication.api.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.services.authentication.application.RefreshResultDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 
+@JsonNaming(SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RefreshResponse(
         String accessToken,

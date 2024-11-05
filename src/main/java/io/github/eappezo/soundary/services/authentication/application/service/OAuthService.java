@@ -31,10 +31,16 @@ public class OAuthService {
     }
 
     private User getSocialUserOrCreateBy(OAuthResult oAuthResult) {
-        return socialAccountRepository
+        User user = socialAccountRepository
                 .findUserIdBy(oAuthResult.platform(), oAuthResult.socialId())
                 .map((it) -> userRepository.findById(it).orElseThrow(UserNotFoundException::new))
                 .orElseGet(() -> socialUserCreationSupport.registerNewSocialUserBy(oAuthResult));
+        if (user.isLeaved()) {
+            socialAccountRepository.removeById(oAuthResult.platform(), oAuthResult.socialId());
+            userRefreshTokenRepository.deleteByUserId(user.getIdentifier());
+            return socialUserCreationSupport.registerNewSocialUserBy(oAuthResult);
+        }
+        return user;
     }
 
     private LoginResultDto createAuthentication(User user) {

@@ -2,7 +2,7 @@ package io.github.eappezo.soundary.services.user.infrastructure.persistence.repo
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.UserRole;
-import io.github.eappezo.soundary.services.user.application.UserRoleManager;
+import io.github.eappezo.soundary.core.user.UserRoleManager;
 import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.UserRoleEntity;
 import io.github.eappezo.soundary.services.user.infrastructure.persistence.entity.key.UserRoleEntityKey;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +38,10 @@ public class UserRoleManagerImpl implements UserRoleManager {
                 .stream()
                 .map(UserRoleEntity::getRole)
                 .toList();
+    }
+
+    @Override
+    public boolean hasRole(Identifier userId, UserRole role) {
+        return jpaUserRoleRepository.existsById(UserRoleEntityKey.of(userId, role));
     }
 }

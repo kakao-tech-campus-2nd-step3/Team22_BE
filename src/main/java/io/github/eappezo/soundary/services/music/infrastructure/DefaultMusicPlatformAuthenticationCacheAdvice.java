@@ -25,8 +25,8 @@ public class DefaultMusicPlatformAuthenticationCacheAdvice implements MusicPlatf
         return delegate.put(generateKey(keys), supplier);
     }
 
-    public <T> T evict(Supplier<T> supplier, Object... keys) {
-        return delegate.evict(generateKey(keys), supplier);
+    public void evict(Object... keys) {
+        delegate.evict(generateKey(keys));
     }
 
     private static String generateKey(Object... keys) {
@@ -52,8 +52,7 @@ public class DefaultMusicPlatformAuthenticationCacheAdvice implements MusicPlatf
         }
 
         @CacheEvict(value = CACHE_NAME, key = "#key")
-        public <T> T evict(String key, Supplier<T> supplier) {
-            return supplier.get();
+        public void evict(String key) {
         }
     }
 }

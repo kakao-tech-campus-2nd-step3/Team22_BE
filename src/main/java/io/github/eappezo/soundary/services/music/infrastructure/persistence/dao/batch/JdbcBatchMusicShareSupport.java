@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class BatchMusicShareSupport implements MusicShareSupport {
+public class JdbcBatchMusicShareSupport implements MusicShareSupport {
     private final IdentifierGenerator identifierGenerator;
     private final JdbcTemplate jdbcTemplate;
     private final JpaSharedMusicRepository jpaSharedMusicRepository;

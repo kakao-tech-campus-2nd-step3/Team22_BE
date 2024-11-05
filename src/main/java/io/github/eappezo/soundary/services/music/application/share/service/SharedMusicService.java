@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class SharedMusicService {
@@ -22,20 +20,35 @@ public class SharedMusicService {
     @Transactional(readOnly = true)
     public Page<SentSharedMusicDto> getSentSharedMusic(
             Identifier userId,
-            SentSharedMusicQueryCondition condition
+            SharedMusicQueryCondition condition
     ) {
         return sharedMusicRetrieveSupport.getSentSharedMusic(userId, condition);
     }
 
     @Transactional(readOnly = true)
-    public List<ReceivedSharedMusicDto> getReceivedSharedMusic(Identifier userId) {
-        return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId);
+    public Page<ReceivedSharedMusicDto> getReceivedSharedMusic(
+            Identifier userId,
+            SharedMusicQueryCondition condition
+    ) {
+        return sharedMusicRetrieveSupport.getReceivedSharedMusic(userId, condition);
     }
+
+    @Transactional(readOnly = true)
+    public SharedMusicLikesDto getSharedMusicLikes(Identifier sharedMusicId) {
+        if (sharedMusicRepository.notExists(sharedMusicId)) {
+            throw new NotExistsSharedMusicException();
+        }
+        return sharedMusicRetrieveSupport.getSharedMusicLikes(sharedMusicId);
+    }
+
 
     @Transactional
     public void likeMusic(Identifier userId, Identifier sharedMusicId) {
         if (sharedMusicRepository.exists(sharedMusicId)) {
             throw new AlreadyLikedSharedMusicException();
+        }
+        if (!sharedMusicRepository.isSharedToUser(sharedMusicId, userId)) {
+            throw new NotExistsSharedMusicException();
         }
         sharedMusicLikeSupport.like(userId, sharedMusicId);
     }
@@ -43,6 +56,9 @@ public class SharedMusicService {
     @Transactional
     public void unlikeMusic(Identifier userId, Identifier sharedMusicId) {
         if (sharedMusicRepository.notExists(sharedMusicId)) {
+            throw new NotExistsSharedMusicException();
+        }
+        if (!sharedMusicRepository.isSharedToUser(sharedMusicId, userId)) {
             throw new NotExistsSharedMusicException();
         }
         sharedMusicLikeSupport.unlike(userId, sharedMusicId);

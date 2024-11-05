@@ -9,4 +9,7 @@ public record TokenPayloadDto(
         Identifier userId,
         List<UserRole> roles
 ) {
+    public TokenPayloadDto include(List<UserRole> roles) {
+        return new TokenPayloadDto(userId, roles);
+    }
 }

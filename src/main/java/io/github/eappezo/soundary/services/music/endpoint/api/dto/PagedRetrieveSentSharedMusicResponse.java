@@ -17,7 +17,7 @@ import java.util.List;
 public record PagedRetrieveSentSharedMusicResponse(
         long total,
         int totalPages,
-        List<SharedMusicResponseDto> sharedMusics
+        List<SentSharedMusicResponseDto> sharedMusics
 ) {
     public static PagedRetrieveSentSharedMusicResponse from(
             Page<SentSharedMusicDto> sharedMusics
@@ -27,13 +27,13 @@ public record PagedRetrieveSentSharedMusicResponse(
                 sharedMusics.totalPages(),
                 sharedMusics.content()
                         .stream()
-                        .map(SharedMusicResponseDto::from)
+                        .map(SentSharedMusicResponseDto::from)
                         .toList()
         );
     }
 
     @JsonNaming(SnakeCaseStrategy.class)
-    private record SharedMusicResponseDto(
+    private record SentSharedMusicResponseDto(
             String id,
             TrackResponseDto track,
             String comment,
@@ -41,8 +41,8 @@ public record PagedRetrieveSentSharedMusicResponse(
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime sharedAt
     ) {
-        public static SharedMusicResponseDto from(SentSharedMusicDto sharedMusic) {
-            return new SharedMusicResponseDto(
+        public static SentSharedMusicResponseDto from(SentSharedMusicDto sharedMusic) {
+            return new SentSharedMusicResponseDto(
                     sharedMusic.id(),
                     TrackResponseDto.from(sharedMusic.track()),
                     sharedMusic.comment(),
@@ -65,7 +65,11 @@ public record PagedRetrieveSentSharedMusicResponse(
             return new TrackResponseDto(
                     track.id(),
                     track.title(),
-                    Arrays.stream(track.serializedArtists().split(", ")).toList(),
+                    Arrays.stream(
+                            track
+                                    .serializedArtists()
+                                    .split(SimpleTrackDto.ARTISTS_DELIMITER)
+                    ).toList(),
                     track.albumCoverUrl(),
                     track.previewMp3Url(),
                     track.durationInSeconds()

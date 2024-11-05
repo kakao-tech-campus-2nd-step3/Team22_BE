@@ -11,7 +11,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @Getter
-@IdClass(FCMKeyManager.class)
+@IdClass(FCMKey.class)
 @Entity(name = "userDevice")
 public class UserDevice extends BaseEntity {
     @Id

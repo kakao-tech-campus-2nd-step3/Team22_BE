@@ -30,7 +30,7 @@ public class LabelRepositoryImpl implements LabelRepository {
         LocalDateTime now = LocalDateTime.now();
         List<Object[]> batchArgs = new ArrayList<>();
         for (Label label : labels) {
-            batchArgs.add(new Object[]{rawUserId, label, now});
+            batchArgs.add(new Object[]{rawUserId, label.toString(), now});
         }
         jdbcTemplate.batchUpdate(labelBatchSql, batchArgs);
     }

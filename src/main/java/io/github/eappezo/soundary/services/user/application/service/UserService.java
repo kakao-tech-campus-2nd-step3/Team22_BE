@@ -6,6 +6,7 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.notification.UserDeviceRepository;
 import io.github.eappezo.soundary.core.user.*;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
+import io.github.eappezo.soundary.services.user.application.LeavedUserRepository;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
 import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
@@ -22,6 +23,7 @@ public class UserService {
     private final UserRoleManager userRoleManager;
     private final LabelRepository labelRepository;
     private final UserDeviceRepository userDeviceRepository;
+    private final LeavedUserRepository leavedUserRepository;
 
     @Transactional(readOnly = true)
     public UserInfo getUserInfo(Identifier userId) {
@@ -79,6 +81,10 @@ public class UserService {
     @Transactional
     public void quitUser(Identifier userId) {
         userRoleManager.appendRole(userId, UserRole.LEAVED);
+
+        User user = getUser(userId);
+        userRepository.deleteById(userId);
+        leavedUserRepository.save(user);
     }
 
     public User getUser(Identifier userId) {

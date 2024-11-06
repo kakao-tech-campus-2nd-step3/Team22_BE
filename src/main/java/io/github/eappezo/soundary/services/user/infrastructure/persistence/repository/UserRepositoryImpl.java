@@ -64,4 +64,9 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean existsByDisplayId(String displayId) {
         return jpaUserRepository.existsByDisplayId(displayId);
     }
+
+    @Override
+    public void deleteById(Identifier userId) {
+        jpaUserRepository.deleteById(userId.toString());
+    }
 }

@@ -1,10 +1,13 @@
 package io.github.eappezo.soundary.services.user.api.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 
 import java.util.List;
 
+@JsonNaming(SnakeCaseStrategy.class)
 public record UserUpdateResponse(
         String displayId,
         String nickname,

@@ -18,4 +18,6 @@ public interface UserRepository {
 
     boolean existsByDisplayId(String displayId);
 
+    void deleteById(Identifier userId);
+
 }

@@ -2,10 +2,7 @@ package io.github.eappezo.soundary.services.user.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.user.api.dto.UserInfoInitializeRequest;
-import io.github.eappezo.soundary.services.user.api.dto.UserInfoResponse;
-import io.github.eappezo.soundary.services.user.api.dto.UserUpdateRequest;
-import io.github.eappezo.soundary.services.user.api.dto.UserUpdateResponse;
+import io.github.eappezo.soundary.services.user.api.dto.*;
 import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import io.github.eappezo.soundary.services.user.application.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +43,15 @@ public class MeController implements MeAPI {
         UserInfo userInfo = userService.updateUser(userId, request.toUserPatch());
 
         return UserUpdateResponse.from(userInfo);
+    }
+
+    @Override
+    @PatchMapping("/device-token")
+    public void updateDeviceToken(
+            @AuthenticatedUser Identifier userId,
+            @RequestBody UpdateDeviceRequest request
+            ) {
+        userService.updateUserDeviceToken(userId, request.deviceToken());
     }
 
     @Override

@@ -80,11 +80,14 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                 )
                 .from(fromTable)
                 .leftJoin(toTable)
-                .on(fromTable.toUserId.eq(toTable.fromUserId))
+                .on(
+                        fromTable.toUserId.eq(toTable.fromUserId),
+                        toTable.toUserId.eq(fromTable.fromUserId),
+                        fromTable.fromUserId.eq(rawUserId)
+                )
                 .join(userEntity)
                 .on(fromTable.toUserId.eq(userEntity.id))
                 .where(
-                        fromTable.fromUserId.eq(rawUserId),
                         toTable.fromUserId.isNull()
                 )
                 .fetch()

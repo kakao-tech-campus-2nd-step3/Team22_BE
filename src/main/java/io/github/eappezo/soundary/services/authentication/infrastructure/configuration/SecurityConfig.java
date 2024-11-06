@@ -27,7 +27,7 @@ public class SecurityConfig {
                         (auth) -> {
                             auth.requestMatchers("/api/login").anonymous();
                             auth.requestMatchers("/api/refresh").anonymous();
-                            auth.requestMatchers(HttpMethod.GET, "/api/v1/users").authenticated();
+                            auth.requestMatchers(HttpMethod.GET, "/api/v1/me").authenticated();
                             auth.requestMatchers("/api/v1/me/default-info").hasRole(UserRole.PENDING.name());
                             auth.requestMatchers(
                                     "/swagger-ui/**",

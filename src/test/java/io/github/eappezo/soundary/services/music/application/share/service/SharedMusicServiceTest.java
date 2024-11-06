@@ -95,8 +95,6 @@ class SharedMusicServiceTest {
         //given
         when(sharedMusicRepository.isSharedToUser(sharedMusicId, userId)).thenReturn(false);
 
-        when(sharedMusicRepository.exists(sharedMusicId)).thenReturn(false);
-
         //when,then
         assertThrows(NotExistsSharedMusicException.class, () -> sharedMusicService.likeMusic(userId, sharedMusicId));
     }
@@ -106,8 +104,6 @@ class SharedMusicServiceTest {
     void unlikeMusic() {
         //given
         when(sharedMusicRepository.isSharedToUser(sharedMusicId, userId)).thenReturn(false);
-
-        when(sharedMusicRepository.notExists(sharedMusicId)).thenReturn(false);
 
         //when,then
         assertThrows(NotExistsSharedMusicException.class, () -> sharedMusicService.unlikeMusic(userId, sharedMusicId));

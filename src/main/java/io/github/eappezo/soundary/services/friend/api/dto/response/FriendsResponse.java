@@ -1,20 +1,23 @@
 package io.github.eappezo.soundary.services.friend.api.dto.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 
 import java.util.List;
 
 public record FriendsResponse(
-    List<FriendResponse> friends
+        List<FriendResponse> friends
 ) {
     public static FriendsResponse from(List<FriendInfo> friendInfoList) {
         List<FriendResponse> friendResponseList = friendInfoList.stream()
-            .map(FriendResponse::from)
-            .toList();
+                .map(FriendResponse::from)
+                .toList();
 
         return new FriendsResponse(friendResponseList);
     }
 
+    @JsonNaming(SnakeCaseStrategy.class)
     public record FriendResponse(
             String id,
             String displayId,

@@ -16,6 +16,7 @@ public class LabelService {
 
     @Transactional
     public void addLabel(Identifier userId, List<Label> labels) {
+        labelRepository.deleteAllByUserId(userId);
         labelRepository.saveAll(userId, labels);
     }
 

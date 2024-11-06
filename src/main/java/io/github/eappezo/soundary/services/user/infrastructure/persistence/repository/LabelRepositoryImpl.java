@@ -33,6 +33,11 @@ public class LabelRepositoryImpl implements LabelRepository {
     }
 
     @Override
+    public void deleteAllByUserId(Identifier userId) {
+        jpaLabelRepository.deleteAllByUserId(userId.toString());
+    }
+
+    @Override
     public List<Label> findAllByUserId(Identifier userId) {
         return jpaLabelRepository
                 .findAllByUserId(userId.toString())

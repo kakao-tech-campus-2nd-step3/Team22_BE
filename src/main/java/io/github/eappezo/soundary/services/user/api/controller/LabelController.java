@@ -16,8 +16,8 @@ public class LabelController implements LabelAPI {
     private final LabelService labelService;
 
     @Override
-    @PostMapping
-    public void addLabel(
+    @PutMapping
+    public void putLabel(
             @AuthenticatedUser Identifier userId,
             @RequestBody LabelAddRequest request
     ) {

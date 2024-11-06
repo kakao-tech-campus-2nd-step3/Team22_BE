@@ -10,4 +10,6 @@ public interface JpaLabelRepository extends JpaRepository<UserLabelEntity, UserL
 
     List<UserLabelEntity> findAllByUserId(String userId);
 
+    void deleteAllByUserId(String userId);
+
 }

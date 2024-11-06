@@ -11,6 +11,8 @@ public interface LabelRepository {
 
     void deleteLabel(Identifier userId, Label label);
 
+    void deleteAllByUserId(Identifier userId);
+
     List<Label> findAllByUserId(Identifier userId);
 
 }

@@ -71,6 +71,12 @@ public class UserService {
     }
 
     @Transactional
+    public void updateUserDeviceToken(Identifier userId, String userDeviceToken) {
+        userDeviceRepository.removeAllDevicesByUserId(userId);
+        userDeviceRepository.registerDevice(userId, userDeviceToken);
+    }
+
+    @Transactional
     public void quitUser(Identifier userId) {
         userRoleManager.appendRole(userId, UserRole.LEAVED);
     }

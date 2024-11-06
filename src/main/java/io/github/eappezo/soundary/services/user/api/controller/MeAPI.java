@@ -2,16 +2,15 @@ package io.github.eappezo.soundary.services.user.api.controller;
 
 import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.user.api.dto.UserInfoInitializeRequest;
-import io.github.eappezo.soundary.services.user.api.dto.UserInfoResponse;
-import io.github.eappezo.soundary.services.user.api.dto.UserUpdateRequest;
-import io.github.eappezo.soundary.services.user.api.dto.UserUpdateResponse;
+import io.github.eappezo.soundary.services.user.api.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @Tag(name = "내 정보 관리 API", description = "나의 정보 조회, 수정 및 탈퇴를 관리합니다.")
 public interface MeAPI {
 
@@ -37,6 +36,15 @@ public interface MeAPI {
     UserUpdateResponse updateMyInfo(
             @AuthenticatedUser Identifier userId,
             @RequestBody UserUpdateRequest userUpdateRequest
+    );
+
+    @Operation(summary = "디바이스 토큰 갱신", description = "디바이스 토큰을 갱신합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "디바이스 토큰 갱신 성공")
+    })
+    void updateDeviceToken(
+            @AuthenticatedUser Identifier userId,
+            @RequestBody UpdateDeviceRequest request
     );
 
     @Operation(summary = "탈퇴", description = "탈퇴합니다.")

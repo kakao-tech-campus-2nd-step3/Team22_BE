@@ -19,7 +19,7 @@ public class LeavedUserEntity extends BaseAuditingEntity {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "display_id", nullable = false, unique = true)
+    @Column(name = "display_id", nullable = false)
     private String displayId;
 
     @Column(name = "nickname", nullable = false)

@@ -2,12 +2,7 @@ package io.github.eappezo.soundary.services.music.application.share.service;
 
 import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.SentSharedMusicDto;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikeSupport;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicLikesDto;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicQueryCondition;
-import io.github.eappezo.soundary.services.music.application.share.SharedMusicRetrieveSupport;
+import io.github.eappezo.soundary.services.music.application.share.*;
 import io.github.eappezo.soundary.services.music.domain.SharedMusicRepository;
 import io.github.eappezo.soundary.services.music.domain.exception.NotExistsSharedMusicException;
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,7 @@ import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.core.user.UserRoleManager;
-import io.github.eappezo.soundary.services.user.UserEntityMapper;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.UserEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

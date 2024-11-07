@@ -1,6 +1,5 @@
 package io.github.eappezo.soundary.services.authentication.application.service;
 
-import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.PersistenceOperationGateway;
 import io.github.eappezo.soundary.core.user.User;
@@ -26,15 +25,21 @@ public class OAuthService {
         OAuthGateway oauthGateway = oAuthGatewayRegistry.getOAuthGateway(request.platform());
         OAuthResult result = oauthGateway.authenticate(request.token());
         return persistenceOperationGateway.executeOperation(() -> {
-            User user = getSocialUserOrCreateBy(result);
+            User user = socialUserFrom(result);
             return createAuthentication(user);
         });
     }
 
-    private User getSocialUserOrCreateBy(OAuthResult oAuthResult) {
+    private User socialUserFrom(OAuthResult oAuthResult) {
         return socialAccountRepository
                 .findUserIdBy(oAuthResult.platform(), oAuthResult.socialId())
-                .map((it) -> userRepository.findById(it).orElseGet(() -> onLeavedUser(oAuthResult, it)))
+                .map(
+                        (loggedInUserId) -> userRepository
+                                .findById(loggedInUserId)
+                                .orElseGet(
+                                        () -> recreateWhenUserLeaved(oAuthResult, loggedInUserId)
+                                )
+                )
                 .orElseGet(() -> socialUserCreationSupport.registerNewSocialUserBy(oAuthResult));
     }
 
@@ -55,8 +60,7 @@ public class OAuthService {
         );
     }
 
-    private User onLeavedUser(OAuthResult oAuthResult, Identifier userId) {
-        socialAccountRepository.removeById(oAuthResult.platform(), oAuthResult.socialId());
+    private User recreateWhenUserLeaved(OAuthResult oAuthResult, Identifier userId) {
         userRefreshTokenRepository.deleteByUserId(userId);
         return socialUserCreationSupport.registerNewSocialUserBy(oAuthResult);
     }

@@ -8,7 +8,7 @@ public record OAuthResult(
         SocialPlatform platform,
         String socialId
 ) {
-    public SocialAccount toSocialAccountOf(Identifier userId) {
+    public SocialAccount makeSocialAccountOf(Identifier userId) {
         return new SocialAccount(platform, socialId, userId);
     }
 }

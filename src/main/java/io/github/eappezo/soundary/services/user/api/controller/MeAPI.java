@@ -4,6 +4,7 @@ import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.user.api.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,14 +19,14 @@ public interface MeAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "내 정보 조회 성공")
     })
-    UserInfoResponse getMyInfo(@AuthenticatedUser Identifier userId);
+    UserInfoResponse getMyInfo(@Parameter(hidden = true) Identifier userId);
 
     @Operation(summary = "내 정보 초기화", description = "초기 내 정보를 추가합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "내 정보 조회 성공")
     })
     void initializeUser(
-            @AuthenticatedUser Identifier userId,
+            @Parameter(hidden = true) Identifier userId,
             @RequestBody UserInfoInitializeRequest request
     );
 
@@ -34,7 +35,7 @@ public interface MeAPI {
             @ApiResponse(responseCode = "200", description = "내 정보 수정 성공")
     })
     UserUpdateResponse updateMyInfo(
-            @AuthenticatedUser Identifier userId,
+            @Parameter(hidden = true) Identifier userId,
             @RequestBody UserUpdateRequest userUpdateRequest
     );
 
@@ -43,7 +44,7 @@ public interface MeAPI {
             @ApiResponse(responseCode = "200", description = "디바이스 토큰 갱신 성공")
     })
     void updateDeviceToken(
-            @AuthenticatedUser Identifier userId,
+            @Parameter(hidden = true) Identifier userId,
             @RequestBody UpdateDeviceRequest request
     );
 
@@ -51,6 +52,6 @@ public interface MeAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "사용자 탈퇴 성공")
     })
-    void quit(@AuthenticatedUser Identifier userId);
+    void quit(@Parameter(hidden = true) Identifier userId);
 
 }

@@ -36,7 +36,7 @@ public record PagedRetrieveSentSharedMusicResponse(
     @JsonNaming(SnakeCaseStrategy.class)
     private record SentSharedMusicResponseDto(
             String id,
-            TrackResponseDto track,
+            SentTrackResponseDto track,
             String comment,
             @Schema(example = "2024-11-23 00:00:00", type = "string")
             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -45,7 +45,7 @@ public record PagedRetrieveSentSharedMusicResponse(
         public static SentSharedMusicResponseDto from(SentSharedMusicDto sharedMusic) {
             return new SentSharedMusicResponseDto(
                     sharedMusic.id(),
-                    TrackResponseDto.from(sharedMusic.track()),
+                    SentTrackResponseDto.from(sharedMusic.track()),
                     sharedMusic.comment(),
                     sharedMusic.sharedAt()
             );
@@ -54,7 +54,7 @@ public record PagedRetrieveSentSharedMusicResponse(
 
     @JsonNaming(SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private record TrackResponseDto(
+    private record SentTrackResponseDto(
             String trackId,
             String title,
             List<String> artists,
@@ -63,8 +63,8 @@ public record PagedRetrieveSentSharedMusicResponse(
             @Nullable String previewMp3Url,
             Long durationInSeconds
     ) {
-        public static TrackResponseDto from(SimpleTrackDto track) {
-            return new TrackResponseDto(
+        public static SentTrackResponseDto from(SimpleTrackDto track) {
+            return new SentTrackResponseDto(
                     track.id(),
                     track.title(),
                     Arrays.stream(

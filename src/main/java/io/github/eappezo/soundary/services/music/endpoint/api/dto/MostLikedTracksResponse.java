@@ -11,19 +11,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public record MostLikedTracksResponse(
-        List<TrackResponseDto> tracks
+        List<MostLikedTrackResponseDto> tracks
 ) {
     public static MostLikedTracksResponse from(MostLikedTracksDto tracks) {
         return new MostLikedTracksResponse(
                 tracks.tracks().stream()
-                        .map(TrackResponseDto::from)
+                        .map(MostLikedTrackResponseDto::from)
                         .toList()
         );
     }
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private record TrackResponseDto(
+    private record MostLikedTrackResponseDto(
             String trackId,
             String title,
             List<String> artists,
@@ -32,8 +32,8 @@ public record MostLikedTracksResponse(
             String previewMp3Url,
             Long durationInSeconds
     ) {
-        public static TrackResponseDto from(SimpleTrackDto track) {
-            return new TrackResponseDto(
+        public static MostLikedTrackResponseDto from(SimpleTrackDto track) {
+            return new MostLikedTrackResponseDto(
                     track.id(),
                     track.title(),
                     Arrays.stream(

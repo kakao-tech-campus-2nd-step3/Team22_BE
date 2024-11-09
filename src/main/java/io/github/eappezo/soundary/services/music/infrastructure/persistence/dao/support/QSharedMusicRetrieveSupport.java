@@ -66,6 +66,7 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                         creatAtAfterStartDate(condition.startDate()),
                         creatAtBeforeEndDate(condition.endDate())
                 )
+                .orderBy(sharedMusicEntity.id.desc())
                 .offset(offset)
                 .limit(condition.size())
                 .fetch()
@@ -85,6 +86,8 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
         Long total = jpaQueryFactory
                 .select(sharedMusicTargetEntity.targetUserId.count())
                 .from(sharedMusicTargetEntity)
+                .join(sharedMusicEntity)
+                .on(sharedMusicTargetEntity.sharedMusicId.eq(sharedMusicEntity.id))
                 .where(
                         sharedMusicTargetEntity.targetUserId.eq(rawUserId),
                         creatAtAfterStartDate(condition.startDate()),
@@ -128,6 +131,7 @@ public class QSharedMusicRetrieveSupport implements SharedMusicRetrieveSupport {
                         sharedMusicLikeEntity.sharedMusicId.eq(sharedMusicEntity.id),
                         sharedMusicLikeEntity.likedUserId.eq(rawUserId)
                 )
+                .orderBy(sharedMusicEntity.id.desc())
                 .offset(offset)
                 .limit(condition.size())
                 .fetch()

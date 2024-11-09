@@ -1,7 +1,6 @@
 package io.github.eappezo.soundary.services.authentication.domain;
 
 import io.github.eappezo.soundary.core.user.User;
-import io.github.eappezo.soundary.services.authentication.application.TokenPayloadDto;
 
 public interface TokenProvider {
 
@@ -9,11 +8,11 @@ public interface TokenProvider {
 
     String generateRefreshTokenFrom(User user);
 
-    String generateAccessToken(TokenPayloadDto payload);
+    String generateAccessToken(TokenPayload payload);
 
-    String generateRefreshToken(TokenPayloadDto payload);
+    String generateRefreshToken(TokenPayload payload);
 
-    TokenPayloadDto extractPayloadFrom(String token);
+    TokenPayload extractPayloadFrom(String token);
 
     Long getAccessTokenExpirationTime();
 

@@ -20,7 +20,6 @@ public class UserDeviceRepositoryImpl implements UserDeviceRepository {
     @Override
     @Transactional
     public void registerDevice(Identifier userId, String deviceToken) {
-        jpaUserDeviceRepository.deleteAllByFcmToken(deviceToken);
         jpaUserDeviceRepository.save(new UserDevice(userId.toString(), deviceToken));
     }
 

@@ -1,4 +1,55 @@
+app:
+  music-platforms:
+    spotify:
+      token-uri: ${SPOTIFY_TOKEN_URI}
+      client-id: ${SPOTIFY_CLIENT_ID}
+      client-secret: ${SPOTIFY_CLIENT_SECRET}
+
+spring:
+  task:
+    execution:
+      pool:
+        core-size: 20
+        max-size: 20
+        queue-capacity: 512
+        keep-alive: 30s
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      repositories:
+        enabled: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    hikari:
+      auto-commit: false
+      pool-name: connection-pool
+      minimum-idle: 10
+      maximum-pool-size: 20
+      connection-timeout: 60000
+      max-lifetime: 1800000
+      idle-timeout: 60000
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    database: mysql
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+        time_zone: Asia/Seoul
+
 token:
   secret-key: ${SECRET_KEY}
-  access-token-expiration: ${REFRESH_TOKEN_EXPIRATION}
+  access-token-expiration: ${ACCESS_TOKEN_EXPIRATION}
   refresh-token-expiration: ${REFRESH_TOKEN_EXPIRATION}
+  refresh-token-extend-threshold: 0.25

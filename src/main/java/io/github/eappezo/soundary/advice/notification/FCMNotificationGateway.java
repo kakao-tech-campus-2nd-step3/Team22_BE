@@ -4,6 +4,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import io.github.eappezo.soundary.core.notification.Notification;
+import io.github.eappezo.soundary.core.notification.NotificationType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class FCMNotificationGateway {
         for (String deviceToken : devices) {
             try {
                 Message message = buildFCMMessage(
+                        notification.type(),
                         notification.title(),
                         notification.body(),
                         deviceToken
@@ -36,10 +38,19 @@ public class FCMNotificationGateway {
     }
 
     private Message buildFCMMessage(
+            NotificationType type,
             String title,
             String body,
             String deviceToken
     ) {
+        if (type.isBackground()) {
+            return Message.builder()
+                    .putData("code", type.code())
+                    .putData("title", title)
+                    .putData("body", body)
+                    .setToken(deviceToken)
+                    .build();
+        }
         return Message.builder()
                 .setNotification(com.google.firebase.messaging.Notification.builder()
                         .setTitle(title)

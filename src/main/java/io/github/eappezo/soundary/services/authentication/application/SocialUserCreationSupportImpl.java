@@ -23,7 +23,7 @@ public class SocialUserCreationSupportImpl implements SocialUserCreationSupport 
     public User registerNewSocialUserBy(OAuthResult oAuthResult) {
         Identifier userId = identifierGenerator.generate();
         Identifier displayId = identifierGenerator.generate();
-        SocialAccount socialAccount = oAuthResult.toSocialAccountOf(userId);
+        SocialAccount socialAccount = oAuthResult.makeSocialAccountOf(userId);
         socialAccountRepository.save(socialAccount);
         User newUser = User.newUser(
                 userId,

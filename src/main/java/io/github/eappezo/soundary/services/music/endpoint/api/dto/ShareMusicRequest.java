@@ -6,6 +6,7 @@ import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.domain.MusicPlatform;
 import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.domain.TrackIdentifier;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 
 import java.util.List;
@@ -14,8 +15,10 @@ public record ShareMusicRequest(
         @JsonProperty("target_user_ids")
         List<String> rawTargetUserIds,
 
+        @Schema(nullable = true)
         @Nullable PlatformTrackIdentifierDto track,
 
+        @Schema(nullable = true)
         @JsonProperty("track_id")
         @Nullable String rawTrackId,
         String comment

@@ -3,6 +3,7 @@ package io.github.eappezo.soundary.services.music.infrastructure.persistence.dao
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.domain.Track;
+import io.github.eappezo.soundary.services.music.domain.TrackIdentifier;
 import io.github.eappezo.soundary.services.music.domain.TrackRepository;
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.PlatformTrackLinkEntityKey;
 import io.github.eappezo.soundary.services.music.infrastructure.persistence.TrackEntity;
@@ -19,8 +20,15 @@ public class TrackRepositoryImpl implements TrackRepository {
     private final JpaPlatformTrackLinkRepository jpaPlatformTrackLinkRepository;
 
     @Override
-    @Transactional
-    public Optional<Track> findByPlatformTrackId(PlatformTrackId platformTrackId) {
+    @Transactional(readOnly = true)
+    public Optional<Track> findByTrackIdentifier(TrackIdentifier trackIdentifier) {
+        if (trackIdentifier.type() == TrackIdentifier.Type.INTERNAL) {
+            return findById(trackIdentifier.internalId());
+        }
+        return findByPlatformTrackId(trackIdentifier.platformTrackId());
+    }
+
+    private Optional<Track> findByPlatformTrackId(PlatformTrackId platformTrackId) {
         return jpaPlatformTrackLinkRepository
                 .findById(PlatformTrackLinkEntityKey.from(platformTrackId))
                 .map((trackLink) ->
@@ -31,8 +39,7 @@ public class TrackRepositoryImpl implements TrackRepository {
                 );
     }
 
-    @Override
-    public Optional<Track> findById(Identifier id) {
+    private Optional<Track> findById(Identifier id) {
         return jpaTrackRepository
                 .findById(id.toString())
                 .map(TrackEntity::toDomain);

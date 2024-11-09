@@ -32,25 +32,11 @@ public class FCMNotificationBuilder {
         String message = format
                 .bodyFormat()
                 .replace("{sender}", buildUserInfo(user));
-        try {
-            String body = objectMapper.writeValueAsString(FCMBody.of(type.code(), message));
-            return new FCMNotificationWrapper(
-                    type,
-                    title,
-                    body
-            );
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    private record FCMBody(
-            String code,
-            String message
-    ) {
-        public static FCMBody of(String code, String message) {
-            return new FCMBody(code, message);
-        }
+        return new FCMNotificationWrapper(
+                type,
+                title,
+                message
+        );
     }
 
     private String buildUserInfo(User user) {

@@ -18,6 +18,10 @@ public class APIExceptionHandler {
     @ExceptionHandler(APIException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleAPIException(APIException exception) {
+        log.error("request failed: {} ({})",
+                exception.errorCode().message(),
+                exception.errorCode().code()
+        );
         return ErrorResponse.of(exception.errorCode());
     }
 

@@ -18,7 +18,7 @@ public interface LabelAPI {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "유저 라벨 추가 성공")
     })
-    void addLabel(
+    void putLabel(
         @Parameter(hidden = true) Identifier userId, LabelAddRequest labelAddRequest
     );
 

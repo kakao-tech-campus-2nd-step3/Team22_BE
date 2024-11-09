@@ -80,10 +80,13 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                 )
                 .from(fromTable)
                 .leftJoin(toTable)
-                .on(fromTable.toUserId.eq(toTable.fromUserId))
+                .on(
+                        fromTable.toUserId.eq(toTable.fromUserId),
+                        fromTable.fromUserId.eq(toTable.toUserId)
+                )
                 .join(userEntity)
-                .on(fromTable.toUserId.eq(userEntity.id))
-                .where(
+                .on(
+                        fromTable.toUserId.eq(userEntity.id),
                         fromTable.fromUserId.eq(rawUserId),
                         toTable.fromUserId.isNull()
                 )
@@ -102,7 +105,7 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
         return jpaQueryFactory
                 .select(
                         new QFriendRequestInfoProjection(
-                                fromTable.toUserId,
+                                fromTable.fromUserId,
                                 userEntity.displayId,
                                 userEntity.nickname,
                                 userEntity.profileImageUrl
@@ -110,10 +113,13 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                 )
                 .from(fromTable)
                 .leftJoin(toTable)
-                .on(fromTable.toUserId.eq(toTable.fromUserId))
+                .on(
+                        fromTable.toUserId.eq(toTable.fromUserId),
+                        fromTable.fromUserId.eq(toTable.toUserId)
+                )
                 .join(userEntity)
-                .on(fromTable.fromUserId.eq(userEntity.id))
-                .where(
+                .on(
+                        fromTable.fromUserId.eq(userEntity.id),
                         fromTable.toUserId.eq(rawUserId),
                         toTable.fromUserId.isNull()
                 )

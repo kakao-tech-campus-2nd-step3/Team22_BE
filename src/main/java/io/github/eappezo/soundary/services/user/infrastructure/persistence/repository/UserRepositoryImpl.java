@@ -6,7 +6,7 @@ import io.github.eappezo.soundary.core.user.User;
 import io.github.eappezo.soundary.core.user.UserRepository;
 import io.github.eappezo.soundary.core.user.UserRole;
 import io.github.eappezo.soundary.core.user.UserRoleManager;
-import io.github.eappezo.soundary.services.user.UserEntityMapper;
+import io.github.eappezo.soundary.services.user.infrastructure.persistence.UserEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -38,6 +38,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByDisplayId(String displayId) {
+        return jpaUserRepository
+                .findByDisplayId(displayId)
+                .map(userEntity -> {
+                    Identifier userId = Identifier.fromString(userEntity.getId());
+                    List<UserRole> userRoles = userRoleManager.getRolesOf(userId);
+                    return userEntityMapper.mapToUser(userEntity, userRoles);
+                });
+    }
+
+    @Override
     public Optional<Identifier> findIdByDisplayId(String displayId) {
         return jpaUserRepository
                 .findUserIdByDisplayId(displayId)
@@ -52,5 +63,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean existsByDisplayId(String displayId) {
         return jpaUserRepository.existsByDisplayId(displayId);
+    }
+
+    @Override
+    public void deleteById(Identifier userId) {
+        jpaUserRepository.deleteById(userId.toString());
     }
 }

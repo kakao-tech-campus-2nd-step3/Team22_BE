@@ -13,10 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserLabelEntity extends BaseEntity {
     @Id
+    @Column(name = "user_id")
     private String userId;
 
     @Id
     @Enumerated(EnumType.STRING)
+    @Column(name = "label")
     private Label label;
 
 }

@@ -10,14 +10,14 @@ import jakarta.annotation.Nullable;
 import java.util.List;
 
 public record SearchTrackResponse(
-        List<TrackResponseDto> tracks
+        List<SearchTrackResponseDto> tracks
 ) {
     public static SearchTrackResponse from(List<SearchedTrackDto> tracks) {
-        return new SearchTrackResponse(tracks.stream().map(TrackResponseDto::from).toList());
+        return new SearchTrackResponse(tracks.stream().map(SearchTrackResponseDto::from).toList());
     }
 
     @JsonNaming(SnakeCaseStrategy.class)
-    public record TrackResponseDto(
+    public record SearchTrackResponseDto(
             MusicPlatform platform,
             String platformTrackId,
             String title,
@@ -27,8 +27,8 @@ public record SearchTrackResponse(
             @Nullable String albumCoverUrl,
             String previewMp3Url
     ) {
-        public static TrackResponseDto from(SearchedTrackDto track) {
-            return new TrackResponseDto(
+        public static SearchTrackResponseDto from(SearchedTrackDto track) {
+            return new SearchTrackResponseDto(
                     track.id().platform(),
                     track.id().platformTrackId(),
                     track.title(),

@@ -11,19 +11,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public record MostSharedTracksResponse(
-        List<TrackResponseDto> tracks
+        List<MostSharedTrackResponseDto> tracks
 ) {
     public static MostSharedTracksResponse from(MostSharedTracksDto tracks) {
         return new MostSharedTracksResponse(
                 tracks.tracks().stream()
-                        .map(TrackResponseDto::from)
+                        .map(MostSharedTrackResponseDto::from)
                         .toList()
         );
     }
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private record TrackResponseDto(
+    private record MostSharedTrackResponseDto(
             String trackId,
             String title,
             List<String> artists,
@@ -32,8 +32,8 @@ public record MostSharedTracksResponse(
             String previewMp3Url,
             Long durationInSeconds
     ) {
-        public static TrackResponseDto from(SimpleTrackDto track) {
-            return new TrackResponseDto(
+        public static MostSharedTrackResponseDto from(SimpleTrackDto track) {
+            return new MostSharedTrackResponseDto(
                     track.id(),
                     track.title(),
                     Arrays.stream(

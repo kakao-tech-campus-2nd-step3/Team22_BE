@@ -34,24 +34,6 @@ public interface MeAPI {
             @RequestBody UserInfoInitializeRequest request
     );
 
-    @Operation(summary = "이미지 업로드 API", description = "이미지를 업로드합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "이미지 업로드 성공")
-    })
-    ImageUploadResponse uploadImage(
-            @Parameter(hidden = true) Identifier userId,
-            @RequestParam("image") MultipartFile image
-    );
-
-    @Operation(summary = "이미지 조회 API", description = "이미지를 조회합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "이미지 조회 성공")
-    })
-    ResponseEntity<byte[]> getImage(
-            @AuthenticatedUser Identifier userId,
-            @PathVariable("image-id") Identifier imageId
-    );
-
     @Operation(summary = "내 정보 수정", description = "내 정보를 수정합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "내 정보 수정 성공")

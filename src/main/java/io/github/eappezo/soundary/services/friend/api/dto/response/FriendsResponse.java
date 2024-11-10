@@ -2,6 +2,7 @@ package io.github.eappezo.soundary.services.friend.api.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.github.eappezo.soundary.core.user.Label;
 import io.github.eappezo.soundary.services.friend.application.dto.FriendInfo;
 
 import java.util.List;
@@ -22,14 +23,16 @@ public record FriendsResponse(
             String id,
             String displayId,
             String nickname,
-            String profileImageUrl
+            String profileImageUrl,
+            List<Label> labels
     ) {
         public static FriendResponse from(FriendInfo friendInfo) {
             return new FriendResponse(
                     friendInfo.id().toString(),
                     friendInfo.displayId(),
                     friendInfo.nickname(),
-                    friendInfo.profileImageUrl()
+                    friendInfo.profileImageUrl(),
+                    friendInfo.labels()
             );
         }
     }

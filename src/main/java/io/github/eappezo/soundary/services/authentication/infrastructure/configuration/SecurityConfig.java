@@ -33,8 +33,7 @@ public class SecurityConfig {
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**",
                                     "/exception/**",
-                                    "/actuator/**",
-                                    "/api/v1/images/**"
+                                    "/actuator/**"
                             ).permitAll();
                             auth.anyRequest().hasRole(UserRole.USER.name());
                         }

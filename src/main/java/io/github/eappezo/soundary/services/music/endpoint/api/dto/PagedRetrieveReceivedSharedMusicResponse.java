@@ -8,6 +8,7 @@ import io.github.eappezo.soundary.core.Page;
 import io.github.eappezo.soundary.services.music.application.share.ReceivedSharedMusicDto;
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public record PagedRetrieveReceivedSharedMusicResponse(
     private record ReceivedSharedMusicResponseDto(
             String id,
             FromUserResponseDto fromUser,
-            TrackResponseDto track,
+            ReceivedTrackResponseDto track,
             String comment,
             Boolean isLiked,
             @Schema(example = "2024-11-23 00:00:00", type = "string")
@@ -44,7 +45,7 @@ public record PagedRetrieveReceivedSharedMusicResponse(
             return new ReceivedSharedMusicResponseDto(
                     sharedMusic.id(),
                     FromUserResponseDto.from(sharedMusic.fromUser()),
-                    TrackResponseDto.from(sharedMusic.track()),
+                    ReceivedTrackResponseDto.from(sharedMusic.track()),
                     sharedMusic.comment(),
                     sharedMusic.isLiked(),
                     sharedMusic.sharedAt()
@@ -71,16 +72,17 @@ public record PagedRetrieveReceivedSharedMusicResponse(
 
     @JsonNaming(SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private record TrackResponseDto(
+    private record ReceivedTrackResponseDto(
             String trackId,
             String title,
             List<String> artists,
             String albumCoverUrl,
-            String previewMp3Url,
+            @Schema(nullable = true)
+            @Nullable String previewMp3Url,
             Long durationInSeconds
     ) {
-        public static TrackResponseDto from(SimpleTrackDto track) {
-            return new TrackResponseDto(
+        public static ReceivedTrackResponseDto from(SimpleTrackDto track) {
+            return new ReceivedTrackResponseDto(
                     track.id(),
                     track.title(),
                     Arrays.stream(

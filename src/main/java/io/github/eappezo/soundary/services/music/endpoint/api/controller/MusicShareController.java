@@ -30,7 +30,7 @@ public class MusicShareController implements MusicShareAPI {
         SharedMusic sharedMusic = musicShareService.shareMusic(
                 userId,
                 request.targetUserIds(),
-                request.platformTrackId(),
+                request.trackIdentifier(),
                 request.comment()
         );
         return ShareMusicResponse.from(sharedMusic);

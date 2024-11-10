@@ -5,33 +5,35 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.github.eappezo.soundary.services.music.application.share.MostSharedTracksDto;
 import io.github.eappezo.soundary.services.music.application.share.SimpleTrackDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Arrays;
 import java.util.List;
 
 public record MostSharedTracksResponse(
-        List<TrackResponseDto> tracks
+        List<MostSharedTrackResponseDto> tracks
 ) {
     public static MostSharedTracksResponse from(MostSharedTracksDto tracks) {
         return new MostSharedTracksResponse(
                 tracks.tracks().stream()
-                        .map(TrackResponseDto::from)
+                        .map(MostSharedTrackResponseDto::from)
                         .toList()
         );
     }
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private record TrackResponseDto(
+    private record MostSharedTrackResponseDto(
             String trackId,
             String title,
             List<String> artists,
             String albumCoverUrl,
+            @Schema(nullable = true)
             String previewMp3Url,
             Long durationInSeconds
     ) {
-        public static TrackResponseDto from(SimpleTrackDto track) {
-            return new TrackResponseDto(
+        public static MostSharedTrackResponseDto from(SimpleTrackDto track) {
+            return new MostSharedTrackResponseDto(
                     track.id(),
                     track.title(),
                     Arrays.stream(

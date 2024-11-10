@@ -7,9 +7,9 @@ import io.github.eappezo.soundary.core.notification.NotificationType;
 import io.github.eappezo.soundary.core.persistence.PersistenceOperationGateway;
 import io.github.eappezo.soundary.core.user.friend.FriendChecker;
 import io.github.eappezo.soundary.services.music.application.share.MusicShareSupport;
-import io.github.eappezo.soundary.services.music.domain.PlatformTrackId;
 import io.github.eappezo.soundary.services.music.domain.SharedMusic;
 import io.github.eappezo.soundary.services.music.domain.Track;
+import io.github.eappezo.soundary.services.music.domain.TrackIdentifier;
 import io.github.eappezo.soundary.services.music.domain.TrackRepository;
 import io.github.eappezo.soundary.services.music.domain.exception.NotFriendException;
 import io.github.eappezo.soundary.services.music.domain.exception.TrackNotFoundException;
@@ -33,15 +33,14 @@ public class MusicShareService {
     public SharedMusic shareMusic(
             Identifier userId,
             List<Identifier> targetUserIds,
-            PlatformTrackId platformTrackId,
+            TrackIdentifier trackIdentifier,
             String comment
     ) {
         SharedMusic sharedMusic = persistenceOperationGateway.executeOperation(() -> {
             if (!friendChecker.isFriendWith(userId, targetUserIds)) {
                 throw new NotFriendException();
             }
-            Track track = trackRepository
-                    .findByPlatformTrackId(platformTrackId)
+            Track track = trackRepository.findByTrackIdentifier(trackIdentifier)
                     .orElseThrow(TrackNotFoundException::new);
             return musicShareSupport.shareTrack(userId, targetUserIds, track, comment);
         });

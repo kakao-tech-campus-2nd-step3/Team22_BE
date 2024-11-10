@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.services.friend.infrastructure;
 
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity;
@@ -32,7 +33,8 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                                 fromTable.toUserId,
                                 userEntity.displayId,
                                 userEntity.nickname,
-                                userEntity.profileImageUrl
+                                userEntity.profileImageUrl,
+                                Expressions.stringTemplate("GROUP_CONCAT({0})", userLabelEntity.label)
                         )
                 )
                 .from(fromTable)
@@ -43,7 +45,10 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                         fromTable.fromUserId.eq(rawUserId)
                 )
                 .join(userEntity)
-                .on(fromTable.toUserId.eq(userEntity.id));
+                .on(fromTable.toUserId.eq(userEntity.id))
+                .leftJoin(userLabelEntity)
+                .on(userEntity.id.eq(userLabelEntity.userId))
+                .groupBy(fromTable.toUserId);
         if (labels.isEmpty()) {
             return query.fetch()
                     .stream()
@@ -80,10 +85,13 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                 )
                 .from(fromTable)
                 .leftJoin(toTable)
-                .on(fromTable.toUserId.eq(toTable.fromUserId))
+                .on(
+                        fromTable.toUserId.eq(toTable.fromUserId),
+                        fromTable.fromUserId.eq(toTable.toUserId)
+                )
                 .join(userEntity)
-                .on(fromTable.toUserId.eq(userEntity.id))
-                .where(
+                .on(
+                        fromTable.toUserId.eq(userEntity.id),
                         fromTable.fromUserId.eq(rawUserId),
                         toTable.fromUserId.isNull()
                 )
@@ -102,7 +110,7 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
         return jpaQueryFactory
                 .select(
                         new QFriendRequestInfoProjection(
-                                fromTable.toUserId,
+                                fromTable.fromUserId,
                                 userEntity.displayId,
                                 userEntity.nickname,
                                 userEntity.profileImageUrl
@@ -110,10 +118,13 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                 )
                 .from(fromTable)
                 .leftJoin(toTable)
-                .on(fromTable.toUserId.eq(toTable.fromUserId))
+                .on(
+                        fromTable.toUserId.eq(toTable.fromUserId),
+                        fromTable.fromUserId.eq(toTable.toUserId)
+                )
                 .join(userEntity)
-                .on(fromTable.fromUserId.eq(userEntity.id))
-                .where(
+                .on(
+                        fromTable.fromUserId.eq(userEntity.id),
                         fromTable.toUserId.eq(rawUserId),
                         toTable.fromUserId.isNull()
                 )

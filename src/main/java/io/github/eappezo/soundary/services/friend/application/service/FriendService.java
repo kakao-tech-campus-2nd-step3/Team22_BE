@@ -97,8 +97,7 @@ public class FriendService {
     }
 
     private boolean isFriendLimit(Identifier fromUserId, Identifier targetUserId) {
-        return friendRepository.countFriends(fromUserId) >= maxFriendsCount
-               || friendRepository.countFriends(targetUserId) >= maxFriendsCount;
+        return friendRepository.countFriends(fromUserId) >= maxFriendsCount;
     }
 
     private enum FriendshipStatus {

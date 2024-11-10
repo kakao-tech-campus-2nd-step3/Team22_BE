@@ -1,4 +1,4 @@
-package io.github.eappezo.soundary.services.user;
+package io.github.eappezo.soundary.services.user.infrastructure.persistence;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.UserEntity;

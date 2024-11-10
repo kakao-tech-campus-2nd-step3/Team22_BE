@@ -13,6 +13,10 @@ spring:
         max-size: 20
         queue-capacity: 512
         keep-alive: 30s
+  servlet:
+    multipart:
+      max-file-size: 15GB
+      max-request-size: 5MB
   data:
     redis:
       host: ${REDIS_HOST}

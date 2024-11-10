@@ -1,9 +1,12 @@
 package io.github.eappezo.soundary.services.user.application.service;
 
 import io.github.eappezo.soundary.core.exception.common.AlreadyExistsUserException;
+import io.github.eappezo.soundary.core.exception.common.ResourceNotExistsException;
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.notification.UserDeviceRepository;
+import io.github.eappezo.soundary.core.persistence.Image;
+import io.github.eappezo.soundary.core.persistence.ImageStorage;
 import io.github.eappezo.soundary.core.user.*;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.services.user.application.LeavedUserRepository;
@@ -24,6 +27,7 @@ public class UserService {
     private final LabelRepository labelRepository;
     private final UserDeviceRepository userDeviceRepository;
     private final LeavedUserRepository leavedUserRepository;
+    private final ImageStorage imageStorage;
 
     @Transactional(readOnly = true)
     public UserInfo getUserInfo(Identifier userId) {
@@ -76,6 +80,16 @@ public class UserService {
     public void updateUserDeviceToken(Identifier userId, String userDeviceToken) {
         userDeviceRepository.removeAllDevicesByUserId(userId);
         userDeviceRepository.registerDevice(userId, userDeviceToken);
+    }
+
+    @Transactional
+    public Image uploadImage(Image image) {
+        return imageStorage.save(image);
+    }
+
+    @Transactional(readOnly = true)
+    public Image getImage(Identifier imageId) {
+        return imageStorage.load(imageId).orElseThrow(ResourceNotExistsException::new);
     }
 
     @Transactional

@@ -2,7 +2,6 @@ package io.github.eappezo.soundary.services.friend.application.dto;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.Label;
-import io.github.eappezo.soundary.core.user.User;
 
 import java.util.List;
 

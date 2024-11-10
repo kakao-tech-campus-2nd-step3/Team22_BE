@@ -1,5 +1,6 @@
 package io.github.eappezo.soundary.services.friend.infrastructure;
 
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.persistence.infrastructure.QFriendEntity;
@@ -32,7 +33,8 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                                 fromTable.toUserId,
                                 userEntity.displayId,
                                 userEntity.nickname,
-                                userEntity.profileImageUrl
+                                userEntity.profileImageUrl,
+                                Expressions.stringTemplate("GROUP_CONCAT({0})", userLabelEntity.label)
                         )
                 )
                 .from(fromTable)
@@ -43,7 +45,10 @@ public class QFriendRetrieveSupport implements FriendRetrieveSupport {
                         fromTable.fromUserId.eq(rawUserId)
                 )
                 .join(userEntity)
-                .on(fromTable.toUserId.eq(userEntity.id));
+                .on(fromTable.toUserId.eq(userEntity.id))
+                .leftJoin(userLabelEntity)
+                .on(userEntity.id.eq(userLabelEntity.userId))
+                .groupBy(fromTable.toUserId);
         if (labels.isEmpty()) {
             return query.fetch()
                     .stream()

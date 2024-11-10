@@ -7,15 +7,16 @@ import io.github.eappezo.soundary.core.notification.NotificationType;
 import io.github.eappezo.soundary.core.persistence.PersistenceOperationGateway;
 import io.github.eappezo.soundary.core.user.friend.FriendChecker;
 import io.github.eappezo.soundary.services.music.application.share.MusicShareSupport;
+import io.github.eappezo.soundary.services.music.domain.SharedMusic;
+import io.github.eappezo.soundary.services.music.domain.Track;
 import io.github.eappezo.soundary.services.music.domain.TrackIdentifier;
-import io.github.eappezo.soundary.services.music.domain.*;
+import io.github.eappezo.soundary.services.music.domain.TrackRepository;
 import io.github.eappezo.soundary.services.music.domain.exception.NotFriendException;
 import io.github.eappezo.soundary.services.music.domain.exception.TrackNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

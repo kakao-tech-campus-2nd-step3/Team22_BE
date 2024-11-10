@@ -50,7 +50,7 @@ public class MeController implements MeAPI {
     public void updateDeviceToken(
             @AuthenticatedUser Identifier userId,
             @RequestBody UpdateDeviceRequest request
-            ) {
+    ) {
         userService.updateUserDeviceToken(userId, request.deviceToken());
     }
 

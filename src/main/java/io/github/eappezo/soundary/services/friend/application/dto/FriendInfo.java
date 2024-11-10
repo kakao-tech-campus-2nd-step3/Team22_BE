@@ -1,19 +1,15 @@
 package io.github.eappezo.soundary.services.friend.application.dto;
 
 import io.github.eappezo.soundary.core.identification.Identifier;
-import io.github.eappezo.soundary.core.user.User;
+import io.github.eappezo.soundary.core.user.Label;
+
+import java.util.List;
 
 public record FriendInfo(
     Identifier id,
     String displayId,
     String nickname,
-    String profileImageUrl
+    String profileImageUrl,
+    List<Label> labels
 ) {
-    public static FriendInfo from(User user) {
-        return new FriendInfo(
-            user.getIdentifier(),
-            user.getDisplayId(),
-            user.getNickname(),
-            user.getProfileImageUrl());
-    }
 }

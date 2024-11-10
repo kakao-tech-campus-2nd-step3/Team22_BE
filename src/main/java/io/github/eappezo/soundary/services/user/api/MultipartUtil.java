@@ -10,6 +10,12 @@ import java.io.IOException;
 
 public class MultipartUtil {
     public static Image toImage(Identifier savedUserId, MultipartFile file) {
+        if (
+                file.getContentType() != null &&
+                !file.getContentType().startsWith("image/")
+        ) {
+            throw new CannotUploadImageException();
+        }
         try {
             return new Image(
                     null,

@@ -1,6 +1,5 @@
 package io.github.eappezo.soundary.services.user.api.controller;
 
-import io.github.eappezo.soundary.core.authentication.AuthenticatedUser;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.services.user.api.dto.ImageUploadResponse;
 import io.swagger.v3.oas.annotations.Operation;

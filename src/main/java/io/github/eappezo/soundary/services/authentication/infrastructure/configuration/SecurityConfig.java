@@ -29,6 +29,7 @@ public class SecurityConfig {
                             auth.requestMatchers("/api/refresh").anonymous();
                             auth.requestMatchers(HttpMethod.GET, "/api/v1/me").authenticated();
                             auth.requestMatchers("/api/v1/me/default-info").hasRole(UserRole.PENDING.name());
+                            auth.requestMatchers("/api/v1/images/**").permitAll();
                             auth.requestMatchers(
                                     "/swagger-ui/**",
                                     "/v3/api-docs/**",

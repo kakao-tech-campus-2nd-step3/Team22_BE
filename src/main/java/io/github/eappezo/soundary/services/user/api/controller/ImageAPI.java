@@ -28,7 +28,6 @@ public interface ImageAPI {
             @ApiResponse(responseCode = "200", description = "이미지 조회 성공")
     })
     ResponseEntity<byte[]> getImage(
-            @Parameter(hidden = true) Identifier userId,
             @PathVariable("image-id") Identifier imageId
     );
 }

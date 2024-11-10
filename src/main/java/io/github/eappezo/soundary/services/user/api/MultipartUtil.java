@@ -20,7 +20,7 @@ public class MultipartUtil {
             return new Image(
                     null,
                     savedUserId,
-                    file.getContentType(),
+                    contentType(file),
                     file.getBytes()
             );
         } catch (IOException e) {
@@ -32,5 +32,13 @@ public class MultipartUtil {
         return ResponseEntity.ok()
                 .header("Content-Type", image.contentType())
                 .body(image.image());
+    }
+
+    private static String contentType(MultipartFile file) {
+        if (file.getOriginalFilename() != null) {
+            String[] filename = file.getOriginalFilename().split("\\.");
+            return "image/" + filename[filename.length - 1];
+        }
+        return file.getContentType();
     }
 }

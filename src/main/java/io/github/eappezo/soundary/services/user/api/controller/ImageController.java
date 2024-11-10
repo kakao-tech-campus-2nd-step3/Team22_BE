@@ -31,7 +31,6 @@ public class ImageController implements ImageAPI {
     @Override
     @GetMapping("/{image-id}")
     public ResponseEntity<byte[]> getImage(
-            @AuthenticatedUser Identifier userId,
             @PathVariable("image-id") Identifier imageId
     ) {
         Image image = imageService.getImage(imageId);

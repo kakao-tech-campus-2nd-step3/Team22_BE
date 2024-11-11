@@ -38,7 +38,7 @@ public record PagedRetrieveReceivedSharedMusicResponse(
             String comment,
             Boolean isLiked,
             @Schema(example = "2024-11-23 00:00:00", type = "string")
-            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
             LocalDateTime sharedAt
     ) {
         public static ReceivedSharedMusicResponseDto from(ReceivedSharedMusicDto sharedMusic) {

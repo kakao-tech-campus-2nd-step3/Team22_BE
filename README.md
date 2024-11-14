@@ -9,8 +9,8 @@ API Docs : https://api.soundary.kro.kr/swagger-ui/index.html#/
 ![image](https://github.com/user-attachments/assets/3355528c-0186-4565-a4f3-5135d4e94ac7)
 
 3. 코드 주안점
-  1. 인증/인가
-  2. 친구
-  3. 음악 공유
-  4. 공유된 음악 집계  
+  a. 인증/인가
+  b. 친구
+  c. 음악 공유
+  d. 공유된 음악 집계  
 

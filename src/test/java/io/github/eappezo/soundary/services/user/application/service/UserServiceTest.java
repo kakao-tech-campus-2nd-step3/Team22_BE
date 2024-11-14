@@ -9,6 +9,7 @@ import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.*;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
+import io.github.eappezo.soundary.services.user.application.LeavedUserRepository;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
 import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,8 @@ class UserServiceTest {
     private UserRoleManager userRoleManager;
     @Mock
     private LabelRepository labelRepository;
+    @Mock
+    private LeavedUserRepository leavedUserRepository;
 
     private Identifier userId;
     private User user;
@@ -83,4 +86,15 @@ class UserServiceTest {
         verify(userRepository).save(any(User.class));
     }
 
+    @Test
+    @DisplayName("유저 탈퇴 처리")
+    void quitUser_Success() {
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        userService.quitUser(userId);
+
+        verify(userRoleManager).appendRole(userId, UserRole.LEAVED);
+        verify(userRepository).deleteById(userId);
+        verify(leavedUserRepository).save(user);
+    }
 }

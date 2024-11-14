@@ -11,7 +11,6 @@ import io.github.eappezo.soundary.core.notification.UserDeviceRepository;
 import io.github.eappezo.soundary.core.user.*;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.services.user.application.LeavedUserRepository;
-import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
 import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
 import org.junit.jupiter.api.BeforeEach;

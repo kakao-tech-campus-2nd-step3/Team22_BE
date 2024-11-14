@@ -1,12 +1,14 @@
 package io.github.eappezo.soundary.services.user.application.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import io.github.eappezo.soundary.core.exception.common.AlreadyExistsUserException;
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.*;
+import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
 import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +31,8 @@ class UserServiceTest {
     private UserRepository userRepository;
     @Mock
     private UserRoleManager userRoleManager;
+    @Mock
+    private LabelRepository labelRepository;
 
     private Identifier userId;
     private User user;
@@ -65,6 +69,18 @@ class UserServiceTest {
 
         assertThrows(AlreadyInitializedUserException.class, () ->
                 userService.initializeUser(userId, "token", List.of(Label.CLASSIC), patch));
+    }
+
+    @Test
+    @DisplayName("유저 정보를 업데이트")
+    void updateUser_Success() {
+        UserPatch patch = new UserPatch("updatedId", "updatedNick", "updatedDesc", "updatedUrl");
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(labelRepository.findAllByUserId(userId)).thenReturn(List.of(Label.CLASSIC));
+
+        userService.updateUser(userId, patch);
+
+        verify(userRepository).save(any(User.class));
     }
 
 }

@@ -8,6 +8,7 @@ import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
 import io.github.eappezo.soundary.core.user.*;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
+import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,8 @@ class UserServiceTest {
     private UserService userService;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private UserRoleManager userRoleManager;
 
     private Identifier userId;
     private User user;
@@ -51,6 +54,16 @@ class UserServiceTest {
         when(userRepository.existsByDisplayId(patch.displayId())).thenReturn(true);
 
         assertThrows(AlreadyExistsUserException.class, () ->
+                userService.initializeUser(userId, "token", List.of(Label.CLASSIC), patch));
+    }
+
+    @Test
+    @DisplayName("이미 초기화된 사용자에 대해 초기화 시도 시 예외 발생")
+    void initializeUser_AlreadyInitializedUser() {
+        UserPatch patch = new UserPatch("newId", "newNick", "newDesc", "newUrl");
+        when(userRoleManager.hasRole(userId, UserRole.PENDING)).thenReturn(false);
+
+        assertThrows(AlreadyInitializedUserException.class, () ->
                 userService.initializeUser(userId, "token", List.of(Label.CLASSIC), patch));
     }
 

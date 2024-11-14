@@ -72,7 +72,7 @@ public class FriendService {
 
     @Transactional
     public void rejectFriendRequest(FriendshipDTO friendship) {
-        friendRepository.delete(friendship);
+        friendRepository.delete(friendship.reverse());
     }
 
     @Transactional

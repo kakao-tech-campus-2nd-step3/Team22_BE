@@ -7,9 +7,11 @@ import static org.mockito.Mockito.*;
 import io.github.eappezo.soundary.core.exception.common.AlreadyExistsUserException;
 import io.github.eappezo.soundary.core.exception.common.UserNotFoundException;
 import io.github.eappezo.soundary.core.identification.Identifier;
+import io.github.eappezo.soundary.core.notification.UserDeviceRepository;
 import io.github.eappezo.soundary.core.user.*;
 import io.github.eappezo.soundary.services.user.application.LabelRepository;
 import io.github.eappezo.soundary.services.user.application.LeavedUserRepository;
+import io.github.eappezo.soundary.services.user.application.dto.UserInfo;
 import io.github.eappezo.soundary.services.user.application.dto.UserPatch;
 import io.github.eappezo.soundary.services.user.domain.exception.AlreadyInitializedUserException;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +36,8 @@ class UserServiceTest {
     private UserRoleManager userRoleManager;
     @Mock
     private LabelRepository labelRepository;
+    @Mock
+    private UserDeviceRepository userDeviceRepository;
     @Mock
     private LeavedUserRepository leavedUserRepository;
 
@@ -97,4 +101,15 @@ class UserServiceTest {
         verify(userRepository).deleteById(userId);
         verify(leavedUserRepository).save(user);
     }
+
+
+    @Test
+    @DisplayName("유저의 기기 토큰 업데이트")
+    void updateUserDeviceToken_Success() {
+        userService.updateUserDeviceToken(userId, "newDeviceToken");
+
+        verify(userDeviceRepository).removeAllDevicesByUserId(userId);
+        verify(userDeviceRepository).registerDevice(userId, "newDeviceToken");
+    }
+
 }

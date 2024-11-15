@@ -52,5 +52,8 @@ API Docs : https://api.soundary.kro.kr/swagger-ui/index.html#/
      음악 검색 시 현재 spotify api를 이용하는데, 이때 client id와 secret을 통해 발급받은 키를 사용해야합니다.
      하지만 검색마다 access token을 새로 발급받는 것은 불필요한 기작이라고 생각하여 MusicPlatformAuthenticationManager를 통해 토큰을 캐싱하고 반환하도록 구현했습니다.
      또한 스케줄러를 통해 일정 시기마다 access token이 만료되기 전에 미리미리 갱신하도록 하여 Hot Key 만료 문제도 대응할 수 있도록 했습니다.
+
+     또한 음악 조회 시 조회된 음악을 데이터베이스에 저장해놓고 공유 시 이 DB에 저장된 음악 정보를 바탕으로 사용자에게 여러가지 정보를 알려주게 되는데 (DB에 저장해두면 불필요한 network io를 줄일 수 있어 좋다고 생각했습니다.)
+     이때 한 번 조회 시 여러개의 음악이 조회되기 때문에 이러한 요구 사항에서 따로 insert를 하는 것 보다는 batch insert를 통해 성능적인 부분에서 이점을 가져갈 수 있도록 하였습니다.
     
 

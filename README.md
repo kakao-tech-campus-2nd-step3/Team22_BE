@@ -5,10 +5,39 @@
 Host : https://api.soundary.kro.kr<br>
 API Docs : https://api.soundary.kro.kr/swagger-ui/index.html#/
 
-2. ERD
+2. 기술 스택
+> **Backend**
+>
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot%203.3.3-6DB33F?style=flat-square&logo=springboot&logoColor=white)
+![Lombok](https://img.shields.io/badge/Lombok-DC382D?style=flat-square&logo=lombok&logoColor=white)
+
+> **Language**
+>
+![Java](https://img.shields.io/badge/Java%2017-FF6600?style=flat-square&logo=java&logoColor=white)
+
+> **Security**
+>
+![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat-square&logo=springsecurity&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)
+
+> **DB**
+>
+![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=flat-square&logo=spring&logoColor=white)
+![QueryDSL](https://img.shields.io/badge/QueryDSL-0055a2?style=flat-square&logo=appveyor&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white)
+![H2](https://img.shields.io/badge/H2-8D6748?style=flat-square&logo=H2&logoColor=white)
+
+> **Deploy**
+> 
+![DOCKER](https://img.shields.io/badge/DOCKER-2496ED?style=flat-square&logo=docker&logoColor=white)
+![NGinx](https://img.shields.io/badge/NGinx-009639?style=flat-square&logo=docker&logoColor=white)
+
+
+3. ERD
 ![image](https://github.com/user-attachments/assets/3355528c-0186-4565-a4f3-5135d4e94ac7)
 
-3. 코드 주안점
+4. 코드 주안점
   * 아키텍처 <br>
      core, advice, services로 나누어 의존의 방향을 단방향으로 관리했습니다.
      (의존 관계 : advice -> services -> core)

@@ -13,7 +13,7 @@ API Docs : https://api.soundary.kro.kr/swagger-ui/index.html#/
 
 > **Language**
 >
-![Java](https://img.shields.io/badge/Java%2017-FF6600?style=flat-square&logo=java&logoColor=white)
+![Java](https://img.shields.io/badge/Java%2021-FF6600?style=flat-square&logo=java&logoColor=white)
 
 > **Security**
 >
